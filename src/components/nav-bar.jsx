@@ -7,8 +7,8 @@ function NavBar(props) {
       <ul>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/profile">Profile</NavLink></li>
-        <li><NavLink to="/test/id1">test id1</NavLink></li>
-        <li><NavLink to="/test/id2">test id2</NavLink></li>
+        <li><NavLink to="/game/id1">game test id1</NavLink></li>
+        <li><NavLink to="/game/id2">game test id2</NavLink></li>
       </ul>
     </nav>
   );

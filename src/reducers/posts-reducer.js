@@ -1,14 +1,14 @@
 import { ActionTypes } from '../actions';
 
-const CountReducer = (state = 0, action = {}) => {
+const postsReducer = (state = 0, action = {}) => {
   switch (action.type) {
-    case ActionTypes.INCREMENT:
+    case ActionTypes.FETCH_POST:
       return state + 1;
-    case ActionTypes.DECREMENT:
+    case ActionTypes.FETCH_POSTS:
       return state - 1;
     default:
       return state;
   }
 };
 
-export default CountReducer;
+export default postsReducer;
