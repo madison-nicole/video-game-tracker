@@ -4,10 +4,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import postsReducer from './posts-reducer';
 
 const rootReducer = combineReducers({
-  posts: {
-    all: [],
-    current: {},
-  },
+  posts: postsReducer,
 });
 
 export default rootReducer;

@@ -5,10 +5,10 @@ function NavBar(props) {
   return (
     <nav>
       <ul>
-        <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/profile">Profile</NavLink></li>
-        <li><NavLink to="/game/id1">game test id1</NavLink></li>
-        <li><NavLink to="/game/id2">game test id2</NavLink></li>
+        <li><NavLink to="/">Games</NavLink></li>
+        <li><NavLink to="/games/new">New Game</NavLink></li>
+        <li><NavLink to="/games/:1">Game Test 1</NavLink></li>
+        <li><NavLink to="/games/:2">Game Test 2</NavLink></li>
       </ul>
     </nav>
   );
