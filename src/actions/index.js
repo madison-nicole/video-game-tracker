@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // API keys
-const ROOT_URL = 'https://platform.cs52.me/api';
-const API_KEY = '?key=jeremywasham';
+const ROOT_URL = 'http://localhost:9090/api';
+const API_KEY = '?key=bigwarlett';
 
 // keys for actiontypes
 export const ActionTypes = {
