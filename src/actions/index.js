@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // API keys
 const ROOT_URL = 'http://localhost:9090/api';
-const API_KEY = '?key=bigwarlett';
+// const API_KEY = '?key=bigwarlett';
 
 // keys for actiontypes
 export const ActionTypes = {
@@ -15,7 +15,7 @@ export function fetchGames() {
   // that gets called with dispatch
   // (arg) => { } is a function
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/posts${API_KEY}`)
+    axios.get(`${ROOT_URL}/posts`)
       .then((response) => {
         // once we are done fetching we can dispatch a redux action with the response data
         dispatch({ type: ActionTypes.FETCH_POSTS, payload: response.data });
@@ -33,7 +33,7 @@ export function fetchGames() {
 // fetch individual game data when clicking on a game in the list
 export function fetchGame(id, navigate) {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/posts/${id}?key=${API_KEY}`)
+    axios.get(`${ROOT_URL}/posts/${id}`)
       .then((response) => {
         // navigate to the correct place
         navigate(`/games/${id}`);
@@ -58,7 +58,7 @@ export function addNewGame(title, navigate) {
       title, content: '', coverUrl: '', tags: '',
     };
 
-    axios.post(`${ROOT_URL}/posts${API_KEY}`, fields)
+    axios.post(`${ROOT_URL}/posts`, fields)
       .then((response) => {
         // once we are done fetching we can dispatch a redux action with the response data
         navigate('/');
@@ -78,7 +78,7 @@ export function updateGame(id, navigate, newTitle) {
   return (dispatch) => {
     const fields = { title: newTitle };
     // update the game
-    axios.put(`${ROOT_URL}/posts/${id}?key=${API_KEY}`, fields)
+    axios.put(`${ROOT_URL}/posts/${id}`, fields)
       .then((response) => {
         dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
       })
@@ -95,7 +95,7 @@ export function updateGame(id, navigate, newTitle) {
 // delete an individual game when clicking the delete button
 export function deleteGame(id, navigate) {
   return (dispatch) => {
-    axios.delete(`${ROOT_URL}/posts/${id}?key=${API_KEY}`)
+    axios.delete(`${ROOT_URL}/posts/${id}`)
       .then((response) => {
         // navigate to the games page
         navigate('/');
