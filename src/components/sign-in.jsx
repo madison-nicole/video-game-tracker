@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Input } from '@chakra-ui/react';
-import { UseDispatch, useNavigate } from 'react-redux';
+import { useDispatch, useNavigate } from 'react-redux';
 import { signinUser } from '../actions';
 
 function SignIn(props) {
