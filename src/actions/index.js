@@ -11,6 +11,7 @@ export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
   DEAUTH_USER: 'DEAUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
+  ERROR_SET: 'ERROR_SET',
 };
 
 export function fetchGames() {
@@ -24,11 +25,9 @@ export function fetchGames() {
         dispatch({ type: ActionTypes.FETCH_POSTS, payload: response.data });
       })
       .catch((error) => {
-        console.log(error);
-        // dispatch an error, use it in a separate error reducer. this is the beauty of redux.
+        // dispatch an error, use it in a separate error reducer
         // have an error component somewhere show it
-        // dispatch({ type: ActionTypes.ERROR_SET, error });
-        // might you also want an ERROR_CLEAR action?
+        dispatch({ type: ActionTypes.ERROR_SET, message: error });
       });
   };
 }
@@ -44,10 +43,9 @@ export function fetchGame(id, navigate) {
         dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
       })
       .catch((error) => {
-        console.log(error);
         // dispatch an error, use it in a separate error reducer. this is the beauty of redux.
         // have an error component somewhere show it
-        // dispatch({ type: ActionTypes.ERROR_SET, error });
+        dispatch({ type: ActionTypes.ERROR_SET, message: error });
         // might you also want an ERROR_CLEAR action?
       });
   };
@@ -67,10 +65,9 @@ export function addNewGame(title, navigate) {
         navigate('/');
       })
       .catch((error) => {
-        console.log(error);
         // dispatch an error, use it in a separate error reducer. this is the beauty of redux.
         // have an error component somewhere show it
-        // dispatch({ type: ActionTypes.ERROR_SET, error });
+        dispatch({ type: ActionTypes.ERROR_SET, message: error });
         // add an ERROR_CLEAR action?
       });
   };
@@ -86,10 +83,9 @@ export function updateGame(id, navigate, newTitle) {
         dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
       })
       .catch((error) => {
-        console.log(error);
         // dispatch an error, use it in a separate error reducer. this is the beauty of redux.
         // have an error component somewhere show it
-        // dispatch({ type: ActionTypes.ERROR_SET, error });
+        dispatch({ type: ActionTypes.ERROR_SET, message: error });
         // might you also want an ERROR_CLEAR action?
       });
   };
@@ -104,10 +100,9 @@ export function deleteGame(id, navigate) {
         navigate('/');
       })
       .catch((error) => {
-        console.log(error);
         // dispatch an error, use it in a separate error reducer. this is the beauty of redux.
         // have an error component somewhere show it
-        // dispatch({ type: ActionTypes.ERROR_SET, error });
+        dispatch({ type: ActionTypes.ERROR_SET, message: error });
         // might you also want an ERROR_CLEAR action?
       });
   };
@@ -142,10 +137,6 @@ export function signinUser({ email, password }, navigate) {
       .catch((error) => {
         // on error should
         dispatch(authError(`Sign In Failed: ${error.response.data}`));
-        // dispatch an error, use it in a separate error reducer. this is the beauty of redux.
-        // have an error component somewhere show it
-        // dispatch({ type: ActionTypes.ERROR_SET, error });
-        // add an ERROR_CLEAR action?
       });
   };
 }
@@ -170,10 +161,6 @@ export function signupUser({ email, password }, navigate) {
       .catch((error) => {
         // on error should
         dispatch(authError(`Sign Up Failed: ${error.response.data}`));
-        // dispatch an error, use it in a separate error reducer. this is the beauty of redux.
-        // have an error component somewhere show it
-        // dispatch({ type: ActionTypes.ERROR_SET, error });
-        // add an ERROR_CLEAR action?
       });
   };
 }

@@ -7,6 +7,7 @@ import NavBar from './nav-bar';
 import Game from './game';
 import Games from './games';
 import NewGame from './new-game';
+import RequireAuth from './require-auth';
 
 export default function App(props) {
   return (
@@ -16,18 +17,10 @@ export default function App(props) {
           <NavBar />
           <Routes>
             <Route element={<Games />} path="/" />
-            <Route element={<NewGame />} path="/games/new" />
+            <Route element={<RequireAuth> <NewGame /> </RequireAuth>} path="/games/new" />
             <Route element={<Game />} path="/games/:gameID" />
             <Route element={<FallBack />} path="*" />
           </Routes>
-
-          {/* <Routes>
-            <Route element={<Home />} path="/" />
-            <Route element={<Profile />} path="/profile" />
-            <Route element={<BrowseGames />} path="/browse" />
-            <Route element={<Game />} path="/game/:id" />
-            <Route element={<FallBack />} path="*" />
-          </Routes> */}
         </div>
       </BrowserRouter>
     </ChakraProvider>
