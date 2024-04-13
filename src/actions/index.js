@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AWS_PROXY_KEY, AWS_PROXY_URL } from '../utils/igdb-utils';
+import { AWS_PROXY_KEY, AWS_PROXY_URL } from '../common/igdb';
 
 // API keys
 const ROOT_URL = 'http://localhost:9090/api';
