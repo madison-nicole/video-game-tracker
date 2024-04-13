@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AWS_PROXY_KEY, AWS_PROXY_URL } from '../utils/igdb-utils';
 
 // API keys
 const ROOT_URL = 'http://localhost:9090/api';
@@ -173,4 +174,30 @@ export function signoutUser(navigate) {
     dispatch({ type: ActionTypes.DEAUTH_USER });
     navigate('/');
   };
+}
+
+// searchTerm = the string to search for
+export function searchGames(searchTerm, navigate) {
+  const data = `search "${searchTerm}"; fields name;`;
+
+  const headers = {
+    'x-api-key': AWS_PROXY_KEY,
+  };
+
+  axios.post(AWS_PROXY_URL, data, {
+    headers,
+  }).then((response) => {
+    console.log('response', response);
+
+    console.log(response.data);
+    // FIRST, we'll dispatch a new action type, which will put the search results into the Redux store
+    // Something like:
+    // dispatch({ type: ActionTypes.IGDB_SEARCH_RESULTS, payload: response.data });
+    //
+    // Then you'll just need to make a new reducer for this too :)
+
+    // SECOND, navigate to the search results page
+    // Something like:
+    // navigate('/results')
+  }).catch((error) => console.log('error', error));
 }

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { fetchGame, fetchGames } from '../actions';
+import SearchBar from './search-bar';
 
 function Games(props) {
   const games = useSelector((reduxState) => reduxState.posts?.all);
@@ -34,6 +35,7 @@ function Games(props) {
 
   return (
     <div className="games-list">
+      <SearchBar />
       {renderGames()}
     </div>
   );
