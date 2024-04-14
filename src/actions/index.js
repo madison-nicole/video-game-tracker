@@ -13,6 +13,9 @@ export const ActionTypes = {
   DEAUTH_USER: 'DEAUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
   ERROR_SET: 'ERROR_SET',
+
+  // IGDB ActionTypes
+  SEARCH_GAMES: 'SEARCH_GAMES',
 };
 
 export function fetchGames() {
@@ -177,27 +180,28 @@ export function signoutUser(navigate) {
 }
 
 // searchTerm = the string to search for
-export function searchGames(searchTerm, navigate) {
-  const data = `search "${searchTerm}"; fields name;`;
+export function searchGames(searchTerm) {
+  return (dispatch) => {
+    // data = API query. From the IGDB example here: https://api-docs.igdb.com/#examples
+    const data = `search "${searchTerm}"; fields name;`;
 
-  const headers = {
-    'x-api-key': AWS_PROXY_KEY,
+    // Need to have x-api-key in the headers, with our proxy key.
+    // Just use this for all of your requests
+    const headers = {
+      'x-api-key': AWS_PROXY_KEY,
+    };
+
+    // Axios sends a request to our proxy
+    // MAKE SURE TO PUT THE HEADERS LAST
+    axios.post(AWS_PROXY_URL, data, {
+      headers,
+    }).then((response) => {
+      // If we get a response, we dispatch the SEARCH_GAMES action, and send the results to our reducer
+      dispatch({ type: ActionTypes.SEARCH_GAMES, payload: response.data });
+    }).catch((error) => {
+      // For now, if we get an error, just log it.
+      // Add error handling later
+      console.log('error', error);
+    });
   };
-
-  axios.post(AWS_PROXY_URL, data, {
-    headers,
-  }).then((response) => {
-    console.log('response', response);
-
-    console.log(response.data);
-    // FIRST, we'll dispatch a new action type, which will put the search results into the Redux store
-    // Something like:
-    // dispatch({ type: ActionTypes.IGDB_SEARCH_RESULTS, payload: response.data });
-    //
-    // Then you'll just need to make a new reducer for this too :)
-
-    // SECOND, navigate to the search results page
-    // Something like:
-    // navigate('/results')
-  }).catch((error) => console.log('error', error));
 }
