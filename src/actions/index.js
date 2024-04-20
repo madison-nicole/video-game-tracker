@@ -196,9 +196,11 @@ export function searchGames(searchTerm) {
     axios.post(AWS_PROXY_URL, data, {
       headers,
     }).then((response) => {
+      console.log('search response');
       // If we get a response, we dispatch the SEARCH_GAMES action, and send the results to our reducer
       dispatch({ type: ActionTypes.SEARCH_GAMES, payload: response.data });
     }).catch((error) => {
+      console.log('search error');
       // For now, if we get an error, just log it.
       // Add error handling later
       console.log('error', error);

@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { fetchGame, fetchGames } from '../actions';
+import { fetchGame, fetchGames, searchGames } from '../actions';
 
 function Games(props) {
   const games = useSelector((reduxState) => reduxState.posts?.all);
@@ -12,6 +12,8 @@ function Games(props) {
 
   useEffect(() => {
     dispatch(fetchGames());
+    console.log('search');
+    dispatch(searchGames('Zelda'));
   }, [dispatch]);
 
   // function for loading the individual game page
