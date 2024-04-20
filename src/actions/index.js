@@ -193,6 +193,10 @@ export function searchGames(searchTerm, navigate) {
       dispatch({ type: ActionTypes.IGDB_SEARCH, payload: response.data });
       console.log(response.data);
       navigate('/results'); // navigate to the search results page
+    }).catch((error) => {
+      // For now, if we get an error, just log it.
+      // Add error handling later
+      console.log('error', error);
     });
   };
 }
