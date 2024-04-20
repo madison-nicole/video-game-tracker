@@ -2,7 +2,8 @@ import axios from 'axios';
 
 // API keys
 const ROOT_URL = 'http://localhost:9090/api';
-// const API_KEY = '?key=bigwarlett';
+const IGDB_URL = 'https://fnhz4q4sk5.execute-api.us-west-2.amazonaws.com/production/v4/games';
+const API_KEY = 'rRdQL0BrMpajZjuoTTFTF3VpTKTgaOOpaGzUZtNW';
 
 // keys for actiontypes
 export const ActionTypes = {
@@ -12,6 +13,7 @@ export const ActionTypes = {
   DEAUTH_USER: 'DEAUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
   ERROR_SET: 'ERROR_SET',
+  IGDB_SEARCH: 'IGDB_SEARCH',
 };
 
 export function fetchGames() {
@@ -172,5 +174,26 @@ export function signoutUser(navigate) {
     localStorage.removeItem('token');
     dispatch({ type: ActionTypes.DEAUTH_USER });
     navigate('/');
+  };
+}
+
+// IGDB SEARCH ACTION
+// searchTerm = the string to search for
+export function searchGames(searchTerm, navigate) {
+  return (dispatch) => {
+    // This is a really flexible API. You can supply whatever fields you want here.
+    const query = `search ${searchTerm}; fields name, release_date.human`;
+
+    // Pretty much all of these endpoints use POST requests
+    axios.post(`${IGDB_URL}/`, {
+      headers: {
+        'x-api-key': API_KEY,
+      },
+      data: query,
+    }).then((response) => {
+      // dispatch a new action type, which will put the search results into the Redux store
+      dispatch({ type: ActionTypes.IGDB_SEARCH, payload: response.data });
+      navigate('/results'); // navigate to the search results page
+    });
   };
 }
