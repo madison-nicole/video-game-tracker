@@ -197,6 +197,7 @@ export function searchGames(searchTerm) {
       headers,
     }).then((response) => {
       console.log('search response');
+      console.log(response.data);
       // If we get a response, we dispatch the SEARCH_GAMES action, and send the results to our reducer
       dispatch({ type: ActionTypes.SEARCH_GAMES, payload: response.data });
     }).catch((error) => {
