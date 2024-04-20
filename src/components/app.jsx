@@ -10,6 +10,7 @@ import NewGame from './new-game';
 import RequireAuth from './require-auth';
 import SignIn from './sign-in';
 import SignUp from './sign-up';
+import SearchBar from './search-bar';
 
 export default function App(props) {
   return (
@@ -17,6 +18,7 @@ export default function App(props) {
       <BrowserRouter>
         <div>
           <NavBar />
+          <SearchBar />
           <Routes>
             <Route element={<Games />} path="/" />
             <Route element={<SignUp />} path="/signup" />

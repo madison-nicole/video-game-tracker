@@ -182,14 +182,12 @@ export function signoutUser(navigate) {
 export function searchGames(searchTerm, navigate) {
   return (dispatch) => {
     // This is a really flexible API. You can supply whatever fields you want here.
-    const query = `search ${searchTerm}; fields name, release_date.human`;
+    const data = `search "${searchTerm}"; fields name;`;
+    const headers = { 'x-api-key': API_KEY };
 
     // Pretty much all of these endpoints use POST requests
-    axios.post(`${IGDB_URL}/`, {
-      headers: {
-        'x-api-key': API_KEY,
-      },
-      data: query,
+    axios.post(IGDB_URL, data, {
+      headers,
     }).then((response) => {
       // dispatch a new action type, which will put the search results into the Redux store
       dispatch({ type: ActionTypes.IGDB_SEARCH, payload: response.data });

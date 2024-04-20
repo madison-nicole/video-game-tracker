@@ -9,7 +9,9 @@ function SearchBar(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSearch = dispatch(searchGames(search, navigate));
+  const handleSearch = () => {
+    dispatch(searchGames(search, navigate));
+  };
 
   return (
     <div className="search-bar">
