@@ -193,6 +193,7 @@ export function searchGames(searchTerm, navigate) {
     }).then((response) => {
       // dispatch a new action type, which will put the search results into the Redux store
       dispatch({ type: ActionTypes.IGDB_SEARCH, payload: response.data });
+      console.log(response.data);
       navigate('/results'); // navigate to the search results page
     });
   };
