@@ -1,13 +1,13 @@
 import { ActionTypes } from '../actions';
 
 const initialState = {
-  results: '',
+  results: [],
 };
 
 const IGDBReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case ActionTypes.IGDB_SEARCH:
-      return state;
+      return { ...state, results: action.payload };
     default:
       return state;
   }

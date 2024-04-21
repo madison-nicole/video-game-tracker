@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { signoutUser } from '../actions';
 
-function NavBar(props) {
+function NavBar({ onOpen }) {
   const authenticated = useSelector((reduxState) => reduxState.auth.authenticated);
 
   // function that signs out the user
@@ -16,22 +16,19 @@ function NavBar(props) {
   };
 
   return (
-    <nav>
+    <nav className="home-nav-bar">
       <ul>
         {authenticated
-          ? (<li onClick={signOut}>Sign Out</li>)
+          ? (<li className="auth-links" onClick={signOut}>Sign Out</li>)
           : (
             <>
-              <li><NavLink to="/signup">Sign Up</NavLink></li>
-              <li><NavLink to="/signin">Log In</NavLink></li>
+              <li className="auth-links" onClick={onOpen}>Sign Up</li>
+              <li className="auth-links" onClick={onOpen}>Log In</li>
             </>
           )}
 
         <li><NavLink to="/">Games</NavLink></li>
         <li><NavLink to="/games/new">New Game</NavLink></li>
-        <li><NavLink to="/games/:1">Game Test 1</NavLink></li>
-        <li><NavLink to="/games/:2">Game Test 2</NavLink></li>
-
       </ul>
     </nav>
   );

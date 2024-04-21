@@ -2,8 +2,8 @@ import axios from 'axios';
 
 // API keys
 const ROOT_URL = 'http://localhost:9090/api';
-const IGDB_URL = 'https://fnhz4q4sk5.execute-api.us-west-2.amazonaws.com/production/v4/games';
-const API_KEY = 'rRdQL0BrMpajZjuoTTFTF3VpTKTgaOOpaGzUZtNW';
+const IGDB_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/games';
+const API_KEY = 'o228NXPSSC2PvDrXAM3Xw5bYz6oOnFAN7XR4UTti';
 
 // keys for actiontypes
 export const ActionTypes = {
@@ -191,7 +191,6 @@ export function searchGames(searchTerm, navigate) {
     }).then((response) => {
       // dispatch a new action type, which will put the search results into the Redux store
       dispatch({ type: ActionTypes.IGDB_SEARCH, payload: response.data });
-      console.log(response.data);
       navigate('/results'); // navigate to the search results page
     }).catch((error) => {
       // For now, if we get an error, just log it.
