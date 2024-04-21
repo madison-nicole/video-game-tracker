@@ -14,7 +14,9 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { signinUser, signupUser } from '../actions';
 
-function AuthModal({ isOpen, onClose }) {
+function AuthModal({
+  isOpen, onClose, accountStatus, setAccountStatus,
+}) {
   // Chakra modal setup
   const finalRef = React.useRef(null);
 
@@ -31,15 +33,14 @@ function AuthModal({ isOpen, onClose }) {
   // to sign up a user
   const createUser = () => {
     dispatch(signupUser({ email, password }, navigate));
+    onClose();
   };
 
   // to log in a user
   const loginUser = () => {
     dispatch(signinUser({ email, password }, navigate));
+    onClose();
   };
-
-  // set to true if account exists, else switch to sign up page
-  const [accountStatus, setAccountStatus] = useState(true);
 
   // a function to render modal buttons according to sign up / sign in
   function renderModalButtons() {

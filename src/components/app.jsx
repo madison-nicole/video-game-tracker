@@ -15,14 +15,15 @@ import AuthModal from './auth-modal';
 export default function App(props) {
   const [search, setSearch] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [accountStatus, setAccountStatus] = useState(true); // true if the user has an account
 
   return (
     <ChakraProvider>
       <BrowserRouter>
         <div>
-          <NavBar onOpen={onOpen} />
+          <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} onOpen={onOpen} />
           <SearchBar search={search} setSearch={setSearch} />
-          <AuthModal isOpen={isOpen} onClose={onClose} />
+          <AuthModal accountStatus={accountStatus} isOpen={isOpen} setAccountStatus={setAccountStatus} onClose={onClose} />
           <Routes>
             <Route element={<Games />} path="/" />
             <Route element={<RequireAuth> <NewGame /> </RequireAuth>} path="/games/new" />
