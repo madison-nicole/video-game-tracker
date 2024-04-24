@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { IconButton, Input } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 import { searchGames } from '../actions';
 
-function SearchBar({ search, setSearch }) {
+function SearchBar(props) {
+  const [search, setSearch] = useState('');
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

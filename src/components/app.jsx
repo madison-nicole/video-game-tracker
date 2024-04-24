@@ -5,15 +5,14 @@ import {
 import { ChakraProvider, useDisclosure } from '@chakra-ui/react';
 import NavBar from './nav-bar';
 import Game from './game';
+import BrowseGames from './browse-games';
 import Games from './games';
 import NewGame from './new-game';
 import RequireAuth from './require-auth';
-import SearchBar from './search-bar';
 import Results from './results';
 import AuthModal from './auth-modal';
 
 export default function App(props) {
-  const [search, setSearch] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [accountStatus, setAccountStatus] = useState(true); // true if the user has an account
 
@@ -22,10 +21,10 @@ export default function App(props) {
       <BrowserRouter>
         <div>
           <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} onOpen={onOpen} />
-          <SearchBar search={search} setSearch={setSearch} />
           <AuthModal accountStatus={accountStatus} isOpen={isOpen} setAccountStatus={setAccountStatus} onClose={onClose} />
           <Routes>
             <Route element={<Games />} path="/" />
+            <Route element={<BrowseGames />} path="/browse" />
             <Route element={<RequireAuth> <NewGame /> </RequireAuth>} path="/games/new" />
             <Route element={<Game />} path="/games/:gameID" />
             <Route element={<Results />} path="/results" />
