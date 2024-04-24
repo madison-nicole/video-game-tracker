@@ -13,7 +13,10 @@ export const ActionTypes = {
   DEAUTH_USER: 'DEAUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
   ERROR_SET: 'ERROR_SET',
+
+  // IGDB Actions
   IGDB_SEARCH: 'IGDB_SEARCH',
+  IGDB_TOP_RATED: 'IGDB_TOP_RATED',
 };
 
 export function fetchGames() {
@@ -192,6 +195,28 @@ export function searchGames(searchTerm, navigate) {
       // dispatch a new action type, which will put the search results into the Redux store
       dispatch({ type: ActionTypes.IGDB_SEARCH, payload: response.data });
       navigate('/results'); // navigate to the search results page
+    }).catch((error) => {
+      // For now, if we get an error, just log it.
+      // Add error handling later
+      console.log('error', error);
+    });
+  };
+}
+
+// IGDB TOP RATED GAMES ACTION
+export function getTopRatedGames() {
+  return (dispatch) => {
+    // This is a really flexible API. You can supply whatever fields you want here.
+    const data = 'fields *; sort rating desc; where rating_count > 20; where version_parent = null; limit 100;';
+    const headers = { 'x-api-key': API_KEY };
+
+    // Pretty much all of these endpoints use POST requests
+    axios.post(IGDB_URL, data, {
+      headers,
+    }).then((response) => {
+      console.log(response.data);
+      // dispatch a new action type, which will put the search results into the Redux store
+      dispatch({ type: ActionTypes.IGDB_TOP_RATED, payload: response.data });
     }).catch((error) => {
       // For now, if we get an error, just log it.
       // Add error handling later
