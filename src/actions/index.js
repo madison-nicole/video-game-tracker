@@ -2,7 +2,8 @@ import axios from 'axios';
 
 // API keys
 const ROOT_URL = 'http://localhost:9090/api';
-const IGDB_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/games';
+const IGDB_GAMES_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/games';
+const IGDB_COVERS_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/covers';
 const API_KEY = 'o228NXPSSC2PvDrXAM3Xw5bYz6oOnFAN7XR4UTti';
 
 // keys for actiontypes
@@ -189,7 +190,7 @@ export function searchGames(searchTerm, navigate) {
     const headers = { 'x-api-key': API_KEY };
 
     // Pretty much all of these endpoints use POST requests
-    axios.post(IGDB_URL, data, {
+    axios.post(IGDB_GAMES_URL, data, {
       headers,
     }).then((response) => {
       // dispatch a new action type, which will put the search results into the Redux store
@@ -207,11 +208,11 @@ export function searchGames(searchTerm, navigate) {
 export function fetchTopRatedGames() {
   return (dispatch) => {
     // This is a really flexible API. You can supply whatever fields you want here.
-    const data = 'fields name, rating, rating_count, screenshots.*; sort rating desc; where rating_count > 400 & version_parent = null; limit 100;';
+    const data = 'fields name, rating, rating_count, cover; sort rating desc; where rating_count > 400 & version_parent = null; limit 100;';
     const headers = { 'x-api-key': API_KEY };
 
     // Pretty much all of these endpoints use POST requests
-    axios.post(IGDB_URL, data, {
+    axios.post(IGDB_GAMES_URL, data, {
       headers,
     }).then((response) => {
       // dispatch a new action type, which will put the search results into the Redux store
@@ -222,4 +223,22 @@ export function fetchTopRatedGames() {
       console.log('error', error);
     });
   };
+}
+
+// Fetch covers from games array
+export function fetchGameCovers(games) {
+  // Build cover query
+  const coverIds = games.map((game) => {
+    return game.cover;
+  });
+
+  const query = `fields url; where id=(${coverIds.toString()}); limit 100;`;
+  const headers = { 'x-api-key': API_KEY };
+
+  // Fetch cover art for each game
+  axios.post(IGDB_COVERS_URL, query, {
+    headers,
+  }).then((response) => {
+    console.log(response.data);
+  });
 }

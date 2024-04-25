@@ -65,7 +65,7 @@ function BrowseGames(props) {
             alt="game cover photo"
             maxW={{ base: '100%', sm: '200px' }}
             objectFit="cover"
-            src={game.screenshots[0].url}
+            src=""
           />
 
           <Stack>
