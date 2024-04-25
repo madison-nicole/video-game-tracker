@@ -204,17 +204,16 @@ export function searchGames(searchTerm, navigate) {
 }
 
 // IGDB TOP RATED GAMES ACTION
-export function getTopRatedGames() {
+export function fetchTopRatedGames() {
   return (dispatch) => {
     // This is a really flexible API. You can supply whatever fields you want here.
-    const data = 'fields *; sort rating desc; where rating_count > 20; where version_parent = null; limit 100;';
+    const data = 'fields name, rating, rating_count, screenshots.*; sort rating desc; where rating_count > 400 & version_parent = null; limit 100;';
     const headers = { 'x-api-key': API_KEY };
 
     // Pretty much all of these endpoints use POST requests
     axios.post(IGDB_URL, data, {
       headers,
     }).then((response) => {
-      console.log(response.data);
       // dispatch a new action type, which will put the search results into the Redux store
       dispatch({ type: ActionTypes.IGDB_TOP_RATED, payload: response.data });
     }).catch((error) => {

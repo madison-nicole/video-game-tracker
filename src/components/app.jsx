@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter, Routes, Route,
 } from 'react-router-dom';
 import { ChakraProvider, useDisclosure } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
 import NavBar from './nav-bar';
 import Game from './game';
 import BrowseGames from './browse-games';
@@ -11,10 +12,18 @@ import NewGame from './new-game';
 import RequireAuth from './require-auth';
 import Results from './results';
 import AuthModal from './auth-modal';
+import { fetchTopRatedGames } from '../actions';
 
 export default function App(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [accountStatus, setAccountStatus] = useState(true); // true if the user has an account
+
+  const dispatch = useDispatch();
+
+  // load top rated games in background
+  useEffect(() => {
+    dispatch(fetchTopRatedGames());
+  }, [dispatch]);
 
   return (
     <ChakraProvider>
