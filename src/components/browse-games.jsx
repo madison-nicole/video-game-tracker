@@ -9,8 +9,10 @@ import { AddIcon, CheckCircleIcon } from '@chakra-ui/icons';
 
 function BrowseGames(props) {
   // fetch the top rated games
-  const topRated = useSelector((reduxState) => reduxState.search?.topRated);
-  console.log(topRated);
+  const topRatedGames = useSelector((reduxState) => reduxState.search?.topRatedGames);
+  const topRatedCovers = useSelector((reduxState) => reduxState.search?.topRatedCovers);
+
+  console.log(topRatedGames, topRatedCovers);
 
   // determine if the game is in your library
   const gameInLibrary = useSelector((reduxState) => reduxState.posts?.id);
@@ -50,7 +52,9 @@ function BrowseGames(props) {
 
   // render the top rated games as horizontal cards
   function renderTopRatedGames() {
-    const topRatedGames = topRated?.map((game, index) => {
+    const renderedGames = topRatedGames?.map((game, index) => {
+      const coverUrl = `https:${topRatedCovers.get(game.cover)}`.replace('thumb', 'cover_big');
+      console.log(coverUrl);
       // console.log(game.screenshots);
       return (
         <Card
@@ -65,7 +69,7 @@ function BrowseGames(props) {
             alt="game cover photo"
             maxW={{ base: '100%', sm: '200px' }}
             objectFit="cover"
-            src=""
+            src={coverUrl}
           />
 
           <Stack>
@@ -87,7 +91,7 @@ function BrowseGames(props) {
       );
     });
 
-    return topRatedGames;
+    return renderedGames;
   }
 
   return (

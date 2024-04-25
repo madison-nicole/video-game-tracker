@@ -2,7 +2,8 @@ import { ActionTypes } from '../actions';
 
 const initialState = {
   results: [],
-  topRated: [],
+  topRatedGames: [],
+  topRatedCovers: new Map(),
 };
 
 const IGDBReducer = (state = initialState, action = {}) => {
@@ -10,7 +11,7 @@ const IGDBReducer = (state = initialState, action = {}) => {
     case ActionTypes.IGDB_SEARCH:
       return { ...state, results: action.payload };
     case ActionTypes.IGDB_TOP_RATED:
-      return { ...state, topRated: action.payload };
+      return { ...state, topRatedGames: action.games, topRatedCovers: action.covers };
     default:
       return state;
   }

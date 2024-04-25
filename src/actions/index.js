@@ -204,6 +204,23 @@ export function searchGames(searchTerm, navigate) {
   };
 }
 
+// Fetch covers from games array
+export async function fetchGameCovers(games) {
+  // Build cover query
+  const coverIds = games.map((game) => {
+    return game.cover;
+  });
+
+  const query = `fields url; where id=(${coverIds.toString()}); limit 100;`;
+  const headers = { 'x-api-key': API_KEY };
+
+  // Fetch cover art for each game
+  const response = await axios.post(IGDB_COVERS_URL, query, {
+    headers,
+  });
+  return new Map(response.data.map((cover) => [cover.id, cover.url]));
+}
+
 // IGDB TOP RATED GAMES ACTION
 export function fetchTopRatedGames() {
   return (dispatch) => {
@@ -214,31 +231,15 @@ export function fetchTopRatedGames() {
     // Pretty much all of these endpoints use POST requests
     axios.post(IGDB_GAMES_URL, data, {
       headers,
-    }).then((response) => {
+    }).then(async (response) => {
+      const games = response.data;
+      const covers = await fetchGameCovers(games);
       // dispatch a new action type, which will put the search results into the Redux store
-      dispatch({ type: ActionTypes.IGDB_TOP_RATED, payload: response.data });
+      dispatch({ type: ActionTypes.IGDB_TOP_RATED, games, covers });
     }).catch((error) => {
       // For now, if we get an error, just log it.
       // Add error handling later
       console.log('error', error);
     });
   };
-}
-
-// Fetch covers from games array
-export function fetchGameCovers(games) {
-  // Build cover query
-  const coverIds = games.map((game) => {
-    return game.cover;
-  });
-
-  const query = `fields url; where id=(${coverIds.toString()}); limit 100;`;
-  const headers = { 'x-api-key': API_KEY };
-
-  // Fetch cover art for each game
-  axios.post(IGDB_COVERS_URL, query, {
-    headers,
-  }).then((response) => {
-    console.log(response.data);
-  });
 }
