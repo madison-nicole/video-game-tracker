@@ -186,11 +186,14 @@ function NavBar({ onOpen, setAccountStatus }) {
     <div className="home-nav-bar">
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex alignItems="center" h={16} justifyContent="space-between">
-          <Button cursor="pointer" onClick={handleHomeButton}>insert logo here</Button>
+          <Flex justifyContent="flex-start" width="100%">
+            <Button cursor="pointer" onClick={handleHomeButton}>insert logo here</Button>
+          </Flex>
 
-          {renderSearchBar()}
-
-          <Flex alignItems="center">
+          <Flex alignItems="center" justifyContent="center" width="100%">
+            {renderSearchBar()}
+          </Flex>
+          <Flex alignItems="center" justifyContent="flex-end" width="100%">
             <Stack direction="row" spacing={3}>
               <Button id="light-dark-mode-button" onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
