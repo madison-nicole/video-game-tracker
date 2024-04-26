@@ -131,6 +131,7 @@ function NavBar({ onOpen, setAccountStatus }) {
             cursor="pointer"
             fontSize={13.5}
             fontWeight="700"
+            textStyle="navButtonText"
             variant="ghost"
             onClick={handleBrowseGames}
           >

@@ -84,7 +84,10 @@ function SearchBar(props) {
           size="sm"
           onClick={onSearchButtonClick}
         />
-        <PopoverContent>
+        <PopoverContent
+          fontSize={14}
+          maxW={300}
+        >
           {resultsCache.map((result) => {
             return <div key={result.id}>{result.name}</div>;
           })}

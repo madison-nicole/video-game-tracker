@@ -1,11 +1,12 @@
 import React from 'react';
 import {
   Tabs, TabList, TabPanels, Tab, TabPanel,
-  Card, CardHeader, CardBody, CardFooter, Image, Stack, Heading, Text, // Button,
+  Card, CardHeader, CardBody, CardFooter, Image, Stack, Heading, Text,
   IconButton, Progress,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { AddIcon, CheckCircleIcon } from '@chakra-ui/icons';
+import JumpToTop from './jump-to-top';
 
 function BrowseGames(props) {
   // fetch the top rated games
@@ -40,6 +41,8 @@ function BrowseGames(props) {
         <IconButton
           aria-label="Add game to your games"
           icon={<AddIcon />}
+          isRound
+          size="md"
           variant="solid"
         />
       );
@@ -50,7 +53,8 @@ function BrowseGames(props) {
   function renderTopRatedGames() {
     const renderedGames = topRatedGames?.map((game, index) => {
       const coverUrl = `https:${topRatedCovers.get(game.cover)}`.replace('thumb', 'cover_big');
-      console.log(coverUrl);
+      const title = game.name;
+      const { rating } = game;
       // console.log(game.screenshots);
       return (
         <Card
@@ -86,34 +90,63 @@ function BrowseGames(props) {
             borderRadius={6}
             borderStyle="solid"
             borderWidth={3}
-            maxH="165px"
-            mb={5}
+            maxH="140px"
+            mb={3.5}
             mr={5}
-            mt={5}
+            mt={3.5}
             objectFit="cover"
             src={coverUrl}
           />
 
-          <Stack>
-            <CardBody>
-              <Heading
-                fontSize={24}
-                size="md"
-              >
-                {game.name}
-              </Heading>
+          <CardBody
+            display="flex"
+            flexDirection="row"
+            padding="0px"
+          >
+            <Heading
+              alignItems="center"
+              display="flex"
+              fontSize={18}
+              fontWeight="700"
+              width="900px"
+            >
+              {title.toUpperCase()}
+            </Heading>
 
-              <Text fontSize={16} py="2">
-                {Math.round(game.rating)}
+            <Stack
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              mb="40px"
+              ml="25px"
+              mr="50px"
+              width="80%"
+            >
+              <Text
+                fontSize={18}
+                fontWeight={700}
+                mt="25px"
+                py="2"
+                textAlign="right"
+              >
+                {rating.toFixed(2)}
               </Text>
 
-              <Progress colorScheme="green" value={game.rating} />
-            </CardBody>
+              <Progress
+                colorScheme="green"
+                value={game.rating}
+              />
+            </Stack>
+          </CardBody>
 
-            <CardFooter>
-              {renderAddButton()}
-            </CardFooter>
-          </Stack>
+          <CardFooter
+            alignItems="center"
+            display="flex"
+            justifyContent="flex-end"
+            mr="20px"
+          >
+            {renderAddButton()}
+          </CardFooter>
         </Card>
       );
     });
@@ -122,18 +155,21 @@ function BrowseGames(props) {
   }
 
   return (
-    <Tabs colorScheme="gray" variant="soft-rounded">
-      <TabList display="flex" justifyContent="center" margin={10}>
-        <Tab cursor="pointer" fontSize={13.5} fontWeight={700}>TRENDING</Tab>
-        <Tab cursor="pointer" fontSize={13.5} fontWeight={700}>TOP RATED</Tab>
-      </TabList>
-      <TabPanels>
-        <TabPanel>insert trending here</TabPanel>
-        <TabPanel>
-          {renderTopRatedGames()}
-        </TabPanel>
-      </TabPanels>
-    </Tabs>
+    <div>
+      <Tabs colorScheme="gray" variant="soft-rounded">
+        <TabList display="flex" justifyContent="center" margin={10}>
+          <Tab cursor="pointer" fontSize={13.5} fontWeight={700}>TRENDING</Tab>
+          <Tab cursor="pointer" fontSize={13.5} fontWeight={700}>TOP RATED</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>insert trending here</TabPanel>
+          <TabPanel>
+            {renderTopRatedGames()}
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+      <JumpToTop />
+    </div>
   );
 }
 
