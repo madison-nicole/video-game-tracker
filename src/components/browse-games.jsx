@@ -12,12 +12,8 @@ function BrowseGames(props) {
   const topRatedGames = useSelector((reduxState) => reduxState.search?.topRatedGames);
   const topRatedCovers = useSelector((reduxState) => reduxState.search?.topRatedCovers);
 
-  console.log(topRatedGames, topRatedCovers);
-
   // determine if the game is in your library
   const gameInLibrary = useSelector((reduxState) => reduxState.posts?.id);
-  console.log(gameInLibrary);
-  console.log(useSelector((reduxState) => reduxState.posts));
 
   // determine variant for top rated game cards to alternate colors
   function determineCardColor(index) {
