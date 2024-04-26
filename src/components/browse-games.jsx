@@ -64,10 +64,12 @@ function BrowseGames(props) {
           <CardHeader>
             <Heading
               alignItems="center"
+              className="number-rankings"
               color="#cccccc"
               colorScheme="lightgray"
               display="flex"
               fontSize={56}
+              fontWeight={700}
               height="100%"
               justifyContent="center"
               size="lg"
@@ -95,7 +97,7 @@ function BrowseGames(props) {
           <Stack>
             <CardBody>
               <Heading
-                fontSize={20}
+                fontSize={24}
                 size="md"
               >
                 {game.name}
