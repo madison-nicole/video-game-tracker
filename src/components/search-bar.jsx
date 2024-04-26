@@ -18,6 +18,8 @@ function SearchBar(props) {
   return (
     <div className="search-bar">
       <Input
+        minWidth="230px"
+        ml="15px"
         placeholder="Search for a game"
         size="sm"
         type="text"
