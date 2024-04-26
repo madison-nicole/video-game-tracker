@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Tabs, TabList, TabPanels, Tab, TabPanel,
-  Card, CardBody, CardFooter, Image, Stack, Heading, Text, // Button,
+  Card, CardHeader, CardBody, CardFooter, Image, Stack, Heading, Text, // Button,
   IconButton, Progress,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
@@ -65,18 +65,47 @@ function BrowseGames(props) {
           overflow="hidden"
           variant={determineCardColor(index)}
         >
+          <CardHeader>
+            <Heading
+              alignItems="center"
+              color="#cccccc"
+              colorScheme="lightgray"
+              display="flex"
+              fontSize={56}
+              height="100%"
+              justifyContent="center"
+              size="lg"
+              textAlign="center"
+              width={20}
+            >
+              {index + 1}
+            </Heading>
+          </CardHeader>
+
           <Image
+            alignItems="center"
             alt="game cover photo"
-            maxW={{ base: '100%', sm: '200px' }}
+            borderRadius={6}
+            borderStyle="solid"
+            borderWidth={3}
+            maxH="165px"
+            mb={5}
+            mr={5}
+            mt={5}
             objectFit="cover"
             src={coverUrl}
           />
 
           <Stack>
             <CardBody>
-              <Heading fontSize={18} size="md">{index + 1}. {game.name}</Heading>
+              <Heading
+                fontSize={20}
+                size="md"
+              >
+                {game.name}
+              </Heading>
 
-              <Text fontSize={14} py="2">
+              <Text fontSize={16} py="2">
                 {Math.round(game.rating)}
               </Text>
 

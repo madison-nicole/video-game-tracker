@@ -30,6 +30,7 @@ function SearchBar(props) {
         colorScheme="gray"
         icon={<Search2Icon />}
         isRound
+        ml={2}
         size="sm"
         onClick={handleSearch}
       />

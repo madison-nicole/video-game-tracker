@@ -23,6 +23,7 @@ function GameCard(props) {
 
   // set up a hook to open and close game cover modal
   const { isOpenGame, onOpenGame, onCloseGame } = useDisclosure();
+  console.log(onOpenGame);
 
   return (
     <div>
