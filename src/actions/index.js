@@ -18,6 +18,9 @@ export const ActionTypes = {
   // IGDB Actions
   IGDB_SEARCH: 'IGDB_SEARCH',
   IGDB_TOP_RATED: 'IGDB_TOP_RATED',
+
+  SELECT_GAME: 'SELECT_GAME',
+  CLEAR_SELECTED_GAME: 'CLEAR_SELECTED_GAME',
 };
 
 export function fetchGames() {
@@ -240,5 +243,31 @@ export function fetchTopRatedGames() {
       // Add error handling later
       console.log('error', error);
     });
+  };
+}
+
+export function selectGame(gameId) {
+  return (dispatch) => {
+    // Fields to get
+    const data = 'fields name, rating, cover, franchise, genres, summary, ;';
+    const headers = { 'x-api-key': API_KEY };
+
+    // Fetch data for the game
+    axios.post(IGDB_GAMES_URL, data, {
+      headers,
+    }).then((response) => {
+      // dispatch a new action type, which will set the selected game in the Redux store
+      dispatch({ type: ActionTypes.SELECT_GAME, payload: response.data });
+    }).catch((error) => {
+      // For now, if we get an error, just log it.
+      // Add error handling later
+      console.log('error', error);
+    });
+  };
+}
+
+export function clearSelectedGame() {
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.CLEAR_SELECTED_GAME });
   };
 }

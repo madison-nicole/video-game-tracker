@@ -25,11 +25,20 @@ function JumpToTop() {
 
   return (
     <IconButton
+      _hover={{
+        bg: 'pink.300',
+      }}
       aria-label="Jump to top"
-      colorScheme="pink"
+      bg="pink.400"
+      borderRadius="6px"
+      bottom={5}
+      cursor="pointer"
       icon={<ArrowUpIcon />}
+      left="96%"
+      mb="20px"
+      position="sticky"
       style={{ display: visible ? 'inline' : 'none' }}
-      variant="outline"
+      variant="solid"
       onClick={scrollToTop}
     />
   );

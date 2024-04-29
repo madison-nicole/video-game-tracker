@@ -10,6 +10,9 @@ import {
   Popover,
   PopoverContent,
   PopoverAnchor,
+  Flex,
+  InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react';
 
 import { Search2Icon } from '@chakra-ui/icons';
@@ -35,8 +38,9 @@ function SearchBar(props) {
 
   const onSearchButtonClick = useCallback(() => {
     handleSearch();
+    onClose();
     navigate('/results');
-  }, [handleSearch, navigate]);
+  }, [handleSearch, navigate, onClose]);
 
   useEffect(() => {
     debouncedSearch();
@@ -63,30 +67,36 @@ function SearchBar(props) {
     <div className="search-bar">
       <Popover autoFocus={false} closeOnBlur isOpen={isOpen} matchWidth onClose={onClose}>
         <PopoverAnchor>
-          <Input
-            minWidth="230px"
-            ml="15px"
-            placeholder="Search for a game"
-            size="sm"
-            type="text"
-            variant="outline"
-            width="-moz-min-content"
-            onBlur={onClose}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <Flex alignItems="center" pl="40px" pr="40px">
+            <InputGroup>
+              <Input
+                minWidth="230px"
+                ml="15px"
+                placeholder="Search for a game"
+                size="sm"
+                type="text"
+                variant="outline"
+                width="-moz-min-content"
+                onBlur={onClose}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <InputRightElement h="100%">
+                <IconButton
+                  aria-label="Search database"
+                  colorScheme="gray"
+                  h="90%"
+                  icon={<Search2Icon />}
+                  size="sm"
+                  variant="ghost"
+                  onClick={onSearchButtonClick}
+                />
+              </InputRightElement>
+            </InputGroup>
+          </Flex>
         </PopoverAnchor>
-        <IconButton
-          aria-label="Search database"
-          colorScheme="gray"
-          icon={<Search2Icon />}
-          isRound
-          ml={2}
-          size="sm"
-          onClick={onSearchButtonClick}
-        />
         <PopoverContent
           fontSize={14}
-          maxW={300}
+          width="385px"
         >
           {resultsCache.map((result) => {
             return <div key={result.id}>{result.name}</div>;

@@ -108,7 +108,7 @@ function BrowseGames(props) {
               display="flex"
               fontSize={18}
               fontWeight="700"
-              width="900px"
+              width="100%"
             >
               {title.toUpperCase()}
             </Heading>
