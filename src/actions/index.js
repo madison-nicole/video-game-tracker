@@ -6,6 +6,9 @@ const IGDB_GAMES_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/p
 const IGDB_COVERS_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/covers';
 const API_KEY = 'o228NXPSSC2PvDrXAM3Xw5bYz6oOnFAN7XR4UTti';
 
+// IGDB API header
+const IGDB_HEADERS = { 'x-api-key': API_KEY };
+
 // keys for actiontypes
 export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',
@@ -190,11 +193,10 @@ export function searchGames(searchTerm, navigate) {
   return (dispatch) => {
     // This is a really flexible API. You can supply whatever fields you want here.
     const data = `search "${searchTerm}"; fields name;`;
-    const headers = { 'x-api-key': API_KEY };
 
     // Pretty much all of these endpoints use POST requests
     axios.post(IGDB_GAMES_URL, data, {
-      headers,
+      headers: IGDB_HEADERS,
     }).then((response) => {
       // dispatch a new action type, which will put the search results into the Redux store
       dispatch({ type: ActionTypes.IGDB_SEARCH, payload: response.data });
@@ -206,7 +208,7 @@ export function searchGames(searchTerm, navigate) {
   };
 }
 
-// Fetch covers from games array
+// Fetch covers from array of multiple games
 export async function fetchGameCovers(games) {
   // Build cover query
   const coverIds = games.map((game) => {
@@ -214,13 +216,24 @@ export async function fetchGameCovers(games) {
   });
 
   const query = `fields url; where id=(${coverIds.toString()}); limit 100;`;
-  const headers = { 'x-api-key': API_KEY };
 
   // Fetch cover art for each game
   const response = await axios.post(IGDB_COVERS_URL, query, {
-    headers,
+    headers: IGDB_HEADERS,
   });
   return new Map(response.data.map((cover) => [cover.id, cover.url]));
+}
+
+// Fetch cover for a single game
+export async function fetchGameCover(coverId) {
+  const query = `fields url; where id = ${coverId};`;
+
+  // Fetch cover art for the game
+  const response = await axios.post(IGDB_COVERS_URL, query, {
+    headers: IGDB_HEADERS,
+  });
+
+  return response.data;
 }
 
 // IGDB TOP RATED GAMES ACTION
@@ -228,11 +241,10 @@ export function fetchTopRatedGames() {
   return (dispatch) => {
     // This is a really flexible API. You can supply whatever fields you want here.
     const data = 'fields name, rating, rating_count, cover; sort rating desc; where rating_count > 400 & version_parent = null; limit 100;';
-    const headers = { 'x-api-key': API_KEY };
 
     // Pretty much all of these endpoints use POST requests
     axios.post(IGDB_GAMES_URL, data, {
-      headers,
+      headers: IGDB_HEADERS,
     }).then(async (response) => {
       const games = response.data;
       const covers = await fetchGameCovers(games);
@@ -249,15 +261,21 @@ export function fetchTopRatedGames() {
 export function selectGame(gameId) {
   return (dispatch) => {
     // Fields to get
-    const data = 'fields name, rating, cover, franchise, genres, summary, ;';
-    const headers = { 'x-api-key': API_KEY };
+    const data = `fields name, rating, cover, franchise, genres, summary, release_dates; where id = ${gameId};`;
 
     // Fetch data for the game
     axios.post(IGDB_GAMES_URL, data, {
-      headers,
-    }).then((response) => {
-      // dispatch a new action type, which will set the selected game in the Redux store
-      dispatch({ type: ActionTypes.SELECT_GAME, payload: response.data });
+      headers: IGDB_HEADERS,
+    }).then(async (response) => {
+      const game = response.data[0];
+
+      // get the game cover
+      const cover = await fetchGameCover(game.cover);
+      const coverUrl = cover[0].url.replace('thumb', 'cover_big');
+      game.cover = coverUrl;
+
+      // dispatch a new action type, which will put the search results into the Redux store
+      dispatch({ type: ActionTypes.SELECT_GAME, payload: game });
     }).catch((error) => {
       // For now, if we get an error, just log it.
       // Add error handling later

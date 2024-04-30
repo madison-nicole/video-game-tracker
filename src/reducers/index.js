@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   posts: postsReducer,
   auth: authReducer,
   error: errorReducer,
-  search: IGDBReducer,
+  igdb: IGDBReducer,
 });
 
 export default rootReducer;

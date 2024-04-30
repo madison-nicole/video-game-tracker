@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -10,27 +10,40 @@ import {
   Heading, Button,
   Text, Image, Stack, Divider, ButtonGroup,
   Card, CardBody, CardFooter,
-  useDisclosure,
 } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearSelectedGame } from '../actions';
 
 function GameCard(props) {
-  // when clicking on to select an individual game from games
-  const game = useSelector((reduxState) => reduxState.posts?.current);
-
+  const dispatch = useDispatch();
   // Chakra modal setup
   const finalRef = React.useRef(null);
 
-  // set up a hook to open and close game cover modal
-  const { isOpenGame, onOpenGame, onCloseGame } = useDisclosure();
-  console.log(onOpenGame);
+  // when clicking on to select an individual game from games
+  const game = useSelector((reduxState) => reduxState.igdb?.selectedGame);
+
+  // round the game rating to two decimal places
+  const rating = game?.rating.toFixed(2);
+
+  const onCloseGame = useCallback(() => {
+    dispatch(clearSelectedGame());
+  }, [dispatch]);
+
+  if (!game) {
+    return null;
+  }
 
   return (
     <div>
-      <Modal blockScrollOnMount={false} finalFocusRef={finalRef} isCentered isOpen={isOpenGame} scrollBehavior="inside" onClose={onCloseGame}>
+      <Modal blockScrollOnMount={false} finalFocusRef={finalRef} isCentered isOpen scrollBehavior="inside" onClose={onCloseGame}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader> </ModalHeader>
+          <ModalHeader>
+            <Heading size="md">{game.name}</Heading>
+            <Text fontSize="2xl">
+              *insert release year*
+            </Text>
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Card maxW="sm">
@@ -38,15 +51,14 @@ function GameCard(props) {
                 <Image
                   alt="Game cover"
                   borderRadius="lg"
-                  src={game.screenshot.url}
+                  src={game.cover}
                 />
                 <Stack mt="6" spacing="3">
-                  <Heading size="md">{game.name}</Heading>
                   <Text>
-                    Insert a game description here.
+                    {game.summary}
                   </Text>
-                  <Text color="blue.600" fontSize="2xl">
-                    $450
+                  <Text fontSize="2xl">
+                    {rating} / 100
                   </Text>
                 </Stack>
               </CardBody>

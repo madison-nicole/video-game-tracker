@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { searchGames } from '../actions';
 
 function Results({ search }) {
-  const results = useSelector((reduxState) => reduxState.search?.results);
+  const results = useSelector((reduxState) => reduxState.igdb?.results);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

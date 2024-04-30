@@ -10,7 +10,6 @@ import { deleteGame, updateGame } from '../actions';
 function Game(props) {
   // when clicking on to select an individual game from games
   const selectedGame = useSelector((reduxState) => reduxState.posts?.current);
-  console.log(selectedGame);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

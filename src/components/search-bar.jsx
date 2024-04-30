@@ -22,7 +22,7 @@ import { searchGames } from '../actions';
 function SearchBar(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const results = useSelector((reduxState) => reduxState.search?.results);
+  const results = useSelector((reduxState) => reduxState.igdb?.results);
   const [search, setSearch] = useState('');
   const [resultsCache, setResultsCache] = useState([]);
 

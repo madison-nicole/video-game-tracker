@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   Tabs, TabList, TabPanels, Tab, TabPanel,
   Card, CardHeader, CardBody, CardFooter, Image, Stack, Heading, Text,
   IconButton, Progress,
 } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AddIcon, CheckCircleIcon } from '@chakra-ui/icons';
 import JumpToTop from './jump-to-top';
+import { selectGame } from '../actions';
 
 function BrowseGames(props) {
+  const dispatch = useDispatch();
+
   // fetch the top rated games
-  const topRatedGames = useSelector((reduxState) => reduxState.search?.topRatedGames);
-  const topRatedCovers = useSelector((reduxState) => reduxState.search?.topRatedCovers);
+  const topRatedGames = useSelector((reduxState) => reduxState.igdb?.topRatedGames);
+  const topRatedCovers = useSelector((reduxState) => reduxState.igdb?.topRatedCovers);
 
   // determine if the game is in your library
   const gameInLibrary = useSelector((reduxState) => reduxState.posts?.id);
@@ -24,6 +27,10 @@ function BrowseGames(props) {
       return 'filled';
     }
   }
+
+  const onSelectGame = useCallback((gameId) => {
+    dispatch(selectGame(gameId));
+  }, [dispatch]);
 
   // render an add button if game is not added to library, else checkmark
   function renderAddButton() {
@@ -55,7 +62,6 @@ function BrowseGames(props) {
       const coverUrl = `https:${topRatedCovers.get(game.cover)}`.replace('thumb', 'cover_big');
       const title = game.name;
       const { rating } = game;
-      // console.log(game.screenshots);
       return (
         <Card
           direction={{ base: 'column', sm: 'row' }}
@@ -90,12 +96,14 @@ function BrowseGames(props) {
             borderRadius={6}
             borderStyle="solid"
             borderWidth={3}
+            cursor="pointer"
             maxH="140px"
             mb={3.5}
             mr={5}
             mt={3.5}
             objectFit="cover"
             src={coverUrl}
+            onClick={() => onSelectGame(game.id)}
           />
 
           <CardBody
@@ -105,10 +113,12 @@ function BrowseGames(props) {
           >
             <Heading
               alignItems="center"
+              cursor="pointer"
               display="flex"
               fontSize={18}
               fontWeight="700"
               width="100%"
+              onClick={() => onSelectGame(game.id)}
             >
               {title.toUpperCase()}
             </Heading>

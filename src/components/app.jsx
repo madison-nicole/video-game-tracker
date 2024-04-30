@@ -12,6 +12,7 @@ import NewGame from './new-game';
 import RequireAuth from './require-auth';
 import Results from './results';
 import AuthModal from './auth-modal';
+import GameCard from './game-card';
 import { fetchTopRatedGames } from '../actions';
 
 export default function App(props) {
@@ -31,6 +32,7 @@ export default function App(props) {
         <div>
           <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} onOpen={onOpen} />
           <AuthModal accountStatus={accountStatus} isOpen={isOpen} setAccountStatus={setAccountStatus} onClose={onClose} />
+          <GameCard />
           <Routes>
             <Route element={<Games />} path="/" />
             <Route element={<BrowseGames />} path="/browse" />
