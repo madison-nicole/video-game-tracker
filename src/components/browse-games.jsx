@@ -47,10 +47,12 @@ function BrowseGames(props) {
       return (
         <IconButton
           aria-label="Add game to your games"
+          fontSize="10px"
+          fontWeight={800}
           icon={<AddIcon />}
           isRound
-          size="md"
-          variant="solid"
+          size="sm"
+          variant="outline"
         />
       );
     }
