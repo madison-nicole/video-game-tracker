@@ -5,7 +5,6 @@ import { Navigate } from 'react-router-dom';
 function RequireAuth({ children }) {
   const authenticated = useSelector((state) => state.auth.authenticated);
 
-  console.log('auth', authenticated);
   if (!authenticated) {
     return <Navigate to="/signin" />;
   } else {

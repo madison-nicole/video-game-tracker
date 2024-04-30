@@ -3,8 +3,6 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Heading, Button,
@@ -38,26 +36,44 @@ function GameCard(props) {
       <Modal blockScrollOnMount={false} finalFocusRef={finalRef} isCentered isOpen scrollBehavior="inside" onClose={onCloseGame}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>
-            <Heading size="md">{game.name}</Heading>
-            <Text fontSize="2xl">
-              *insert release year*
-            </Text>
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Card maxW="sm">
+          <ModalBody padding="0px">
+            <Card
+              alignItems="center"
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+            >
+              <ModalCloseButton />
+              <Heading
+                size="md"
+                textAlign="center"
+              >
+                {game.name}
+              </Heading>
+              <Text
+                fontSize="12px"
+                textAlign="center"
+              >
+                *insert release year*
+              </Text>
               <CardBody>
                 <Image
                   alt="Game cover"
                   borderRadius="lg"
-                  src={game.cover}
+                  maxH="300px"
+                  src={game.coverUrl}
                 />
                 <Stack mt="6" spacing="3">
-                  <Text>
+                  <Text
+                    fontSize="14px"
+                    textAlign="center"
+                  >
                     {game.summary}
                   </Text>
-                  <Text fontSize="2xl">
+                  <Text
+                    fontSize="2xl"
+                    textAlign="center"
+                  >
                     {rating} / 100
                   </Text>
                 </Stack>
@@ -72,10 +88,6 @@ function GameCard(props) {
               </CardFooter>
             </Card>
           </ModalBody>
-
-          <ModalFooter>
-            insert modal footer
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </div>

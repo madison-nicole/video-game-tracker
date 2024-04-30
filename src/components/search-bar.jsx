@@ -98,8 +98,8 @@ function SearchBar(props) {
           fontSize={14}
           width="385px"
         >
-          {resultsCache.map((result) => {
-            return <div key={result.id}>{result.name}</div>;
+          {resultsCache.map((result, idx) => {
+            return <div key={`${result.id}`}>{result.name}</div>;
           })}
         </PopoverContent>
       </Popover>

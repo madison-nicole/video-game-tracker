@@ -192,7 +192,7 @@ export function signoutUser(navigate) {
 export function searchGames(searchTerm, navigate) {
   return (dispatch) => {
     // This is a really flexible API. You can supply whatever fields you want here.
-    const data = `search "${searchTerm}"; fields name;`;
+    const data = `search "${searchTerm}"; fields name, rating, cover, franchise, genres, summary, release_dates;`;
 
     // Pretty much all of these endpoints use POST requests
     axios.post(IGDB_GAMES_URL, data, {
@@ -240,7 +240,7 @@ export async function fetchGameCover(coverId) {
 export function fetchTopRatedGames() {
   return (dispatch) => {
     // This is a really flexible API. You can supply whatever fields you want here.
-    const data = 'fields name, rating, rating_count, cover; sort rating desc; where rating_count > 400 & version_parent = null; limit 100;';
+    const data = 'fields name, rating, cover, franchise, genres, summary, release_dates; sort rating desc; where rating_count > 400 & version_parent = null; limit 100;';
 
     // Pretty much all of these endpoints use POST requests
     axios.post(IGDB_GAMES_URL, data, {
@@ -258,7 +258,27 @@ export function fetchTopRatedGames() {
   };
 }
 
-export function selectGame(gameId) {
+export function selectGame(game, coverUrl) {
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.SELECT_GAME, payload: { ...game, coverUrl } });
+  };
+}
+
+export function selectGameAndLoadCover(game) {
+  return (dispatch) => {
+    fetchGameCover(game.cover).then((response) => {
+      const cover = response.data;
+      const coverUrl = `https://${cover[0].url.replace('thumb', 'cover_big')}`;
+      dispatch({ type: ActionTypes.SELECT_GAME, payload: { ...game, coverUrl } });
+    }).catch((error) => {
+      // For now, if we get an error, just log it.
+      // Add error handling later
+      console.log('error', error);
+    });
+  };
+}
+
+export function selectAndLoadGame(gameId) {
   return (dispatch) => {
     // Fields to get
     const data = `fields name, rating, cover, franchise, genres, summary, release_dates; where id = ${gameId};`;
@@ -271,8 +291,8 @@ export function selectGame(gameId) {
 
       // get the game cover
       const cover = await fetchGameCover(game.cover);
-      const coverUrl = cover[0].url.replace('thumb', 'cover_big');
-      game.cover = coverUrl;
+      const coverUrl = `https://${cover[0].url.replace('thumb', 'cover_big')}`;
+      game.coverUrl = coverUrl;
 
       // dispatch a new action type, which will put the search results into the Redux store
       dispatch({ type: ActionTypes.SELECT_GAME, payload: game });

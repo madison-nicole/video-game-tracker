@@ -28,8 +28,8 @@ function BrowseGames(props) {
     }
   }
 
-  const onSelectGame = useCallback((gameId) => {
-    dispatch(selectGame(gameId));
+  const onSelectGame = useCallback((game, coverUrl) => {
+    dispatch(selectGame(game, coverUrl));
   }, [dispatch]);
 
   // render an add button if game is not added to library, else checkmark
@@ -103,7 +103,7 @@ function BrowseGames(props) {
             mt={3.5}
             objectFit="cover"
             src={coverUrl}
-            onClick={() => onSelectGame(game.id)}
+            onClick={() => onSelectGame(game, coverUrl)}
           />
 
           <CardBody
@@ -118,7 +118,7 @@ function BrowseGames(props) {
               fontSize={18}
               fontWeight="700"
               width="100%"
-              onClick={() => onSelectGame(game.id)}
+              onClick={() => onSelectGame(game, coverUrl)}
             >
               {title.toUpperCase()}
             </Heading>
