@@ -3,8 +3,10 @@ import { IconButton } from '@chakra-ui/react';
 import { ArrowUpIcon } from '@chakra-ui/icons';
 
 function JumpToTop() {
+  // state
   const [visible, setVisible] = useState(false);
 
+  // toggle visibility of the button
   const toggleVisible = () => {
     const scrolled = document.documentElement.scrollTop;
     if (scrolled > 300) {
@@ -14,6 +16,7 @@ function JumpToTop() {
     }
   };
 
+  // scroll to the top of the page
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -21,6 +24,7 @@ function JumpToTop() {
     });
   };
 
+  // detect user scroll
   window.addEventListener('scroll', toggleVisible);
 
   return (

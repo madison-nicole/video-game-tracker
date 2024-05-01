@@ -1,6 +1,6 @@
 // import React, { ReactNode } from 'react';
 import React, { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import {
@@ -12,14 +12,15 @@ import {
 import { MoonIcon, SunIcon, BellIcon } from '@chakra-ui/icons';
 import SearchBar from './search-bar';
 import { signoutUser } from '../actions';
+import { useAuthenticated } from '../hooks/redux-hooks';
 
 function NavBar({ onOpen, setAccountStatus }) {
-  const authenticated = useSelector((reduxState) => reduxState.auth.authenticated);
-
-  // function that signs out the user
+  // hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation().pathname;
+  const { colorMode, toggleColorMode } = useColorMode(); // for dark and light mode
+  const authenticated = useAuthenticated();
 
   const signOut = () => {
     dispatch(signoutUser(navigate));
@@ -42,8 +43,6 @@ function NavBar({ onOpen, setAccountStatus }) {
   const handleHomeButton = useCallback(() => {
     navigate('/');
   }, [navigate]);
-
-  const { colorMode, toggleColorMode } = useColorMode(); // for dark and light mode
 
   // if signed in, render a different menu than new users
   function renderMenu() {

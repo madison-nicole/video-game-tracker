@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import {
   Button, Input,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
+  Modal, ModalOverlay, ModalContent, ModalHeader,
+  ModalFooter, ModalBody, ModalCloseButton,
 } from '@chakra-ui/react';
-
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { signinUser, signupUser } from '../actions';
@@ -18,14 +12,16 @@ import { signInPrompt, signUpPrompt } from '../utils/text-utils';
 function AuthModal({
   isOpen, onClose, accountStatus, setAccountStatus,
 }) {
-  // Chakra modal setup
-  const finalRef = React.useRef(null);
-
+  // state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // Chakra modal setup
+  const finalRef = React.useRef(null);
 
   // to sign up a user
   const createUser = () => {

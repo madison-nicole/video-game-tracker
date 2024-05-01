@@ -11,23 +11,21 @@ import { clearSelectedGame, addNewGame } from '../actions';
 import { useAuthenticated, useSelectedGame } from '../hooks/redux-hooks';
 
 function GameCard({ openAuthModal, isOpenAuthModal }) {
+  // state
+  const [userRating, setUserRating] = useState(0);
+
   // hooks
-  const dispatch = useDispatch(); // to dispatch an action
-  const navigate = useNavigate(); // to navigate to url
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const authenticated = useAuthenticated(); // to check if user is signed in
   const game = useSelectedGame(); // to grab data from selected game
 
+  // store the game data
+  const title = game?.name; // game title
+  const avgRating = game?.rating.toFixed(2); // avg rating rounded to two decimals
+
   // Chakra modal setup
   const finalRef = React.useRef(null);
-
-  // store the game title and navigate for use in addNewGame function
-  const title = game?.name;
-
-  // round the game rating to two decimal places
-  const avgRating = game?.rating.toFixed(2);
-
-  // set up user rating
-  const [userRating, setUserRating] = useState(0);
 
   const onCloseGame = useCallback(() => {
     setUserRating(0);
@@ -39,17 +37,13 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   }
 
   function logGame(gameTitle, gameNavigate, gameRating) {
-    // if not logged in
-    if (!authenticated) {
+    if (!authenticated) { // if not logged in
       openAuthModal();
-    // if no rating is made
-    } else if (userRating === 0) {
-      // store the game without a rating
-      addNewGame(title, navigate);
+    } else if (userRating === 0) { // if no rating is made
+      addNewGame(title, navigate); // store the game w/o a rating
       onCloseGame();
     } else {
-      // if authenticated and rated, store all
-      addNewGame(title, navigate, userRating);
+      addNewGame(title, navigate, userRating); // store all
       onCloseGame();
     }
   }

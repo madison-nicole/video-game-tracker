@@ -11,7 +11,7 @@ function ResultsList({ gamesData, onSelectGame }) {
   const renderedGames = games?.map((game, index) => {
     const coverUrl = `https:${covers.get(game.cover)}`.replace('thumb', 'cover_big');
     const year = years?.get(game?.release_dates?.[0]);
-    const title = game.name;
+    const title = game.name.toUpperCase();
     // const { rating } = game;
     return (
       <Card
@@ -53,7 +53,7 @@ function ResultsList({ gamesData, onSelectGame }) {
             width="100%"
             onClick={() => onSelectGame(game, coverUrl, year)}
           >
-            {title.toUpperCase()}
+            {title}
           </Heading>
 
           <Stack

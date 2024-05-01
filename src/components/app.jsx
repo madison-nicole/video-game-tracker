@@ -16,14 +16,16 @@ import GameCard from './game-card';
 import { fetchTopRatedGames } from '../actions';
 
 export default function App(props) {
-  const { isOpen, onOpen, onClose } = useDisclosure(); // auth modal
+  // state
   const [accountStatus, setAccountStatus] = useState(true); // true if the user has an account
 
+  // hooks
   const dispatch = useDispatch();
+  const { isOpen, onOpen, onClose } = useDisclosure(); // auth modal
 
-  // load top rated games in background
+  // background processes
   useEffect(() => {
-    dispatch(fetchTopRatedGames());
+    dispatch(fetchTopRatedGames()); // load top rated games
   }, [dispatch]);
 
   return (
