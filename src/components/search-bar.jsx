@@ -1,32 +1,28 @@
 import React, {
   useState, useCallback, useEffect,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import {
-  IconButton,
-  Input,
-  useDisclosure,
-  Popover,
-  PopoverContent,
-  PopoverAnchor,
-  Flex,
-  InputGroup,
-  InputRightElement,
+  IconButton, Input, useDisclosure, Popover,
+  PopoverContent, PopoverAnchor, Flex,
+  InputGroup, InputRightElement,
 } from '@chakra-ui/react';
-
 import { Search2Icon } from '@chakra-ui/icons';
 import debounce from 'lodash.debounce';
 import { searchGames, searchGamesPreview } from '../actions';
+import { useSearchResultsPreview } from '../hooks/redux-hooks';
 
 function SearchBar(props) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const resultsPreview = useSelector((reduxState) => reduxState.igdb?.resultsPreview);
+  // state
   const [search, setSearch] = useState('');
   const [resultsCache, setResultsCache] = useState([]);
 
+  // hooks
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const resultsPreview = useSearchResultsPreview();
 
   const handleSearchPreview = useCallback(() => {
     dispatch(searchGamesPreview(search));
@@ -44,7 +40,6 @@ function SearchBar(props) {
 
   // Search games when the user presses enter
   const onInputKeydown = useCallback((e) => {
-    console.log(e);
     if (e.keyCode === 13) {
       onSearchButtonClick();
     }

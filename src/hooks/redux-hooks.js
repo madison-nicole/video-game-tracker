@@ -10,6 +10,17 @@ export function useTopRated() {
   return useSelector((reduxState) => reduxState.igdb?.topRated);
 }
 
+// fetch data from selected game
 export function useSelectedGame() {
   return useSelector((reduxState) => reduxState.igdb?.selectedGame);
+}
+
+// fetch the search results
+export function useSearchResults() {
+  return useSelector((reduxState) => reduxState.igdb?.results);
+}
+
+// fetch the search results preview
+export function useSearchResultsPreview() {
+  return useSelector((reduxState) => reduxState.igdb?.resultsPreview);
 }
