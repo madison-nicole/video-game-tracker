@@ -10,7 +10,7 @@ import TopRatedList from './top-rated-list';
 function BrowseGames(props) {
   const dispatch = useDispatch();
 
-  // fetch the top rated games
+  // fetch the top 100 rated games
   const topRated = useSelector((reduxState) => reduxState.igdb?.topRated);
 
   const onSelectGame = useCallback((game, coverUrl, year) => {
@@ -25,7 +25,9 @@ function BrowseGames(props) {
           <Tab cursor="pointer" fontSize={13.5} fontWeight={700}>TOP RATED</Tab>
         </TabList>
         <TabPanels>
-          <TabPanel>insert trending here</TabPanel>
+          <TabPanel>
+            insert trending here
+          </TabPanel>
           <TabPanel>
             <TopRatedList gamesData={topRated} onSelectGame={onSelectGame} />
           </TabPanel>

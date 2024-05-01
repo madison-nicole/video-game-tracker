@@ -1,34 +1,30 @@
 import React, { useCallback, useState } from 'react';
 import {
   Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton,
-  Heading, Button,
-  Text, Image, Stack, ButtonGroup,
+  Heading, Button, Text, Image, Stack, ButtonGroup,
   Card, CardBody, CardFooter,
   Slider, SliderTrack, SliderFilledTrack, SliderThumb,
 } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { clearSelectedGame, addNewGame } from '../actions';
+import { useAuthenticated, useSelectedGame } from '../hooks/redux-hooks';
 
 function GameCard({ openAuthModal, isOpenAuthModal }) {
-  const dispatch = useDispatch();
+  // hooks
+  const dispatch = useDispatch(); // to dispatch an action
+  const navigate = useNavigate(); // to navigate to url
+  const authenticated = useAuthenticated(); // to check if user is signed in
+  const game = useSelectedGame(); // to grab data from selected game
+
   // Chakra modal setup
   const finalRef = React.useRef(null);
 
-  // when clicking on to select an individual game from games
-  const game = useSelector((reduxState) => reduxState.igdb?.selectedGame);
-
-  // checking whether or not a user is signed in
-  const authenticated = useSelector((reduxState) => reduxState.auth.authenticated);
-
   // store the game title and navigate for use in addNewGame function
   const title = game?.name;
-  const navigate = useNavigate();
 
   // round the game rating to two decimal places
   const avgRating = game?.rating.toFixed(2);
-
-  console.log(game?.release_dates);
 
   // set up user rating
   const [userRating, setUserRating] = useState(0);
@@ -78,10 +74,10 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
             >
               <ModalCloseButton />
               <Heading
-                marginLeft="5px"
                 marginTop="10px"
                 size="md"
                 textAlign="center"
+                width="80%"
               >
                 {game.name}
               </Heading>

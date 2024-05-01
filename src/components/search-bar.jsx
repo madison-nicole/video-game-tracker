@@ -38,9 +38,23 @@ function SearchBar(props) {
 
   const onSearchButtonClick = useCallback(() => {
     dispatch(searchGames(search));
-    onClose();
     navigate('/results');
+    onClose();
   }, [dispatch, navigate, onClose, search]);
+
+  // Search games when the user presses enter
+  const onInputKeydown = useCallback((e) => {
+    console.log(e);
+    if (e.keyCode === 13) {
+      onSearchButtonClick();
+    }
+  }, [onSearchButtonClick]);
+
+  const onInputFocus = useCallback(() => {
+    if (resultsCache.length > 0) {
+      onOpen();
+    }
+  }, [onOpen, resultsCache.length]);
 
   useEffect(() => {
     debouncedSearch();
@@ -79,6 +93,8 @@ function SearchBar(props) {
                 width="-moz-min-content"
                 onBlur={onClose}
                 onChange={(e) => setSearch(e.target.value)}
+                onFocus={onInputFocus}
+                onKeyDown={onInputKeydown}
               />
               <InputRightElement h="100%">
                 <IconButton

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { useNavigate } from 'react-router';
 import { selectGame } from '../actions';
 import ResultsList from './results-list';
+import JumpToTop from './jump-to-top';
 
 function Results({ search }) {
   const results = useSelector((reduxState) => reduxState.igdb?.results);
@@ -25,6 +26,7 @@ function Results({ search }) {
   return (
     <div className="results-page">
       <ResultsList gamesData={results} onSelectGame={onSelectGame} />
+      <JumpToTop />
     </div>
   );
 }

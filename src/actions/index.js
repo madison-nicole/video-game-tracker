@@ -1,14 +1,11 @@
 import axios from 'axios';
 
+import {
+  IGDB_COVERS_URL, IGDB_DATES_URL, IGDB_GAMES_URL, IGDB_HEADERS, fetchGameCovers, fetchGameReleaseYears,
+} from '../api/igdb';
+
 // API keys
 const ROOT_URL = 'http://localhost:9090/api';
-const IGDB_GAMES_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/games';
-const IGDB_COVERS_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/covers';
-const IGDB_DATES_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/release_dates';
-const API_KEY = 'o228NXPSSC2PvDrXAM3Xw5bYz6oOnFAN7XR4UTti';
-
-// IGDB API header
-const IGDB_HEADERS = { 'x-api-key': API_KEY };
 
 // keys for actiontypes
 export const ActionTypes = {
@@ -209,61 +206,32 @@ export function searchGamesPreview(searchTerm) {
   };
 }
 
-// Fetch covers from array of multiple games
-export async function fetchGameCovers(games) {
-  // Build cover query
-  const coverIds = games.map((game) => {
-    return game.cover;
-  });
-
-  const query = `fields url; where id=(${coverIds.toString()}); limit 100;`;
-
-  // Fetch cover art for each game
-  const response = await axios.post(IGDB_COVERS_URL, query, {
-    headers: IGDB_HEADERS,
-  });
-  return new Map(response.data.map((cover) => [cover.id, cover.url]));
-}
-
-// Fetch covers from array of multiple games
-export async function fetchGameReleaseYears(games) {
-  // Build cover query
-  const yearIds = games.map((game) => {
-    return game.release_dates[0];
-  });
-
-  const query = `fields y; where id=(${yearIds.toString()}); limit 100;`;
-
-  // Fetch cover art for each game
-  const response = await axios.post(IGDB_DATES_URL, query, {
-    headers: IGDB_HEADERS,
-  });
-
-  return new Map(response.data.map((year) => [year.id, year.y]));
-}
-
 // Search games = full results for the results page
 export function searchGames(searchTerm) {
-  return (dispatch) => {
-    // This is a really flexible API. You can supply whatever fields you want here.
+  return async (dispatch) => {
+    // query
     const data = `search "${searchTerm}"; fields name, rating, cover, franchise, genres, summary, release_dates;`;
 
-    // Pretty much all of these endpoints use POST requests
-    axios.post(IGDB_GAMES_URL, data, {
-      headers: IGDB_HEADERS,
-    }).then(async (response) => {
+    try {
+    // First, request games for the given search term
+      const response = await axios.post(IGDB_GAMES_URL, data, {
+        headers: IGDB_HEADERS,
+      });
       const games = response.data;
+
+      // Then, fetch game covers and years for the games
+      // Original request only returns IDs for covers and years
       const covers = await fetchGameCovers(games);
       const years = await fetchGameReleaseYears(games);
       // dispatch a new action type, which will put the search results into the Redux store
       dispatch({
         type: ActionTypes.IGDB_SEARCH, games, covers, years,
       });
-    }).catch((error) => {
+    } catch (error) {
       // For now, if we get an error, just log it.
       // Add error handling later
       console.log('error', error);
-    });
+    }
   };
 }
 
