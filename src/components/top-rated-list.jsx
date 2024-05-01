@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   Card, CardBody, CardFooter, Image, Stack, Heading, Text,
   Progress,

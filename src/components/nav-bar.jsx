@@ -8,7 +8,6 @@ import {
   Menu, MenuButton, MenuList, MenuItem, MenuDivider,
   useColorModeValue, Stack, useColorMode, Center,
 } from '@chakra-ui/react';
-
 import { MoonIcon, SunIcon, BellIcon } from '@chakra-ui/icons';
 import SearchBar from './search-bar';
 import { signoutUser } from '../actions';

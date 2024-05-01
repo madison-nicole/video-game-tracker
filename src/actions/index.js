@@ -1,7 +1,7 @@
 import axios from 'axios';
-
 import {
-  IGDB_COVERS_URL, IGDB_DATES_URL, IGDB_GAMES_URL, IGDB_HEADERS, fetchGameCovers, fetchGameReleaseYears,
+  IGDB_COVERS_URL, IGDB_DATES_URL, IGDB_GAMES_URL, IGDB_HEADERS,
+  fetchGameCovers, fetchGameReleaseYears,
 } from '../api/igdb';
 
 // API keys

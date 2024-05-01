@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 import {
   IconButton, Input, useDisclosure, Popover,
   PopoverContent, PopoverAnchor, Flex,
-  InputGroup, InputRightElement,
+  InputGroup, InputRightElement, Button,
 } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 import debounce from 'lodash.debounce';
@@ -75,7 +75,7 @@ function SearchBar(props) {
     <div className="search-bar">
       <Popover autoFocus={false} closeOnBlur isOpen={isOpen} matchWidth onClose={onClose}>
         <PopoverAnchor>
-          <Flex alignItems="center" pl="40px" pr="40px">
+          <Flex alignItems="center" pl="0px" pr="0px">
             <InputGroup>
               <Input
                 minWidth="230px"
@@ -105,11 +105,34 @@ function SearchBar(props) {
           </Flex>
         </PopoverAnchor>
         <PopoverContent
-          fontSize={14}
-          width="385px"
+          maxH="250px"
+          ml="15px"
+          mt="0px"
+          overflowX="hidden"
+          overflowY="scroll"
+          width="230px"
         >
           {resultsCache.map((result, idx) => {
-            return <div key={`${result.id}`}>{result.name}</div>;
+            return (
+              <Button
+                borderRadius="0px"
+                className="search-result-row"
+                fontSize="13px"
+                fontWeight={400}
+                height="fit-content"
+                key={`${result.id}`}
+                ml={0}
+                paddingBottom="2px"
+                paddingTop="2px"
+                pl={0}
+                textAlign="left"
+                variant="outline"
+                whiteSpace="break-spaces"
+                width="230px"
+              >
+                {result.name}
+              </Button>
+            );
           })}
         </PopoverContent>
       </Popover>
