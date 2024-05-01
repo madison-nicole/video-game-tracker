@@ -26,6 +26,39 @@ export async function fetchGamesIGDB(query) {
 }
 
 /**
+ * Fetch the game cover url from a cover id.
+ * @param {string} coverId
+ * @returns formatted cover url
+ */
+export async function fetchGameCoverUrl(coverId) {
+  const query = `fields url; where id = ${coverId};`;
+
+  // Fetch cover art for the game
+  const response = await axios.post(IGDB_COVERS_URL, query, {
+    headers: IGDB_HEADERS,
+  });
+
+  const cover = response.data[0];
+  const coverUrl = `https://${cover.url.replace('thumb', 'cover_big')}`;
+  return coverUrl;
+}
+
+/**
+ * Fetch the release year from a release year id
+ * @param {string} releaseYearId
+ * @returns release year (YYYY)
+ */
+export async function fetchGameReleaseYear(releaseYearId) {
+  const query = `fields y; where id = ${releaseYearId};`;
+
+  const response = await axios.post(IGDB_DATES_URL, query, {
+    headers: IGDB_HEADERS,
+  });
+
+  return response.data.y;
+}
+
+/**
  * Fetches covers from an array of games
  * @returns a map of cover id to cover url
  */
@@ -42,8 +75,6 @@ export async function fetchGameCovers(games) {
     headers: IGDB_HEADERS,
   });
 
-  console.log(response);
-
   return new Map(response.data.map((cover) => [cover.id, cover.url]));
 }
 
@@ -53,7 +84,7 @@ export async function fetchGameCovers(games) {
  */
 export async function fetchGameReleaseYears(games) {
   const yearIds = games.map((game) => {
-    return game.release_dates[0];
+    return game.release_dates?.[0];
   });
 
   const query = `fields y; where id=(${yearIds.toString()}); limit 100;`;

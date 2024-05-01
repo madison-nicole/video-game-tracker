@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {
-  IGDB_COVERS_URL, IGDB_DATES_URL, IGDB_GAMES_URL, IGDB_HEADERS,
-  fetchGameCovers, fetchGameReleaseYears,
+  IGDB_GAMES_URL, IGDB_HEADERS,
+  fetchGameCoverUrl,
+  fetchGameCovers, fetchGameReleaseYear, fetchGameReleaseYears,
 } from '../api/igdb';
 
 // API keys
@@ -235,30 +236,6 @@ export function searchGames(searchTerm) {
   };
 }
 
-// Fetch cover for a single game
-export async function fetchGameCover(coverId) {
-  const query = `fields url; where id = ${coverId};`;
-
-  // Fetch cover art for the game
-  const response = await axios.post(IGDB_COVERS_URL, query, {
-    headers: IGDB_HEADERS,
-  });
-
-  return response.data;
-}
-
-// Fetch cover for a single game
-export async function fetchGameReleaseYear(releaseYearId) {
-  const query = `fields y; where id = ${releaseYearId};`;
-
-  // Fetch cover art for the game
-  const response = await axios.post(IGDB_DATES_URL, query, {
-    headers: IGDB_HEADERS,
-  });
-
-  return response.data;
-}
-
 // IGDB TOP RATED GAMES ACTION
 export function fetchTopRatedGames() {
   return (dispatch) => {
@@ -291,55 +268,14 @@ export function selectGame(game, coverUrl, year) {
 }
 
 export function selectGameAndLoadData(game) {
-  return (dispatch) => {
-    fetchGameCover(game.cover).then((response) => {
-      const cover = response.data;
-      const coverUrl = `https://${cover[0].url.replace('thumb', 'cover_big')}`;
+  return async (dispatch) => {
+    console.log('selectGame');
+    const coverUrl = await fetchGameCoverUrl(game.cover);
+    const year = await fetchGameReleaseYear(game.release_dates[0]);
 
-      const releaseYearId = game.release_dates[2];
+    console.log(game, coverUrl, year);
 
-      console.log(releaseYearId);
-
-      fetchGameReleaseYear(releaseYearId).then((yearRes) => {
-        const releaseYear = yearRes.data;
-        console.log(releaseYear);
-        dispatch({ type: ActionTypes.SELECT_GAME, payload: { ...game, coverUrl, releaseYear } });
-      }).catch((error) => {
-        // For now, if we get an error, just log it.
-        // Add error handling later
-        console.log('error', error);
-      });
-    }).catch((error) => {
-      // For now, if we get an error, just log it.
-      // Add error handling later
-      console.log('error', error);
-    });
-  };
-}
-
-export function selectAndLoadGame(gameId) {
-  return (dispatch) => {
-    // Fields to get
-    const data = `fields name, rating, cover, franchise, genres, summary, release_dates; where id = ${gameId};`;
-
-    // Fetch data for the game
-    axios.post(IGDB_GAMES_URL, data, {
-      headers: IGDB_HEADERS,
-    }).then(async (response) => {
-      const game = response.data[0];
-
-      // get the game cover
-      const cover = await fetchGameCover(game.cover);
-      const coverUrl = `https://${cover[0].url.replace('thumb', 'cover_big')}`;
-      game.coverUrl = coverUrl;
-
-      // dispatch a new action type, which will put the search results into the Redux store
-      dispatch({ type: ActionTypes.SELECT_GAME, payload: game });
-    }).catch((error) => {
-      // For now, if we get an error, just log it.
-      // Add error handling later
-      console.log('error', error);
-    });
+    dispatch({ type: ActionTypes.SELECT_GAME, payload: { ...game, coverUrl, year } });
   };
 }
 

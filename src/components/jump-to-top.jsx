@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconButton } from '@chakra-ui/react';
+import { IconButton, Fade } from '@chakra-ui/react';
 import { ArrowUpIcon } from '@chakra-ui/icons';
 
 function JumpToTop() {
@@ -28,23 +28,27 @@ function JumpToTop() {
   window.addEventListener('scroll', toggleVisible);
 
   return (
-    <IconButton
-      _hover={{
-        bg: 'pink.300',
-      }}
-      aria-label="Jump to top"
-      bg="pink.400"
-      borderRadius="6px"
-      bottom={5}
-      cursor="pointer"
-      display={visible ? 'inline' : 'none'}
-      icon={<ArrowUpIcon />}
-      left="96%"
-      mb="20px"
-      position="sticky"
-      variant="solid"
-      onClick={scrollToTop}
-    />
+    <div style={{ bottom: '5px', left: '96%', position: 'sticky' }}>
+      <Fade in={visible}>
+        <IconButton
+          _hover={{
+            bg: 'pink.300',
+          }}
+          aria-label="Jump to top"
+          bg="pink.400"
+          borderRadius="6px"
+          bottom={5}
+          cursor="pointer"
+        // display={visible ? 'inline' : 'none'}
+          icon={<ArrowUpIcon />}
+          left="96%"
+          mb="20px"
+          position="sticky"
+          variant="solid"
+          onClick={scrollToTop}
+        />
+      </Fade>
+    </div>
   );
 }
 

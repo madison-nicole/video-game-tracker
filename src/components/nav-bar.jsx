@@ -11,7 +11,7 @@ import {
 import { MoonIcon, SunIcon, BellIcon } from '@chakra-ui/icons';
 import SearchBar from './search-bar';
 import { signoutUser } from '../actions';
-import { useAuthenticated } from '../hooks/redux-hooks';
+import { useAuthenticated, useSearchResultsPreview } from '../hooks/redux-hooks';
 
 function NavBar({ onOpen, setAccountStatus }) {
   // hooks
@@ -20,6 +20,7 @@ function NavBar({ onOpen, setAccountStatus }) {
   const location = useLocation().pathname;
   const { colorMode, toggleColorMode } = useColorMode(); // for dark and light mode
   const authenticated = useAuthenticated();
+  const resultsPreview = useSearchResultsPreview();
 
   const signOut = () => {
     dispatch(signoutUser(navigate));
@@ -162,7 +163,7 @@ function NavBar({ onOpen, setAccountStatus }) {
       return null;
     } else {
       return (
-        <SearchBar />
+        <SearchBar gamesData={resultsPreview} />
       );
     }
   }

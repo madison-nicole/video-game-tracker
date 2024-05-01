@@ -10,11 +10,11 @@ import {
 } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 import debounce from 'lodash.debounce';
-import { searchGames, searchGamesPreview } from '../actions';
+import { searchGames, searchGamesPreview, selectGameAndLoadData } from '../actions';
 import { useSearchResultsPreview } from '../hooks/redux-hooks';
 import { useOnKeyDown, ENTER_KEY } from '../hooks/event-hooks';
 
-function SearchBar(props) {
+function SearchBar({ gamesData, onSelectGame }) {
   // state
   const [search, setSearch] = useState('');
   const [resultsCache, setResultsCache] = useState([]);
@@ -49,6 +49,12 @@ function SearchBar(props) {
       onOpen();
     }
   }, [onOpen, resultsCache.length]);
+
+  //
+  const onSelectGamePreview = useCallback((game) => {
+    console.log(game);
+    dispatch(selectGameAndLoadData(game));
+  }, [dispatch]);
 
   useEffect(() => {
     debouncedSearch();
@@ -105,9 +111,10 @@ function SearchBar(props) {
           </Flex>
         </PopoverAnchor>
         <PopoverContent
+          borderRadius="0.125rem"
           maxH="250px"
           ml="15px"
-          mt="0px"
+          mt="-7px"
           overflowX="hidden"
           overflowY="scroll"
           width="230px"
@@ -116,10 +123,11 @@ function SearchBar(props) {
             return (
               <Button
                 borderRadius="0px"
-                className="search-result-row"
+                cursor="pointer"
                 fontSize="13px"
                 fontWeight={400}
                 height="fit-content"
+                justifyContent="flex-start"
                 key={`${result.id}`}
                 ml={0}
                 paddingBottom="2px"
@@ -129,6 +137,7 @@ function SearchBar(props) {
                 variant="outline"
                 whiteSpace="break-spaces"
                 width="230px"
+                onClick={() => onSelectGamePreview(result)}
               >
                 {result.name}
               </Button>

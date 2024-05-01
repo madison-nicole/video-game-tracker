@@ -1,21 +1,14 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   Tabs, TabList, TabPanels, Tab, TabPanel,
 } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
 import JumpToTop from './jump-to-top';
-import { selectGame } from '../actions';
 import TopRatedList from './top-rated-list';
 import { useTopRated } from '../hooks/redux-hooks';
 
-function BrowseGames(props) {
+function BrowseGames({ onSelectGame }) {
   // hooks
-  const dispatch = useDispatch();
   const topRated = useTopRated(); // fetch the top 100 rated games
-
-  const onSelectGame = useCallback((game, coverUrl, year) => {
-    dispatch(selectGame(game, coverUrl, year));
-  }, [dispatch]);
 
   return (
     <div>
