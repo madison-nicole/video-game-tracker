@@ -17,30 +17,30 @@ import {
 
 import { Search2Icon } from '@chakra-ui/icons';
 import debounce from 'lodash.debounce';
-import { searchGames } from '../actions';
+import { searchGames, searchGamesPreview } from '../actions';
 
 function SearchBar(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const results = useSelector((reduxState) => reduxState.igdb?.results);
+  const resultsPreview = useSelector((reduxState) => reduxState.igdb?.resultsPreview);
   const [search, setSearch] = useState('');
   const [resultsCache, setResultsCache] = useState([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleSearch = useCallback(() => {
-    dispatch(searchGames(search));
+  const handleSearchPreview = useCallback(() => {
+    dispatch(searchGamesPreview(search));
   }, [dispatch, search]);
 
   // create a new debounced search function
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSearch = useCallback(debounce(handleSearch, 100), [handleSearch]);
+  const debouncedSearch = useCallback(debounce(handleSearchPreview, 100), [handleSearchPreview]);
 
   const onSearchButtonClick = useCallback(() => {
-    handleSearch();
+    dispatch(searchGames(search));
     onClose();
     navigate('/results');
-  }, [handleSearch, navigate, onClose]);
+  }, [dispatch, navigate, onClose, search]);
 
   useEffect(() => {
     debouncedSearch();
@@ -48,20 +48,20 @@ function SearchBar(props) {
 
   useEffect(() => {
     // if we have results, open the popover, and update results cache
-    if (results?.length > 0) {
-      setResultsCache(results);
+    if (resultsPreview?.length > 0) {
+      setResultsCache(resultsPreview);
       onOpen();
       return;
     }
 
     // if the user has cleared the input, close the popover, and update results cache
     if (search?.length === 0) {
-      setResultsCache(results);
+      setResultsCache(resultsPreview);
       onClose();
     }
 
     // otherwise, continue displaying the previous search results (stored in results cache)
-  }, [onClose, onOpen, results, search?.length]);
+  }, [onClose, onOpen, resultsPreview, search?.length]);
 
   return (
     <div className="search-bar">

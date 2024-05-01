@@ -16,7 +16,7 @@ import GameCard from './game-card';
 import { fetchTopRatedGames } from '../actions';
 
 export default function App(props) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure(); // auth modal
   const [accountStatus, setAccountStatus] = useState(true); // true if the user has an account
 
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export default function App(props) {
         <div>
           <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} onOpen={onOpen} />
           <AuthModal accountStatus={accountStatus} isOpen={isOpen} setAccountStatus={setAccountStatus} onClose={onClose} />
-          <GameCard />
+          <GameCard isOpenAuthModal={isOpen} openAuthModal={onOpen} />
           <Routes>
             <Route element={<Games />} path="/" />
             <Route element={<BrowseGames />} path="/browse" />

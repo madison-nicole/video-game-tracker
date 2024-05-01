@@ -4,22 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import {
-  IconButton,
-  Box,
-  Flex,
-  Avatar,
-  // Link,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  // useDisclosure,
-  useColorModeValue,
-  Stack,
-  useColorMode,
-  Center,
+  IconButton, Box, Flex, Avatar, Button,
+  Menu, MenuButton, MenuList, MenuItem, MenuDivider,
+  useColorModeValue, Stack, useColorMode, Center,
 } from '@chakra-ui/react';
 
 import { MoonIcon, SunIcon, BellIcon } from '@chakra-ui/icons';
@@ -57,7 +44,6 @@ function NavBar({ onOpen, setAccountStatus }) {
   }, [navigate]);
 
   const { colorMode, toggleColorMode } = useColorMode(); // for dark and light mode
-  // const { isOpenProfileBar, onOpenProfileBar, onCloseProfileBar } = useDisclosure(); // for opening and closing account modal
 
   // if signed in, render a different menu than new users
   function renderMenu() {

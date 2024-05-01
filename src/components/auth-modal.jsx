@@ -13,16 +13,13 @@ import {
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { signinUser, signupUser } from '../actions';
+import { signInPrompt, signUpPrompt } from '../utils/text-utils';
 
 function AuthModal({
   isOpen, onClose, accountStatus, setAccountStatus,
 }) {
   // Chakra modal setup
   const finalRef = React.useRef(null);
-
-  // set prompt text for buttons
-  const signUpPrompt = 'Don\'t have an account? Sign Up.';
-  const signInPrompt = 'Already a user? Log in.';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

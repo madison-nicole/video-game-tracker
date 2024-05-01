@@ -1,37 +1,30 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
-import { searchGames } from '../actions';
+// import { useNavigate } from 'react-router';
+import { selectGame } from '../actions';
+import ResultsList from './results-list';
 
 function Results({ search }) {
   const results = useSelector((reduxState) => reduxState.igdb?.results);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // function for loading the individual game page
-  const loadResult = (id) => {
-    dispatch(searchGames(search, navigate));
-  };
+  const onSelectGame = useCallback((game, coverUrl, year) => {
+    dispatch(selectGame(game, coverUrl, year));
+  }, [dispatch]);
 
-  function renderResults() {
-    const resultItems = results.map((result) => {
-      return <li key={result.id} title={result.name} onClick={() => loadResult(result.id)}> {result.name} </li>;
-    });
-
-    return resultItems;
-  }
+  console.log(results);
 
   if (!results) {
     return <div />;
   }
 
   return (
-    <div>
-      <ul className="results-list">
-        {renderResults()}
-      </ul>
+    <div className="results-page">
+      <ResultsList gamesData={results} onSelectGame={onSelectGame} />
     </div>
   );
 }

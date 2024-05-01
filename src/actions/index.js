@@ -4,6 +4,7 @@ import axios from 'axios';
 const ROOT_URL = 'http://localhost:9090/api';
 const IGDB_GAMES_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/games';
 const IGDB_COVERS_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/covers';
+const IGDB_DATES_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/release_dates';
 const API_KEY = 'o228NXPSSC2PvDrXAM3Xw5bYz6oOnFAN7XR4UTti';
 
 // IGDB API header
@@ -19,6 +20,7 @@ export const ActionTypes = {
   ERROR_SET: 'ERROR_SET',
 
   // IGDB Actions
+  IGDB_SEARCH_PREVIEW: 'IGDB_SEARCH_PREVIEW',
   IGDB_SEARCH: 'IGDB_SEARCH',
   IGDB_TOP_RATED: 'IGDB_TOP_RATED',
 
@@ -64,11 +66,11 @@ export function fetchGame(id, navigate) {
 }
 
 // add the game to the database
-export function addNewGame(title, navigate) {
+export function addNewGame(title, navigate, userRating) {
   return (dispatch) => {
     // return the fields
     const fields = {
-      title, content: '', coverUrl: '', tags: '',
+      title, rating: userRating, content: '', coverUrl: '', tags: '',
     };
 
     axios.post(`${ROOT_URL}/posts`, fields, { headers: { authorization: localStorage.getItem('token') } })
@@ -187,9 +189,8 @@ export function signoutUser(navigate) {
   };
 }
 
-// IGDB SEARCH ACTION
-// searchTerm = the string to search for
-export function searchGames(searchTerm, navigate) {
+// Search games preview = quick results for the search bar dropdown
+export function searchGamesPreview(searchTerm) {
   return (dispatch) => {
     // This is a really flexible API. You can supply whatever fields you want here.
     const data = `search "${searchTerm}"; fields name, rating, cover, franchise, genres, summary, release_dates;`;
@@ -199,7 +200,7 @@ export function searchGames(searchTerm, navigate) {
       headers: IGDB_HEADERS,
     }).then((response) => {
       // dispatch a new action type, which will put the search results into the Redux store
-      dispatch({ type: ActionTypes.IGDB_SEARCH, payload: response.data });
+      dispatch({ type: ActionTypes.IGDB_SEARCH_PREVIEW, payload: response.data });
     }).catch((error) => {
       // For now, if we get an error, just log it.
       // Add error handling later
@@ -224,12 +225,66 @@ export async function fetchGameCovers(games) {
   return new Map(response.data.map((cover) => [cover.id, cover.url]));
 }
 
+// Fetch covers from array of multiple games
+export async function fetchGameReleaseYears(games) {
+  // Build cover query
+  const yearIds = games.map((game) => {
+    return game.release_dates[0];
+  });
+
+  const query = `fields y; where id=(${yearIds.toString()}); limit 100;`;
+
+  // Fetch cover art for each game
+  const response = await axios.post(IGDB_DATES_URL, query, {
+    headers: IGDB_HEADERS,
+  });
+
+  return new Map(response.data.map((year) => [year.id, year.y]));
+}
+
+// Search games = full results for the results page
+export function searchGames(searchTerm) {
+  return (dispatch) => {
+    // This is a really flexible API. You can supply whatever fields you want here.
+    const data = `search "${searchTerm}"; fields name, rating, cover, franchise, genres, summary, release_dates;`;
+
+    // Pretty much all of these endpoints use POST requests
+    axios.post(IGDB_GAMES_URL, data, {
+      headers: IGDB_HEADERS,
+    }).then(async (response) => {
+      const games = response.data;
+      const covers = await fetchGameCovers(games);
+      const years = await fetchGameReleaseYears(games);
+      // dispatch a new action type, which will put the search results into the Redux store
+      dispatch({
+        type: ActionTypes.IGDB_SEARCH, games, covers, years,
+      });
+    }).catch((error) => {
+      // For now, if we get an error, just log it.
+      // Add error handling later
+      console.log('error', error);
+    });
+  };
+}
+
 // Fetch cover for a single game
 export async function fetchGameCover(coverId) {
   const query = `fields url; where id = ${coverId};`;
 
   // Fetch cover art for the game
   const response = await axios.post(IGDB_COVERS_URL, query, {
+    headers: IGDB_HEADERS,
+  });
+
+  return response.data;
+}
+
+// Fetch cover for a single game
+export async function fetchGameReleaseYear(releaseYearId) {
+  const query = `fields y; where id = ${releaseYearId};`;
+
+  // Fetch cover art for the game
+  const response = await axios.post(IGDB_DATES_URL, query, {
     headers: IGDB_HEADERS,
   });
 
@@ -248,8 +303,11 @@ export function fetchTopRatedGames() {
     }).then(async (response) => {
       const games = response.data;
       const covers = await fetchGameCovers(games);
+      const years = await fetchGameReleaseYears(games);
       // dispatch a new action type, which will put the search results into the Redux store
-      dispatch({ type: ActionTypes.IGDB_TOP_RATED, games, covers });
+      dispatch({
+        type: ActionTypes.IGDB_TOP_RATED, games, covers, years,
+      });
     }).catch((error) => {
       // For now, if we get an error, just log it.
       // Add error handling later
@@ -258,18 +316,31 @@ export function fetchTopRatedGames() {
   };
 }
 
-export function selectGame(game, coverUrl) {
+export function selectGame(game, coverUrl, year) {
   return (dispatch) => {
-    dispatch({ type: ActionTypes.SELECT_GAME, payload: { ...game, coverUrl } });
+    dispatch({ type: ActionTypes.SELECT_GAME, payload: { ...game, coverUrl, year } });
   };
 }
 
-export function selectGameAndLoadCover(game) {
+export function selectGameAndLoadData(game) {
   return (dispatch) => {
     fetchGameCover(game.cover).then((response) => {
       const cover = response.data;
       const coverUrl = `https://${cover[0].url.replace('thumb', 'cover_big')}`;
-      dispatch({ type: ActionTypes.SELECT_GAME, payload: { ...game, coverUrl } });
+
+      const releaseYearId = game.release_dates[2];
+
+      console.log(releaseYearId);
+
+      fetchGameReleaseYear(releaseYearId).then((yearRes) => {
+        const releaseYear = yearRes.data;
+        console.log(releaseYear);
+        dispatch({ type: ActionTypes.SELECT_GAME, payload: { ...game, coverUrl, releaseYear } });
+      }).catch((error) => {
+        // For now, if we get an error, just log it.
+        // Add error handling later
+        console.log('error', error);
+      });
     }).catch((error) => {
       // For now, if we get an error, just log it.
       // Add error handling later

@@ -33,11 +33,11 @@ function JumpToTop() {
       borderRadius="6px"
       bottom={5}
       cursor="pointer"
+      display={visible ? 'inline' : 'none'}
       icon={<ArrowUpIcon />}
       left="96%"
       mb="20px"
       position="sticky"
-      style={{ display: visible ? 'inline' : 'none' }}
       variant="solid"
       onClick={scrollToTop}
     />
