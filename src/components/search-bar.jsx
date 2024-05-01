@@ -12,6 +12,7 @@ import { Search2Icon } from '@chakra-ui/icons';
 import debounce from 'lodash.debounce';
 import { searchGames, searchGamesPreview } from '../actions';
 import { useSearchResultsPreview } from '../hooks/redux-hooks';
+import { useOnKeyDown, ENTER_KEY } from '../hooks/event-hooks';
 
 function SearchBar(props) {
   // state
@@ -38,12 +39,8 @@ function SearchBar(props) {
     onClose();
   }, [dispatch, navigate, onClose, search]);
 
-  // Search games when the user presses enter
-  const onInputKeydown = useCallback((e) => {
-    if (e.keyCode === 13) {
-      onSearchButtonClick();
-    }
-  }, [onSearchButtonClick]);
+  // also search games when the user presses enter
+  const searchOnEnter = useOnKeyDown(onSearchButtonClick, ENTER_KEY);
 
   const onInputFocus = useCallback(() => {
     if (resultsCache.length > 0) {
@@ -89,7 +86,7 @@ function SearchBar(props) {
                 onBlur={onClose}
                 onChange={(e) => setSearch(e.target.value)}
                 onFocus={onInputFocus}
-                onKeyDown={onInputKeydown}
+                onKeyDown={searchOnEnter}
               />
               <InputRightElement h="100%">
                 <IconButton
