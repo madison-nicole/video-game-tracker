@@ -34,9 +34,11 @@ function SearchBar(props) {
   const debouncedSearch = useCallback(debounce(handleSearchPreview, 100), [handleSearchPreview]);
 
   const onSearchButtonClick = useCallback(() => {
-    dispatch(searchGames(search));
-    navigate('/results');
-    onClose();
+    if (search.length > 0) { // only run if search exists
+      dispatch(searchGames(search));
+      navigate('/results');
+      onClose();
+    }
   }, [dispatch, navigate, onClose, search]);
 
   // also search games when the user presses enter
