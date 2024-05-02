@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import {
   IconButton, Box, Flex, Avatar, Button,
   Menu, MenuButton, MenuList, MenuItem, MenuDivider,
-  useColorModeValue, Stack, useColorMode, Center,
+  useColorModeValue, HStack, useColorMode, Center,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon, BellIcon } from '@chakra-ui/icons';
 import SearchBar from './search-bar';
@@ -18,7 +18,7 @@ function NavBar({ onOpen, setAccountStatus }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation().pathname;
-  const { colorMode, toggleColorMode } = useColorMode(); // for dark and light mode
+  const { colorMode, toggleColorMode } = useColorMode();
   const authenticated = useAuthenticated();
   const resultsPreview = useSearchResultsPreview();
 
@@ -48,21 +48,16 @@ function NavBar({ onOpen, setAccountStatus }) {
   function renderMenu() {
     if (authenticated) {
       return (
-        <Stack
-          direction="row"
-          flex={{ base: 1, md: 0 }}
-          justify="flex-end"
-          spacing={3}
-        >
+        <HStack variant="navButtonRow">
           <Flex alignItems="center">
-            <Stack direction="row" spacing={3}>
+            <HStack spacing={3}>
               <IconButton
                 aria-label="View notifications"
                 colorScheme="gray"
                 icon={<BellIcon />}
                 size="lg"
               />
-            </Stack>
+            </HStack>
           </Flex>
           <Menu className="profile-menu">
             <MenuButton
@@ -97,62 +92,21 @@ function NavBar({ onOpen, setAccountStatus }) {
               <MenuItem onClick={signOut}>Sign Out</MenuItem>
             </MenuList>
           </Menu>
-        </Stack>
+        </HStack>
       );
     } else {
       return (
-        <Stack
-          direction="row"
-          flex={{ base: 1, md: 0 }}
-          justify="flex-end"
-          spacing={3}
-        >
-          <Button
-            _hover={{
-              bg: 'gray.300',
-            }}
-            as="a"
-            className="new-user-homepage-menu-buttons"
-            cursor="pointer"
-            fontSize={13.5}
-            fontWeight="700"
-            textStyle="navButtonText"
-            variant="ghost"
-            onClick={handleBrowseGames}
-          >
+        <HStack variant="navButtonRow">
+          <Button variant="ghostBW" onClick={handleBrowseGames}>
             BROWSE GAMES
           </Button>
-          <Button
-            _hover={{
-              bg: 'gray.300',
-            }}
-            as="a"
-            className="new-user-homepage-menu-buttons"
-            cursor="pointer"
-            fontSize={13.5}
-            fontWeight="700"
-            variant="ghost"
-            onClick={handleLogIn}
-          >
+          <Button variant="ghostBW" onClick={handleLogIn}>
             LOG IN
           </Button>
-          <Button
-            _hover={{
-              bg: 'pink.300',
-            }}
-            as="a"
-            bg="pink.400"
-            className="new-user-homepage-menu-buttons"
-            color="white"
-            cursor="pointer"
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={13.5}
-            fontWeight="700"
-            onClick={handleSignUp}
-          >
+          <Button variant="solidPink" onClick={handleSignUp}>
             SIGN UP
           </Button>
-        </Stack>
+        </HStack>
       );
     }
   }
@@ -180,12 +134,12 @@ function NavBar({ onOpen, setAccountStatus }) {
             {renderSearchBar()}
           </Flex>
           <Flex alignItems="center" justifyContent="flex-end" width="100%">
-            <Stack direction="row" spacing={3}>
+            <HStack spacing={3}>
               <Button id="light-dark-mode-button" onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
               {renderMenu()}
-            </Stack>
+            </HStack>
           </Flex>
         </Flex>
       </Box>

@@ -11,7 +11,8 @@ function ResultsList({ gamesData, onSelectGame }) {
   const renderedGames = games?.map((game, index) => {
     const coverUrl = `https:${covers.get(game.cover)}`.replace('thumb', 'cover_big');
     const year = years?.get(game?.release_dates?.[0]);
-    const title = game.name.toUpperCase();
+    const title = game.name?.toUpperCase();
+
     // const { rating } = game;
     return (
       <Card

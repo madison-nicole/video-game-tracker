@@ -14,6 +14,7 @@ import Results from './results';
 import AuthModal from './auth-modal';
 import GameCard from './game-card';
 import { fetchTopRatedGames, selectGame } from '../actions';
+import theme from '../theme/theme';
 
 export default function App(props) {
   // state
@@ -35,7 +36,7 @@ export default function App(props) {
   }, [dispatch]);
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <BrowserRouter>
         <div>
           <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} onOpen={onOpen} />

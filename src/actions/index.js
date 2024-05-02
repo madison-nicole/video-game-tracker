@@ -191,7 +191,7 @@ export function signoutUser(navigate) {
 export function searchGamesPreview(searchTerm) {
   return (dispatch) => {
     // This is a really flexible API. You can supply whatever fields you want here.
-    const data = `search "${searchTerm}"; fields name, rating, cover, franchise, genres, summary, release_dates;`;
+    const data = `search "${searchTerm}"; fields name, rating, cover, franchise, genres, summary, release_dates; where version_parent = null;`;
 
     // Pretty much all of these endpoints use POST requests
     axios.post(IGDB_GAMES_URL, data, {
@@ -211,13 +211,14 @@ export function searchGamesPreview(searchTerm) {
 export function searchGames(searchTerm) {
   return async (dispatch) => {
     // query
-    const data = `search "${searchTerm}"; fields name, rating, cover, franchise, genres, summary, release_dates;`;
+    const data = `search "${searchTerm}"; fields name, rating, rating_count, cover, franchise, genres, summary, release_dates; where version_parent = null; limit 100;`;
 
     try {
     // First, request games for the given search term
       const response = await axios.post(IGDB_GAMES_URL, data, {
         headers: IGDB_HEADERS,
       });
+      // const games = response.data.filter((game) => game.rating_count !== undefined).sort((a, b) => b.rating_count - a.rating_count);
       const games = response.data;
 
       // Then, fetch game covers and years for the games
