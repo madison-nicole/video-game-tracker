@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   Card, CardBody, CardFooter, Image, Stack, Heading, Text,
   Progress,
 } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
 import alternateCardColor from '../utils/style-utils';
 import GameListButton from './game-list-button';
 import Ranking from './ranking';
+import { selectGame } from '../actions';
 
-function TopRatedList({ gamesData, onSelectGame }) {
+function TopRatedList({ gamesData }) {
+  // hooks
+  const dispatch = useDispatch();
+
+  // store data
   const { games, covers, years } = gamesData;
+
+  // select game and fetch data
+  const onSelectGame = useCallback((game, coverUrl, year) => {
+    dispatch(selectGame(game, coverUrl, year));
+  }, [dispatch]);
 
   const renderedGames = games?.map((game, index) => {
     const coverUrl = `https:${covers.get(game.cover)}`.replace('thumb', 'cover_big');

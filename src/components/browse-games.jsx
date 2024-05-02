@@ -6,7 +6,7 @@ import JumpToTop from './jump-to-top';
 import TopRatedList from './top-rated-list';
 import { useTopRated } from '../hooks/redux-hooks';
 
-function BrowseGames({ onSelectGame }) {
+function BrowseGames(props) {
   // hooks
   const topRated = useTopRated(); // fetch the top 100 rated games
 
@@ -22,7 +22,7 @@ function BrowseGames({ onSelectGame }) {
             insert trending here
           </TabPanel>
           <TabPanel>
-            <TopRatedList gamesData={topRated} onSelectGame={onSelectGame} />
+            <TopRatedList gamesData={topRated} />
           </TabPanel>
         </TabPanels>
       </Tabs>

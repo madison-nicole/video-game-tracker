@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import {
-  Button, Input,
-  Modal, ModalOverlay, ModalContent, ModalHeader,
+  Input, Modal, ModalOverlay, ModalContent, ModalHeader,
   ModalFooter, ModalBody, ModalCloseButton,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { signinUser, signupUser } from '../actions';
-import { signInPrompt, signUpPrompt } from '../utils/text-utils';
+import AuthModalButtons from './auth-modal-buttons';
 
 function AuthModal({
   isOpen, onClose, accountStatus, setAccountStatus,
@@ -34,25 +33,6 @@ function AuthModal({
     dispatch(signinUser({ email, password }, navigate));
     onClose();
   };
-
-  // a function to render modal buttons according to sign up / sign in
-  function renderModalButtons() {
-    if (accountStatus) {
-      return (
-        <div className="auth-buttons">
-          <Button colorScheme="green" type="submit" onClick={loginUser}>Log In</Button>
-          <Button colorScheme="gray" fontSize="small" variant="link" onClick={() => setAccountStatus(false)}>{signUpPrompt}</Button>
-        </div>
-      );
-    } else {
-      return (
-        <div className="auth-buttons">
-          <Button colorScheme="green" type="submit" onClick={createUser}>Sign Up</Button>
-          <Button colorScheme="gray" fontSize="small" variant="link" onClick={() => setAccountStatus(true)}>{signInPrompt}</Button>
-        </div>
-      );
-    }
-  }
 
   return (
     <div>
@@ -83,7 +63,7 @@ function AuthModal({
           </ModalBody>
 
           <ModalFooter>
-            {renderModalButtons()}
+            <AuthModalButtons account={accountStatus} login={loginUser} setAccount={setAccountStatus} signup={createUser} />
           </ModalFooter>
         </ModalContent>
       </Modal>

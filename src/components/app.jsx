@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter, Routes, Route,
 } from 'react-router-dom';
@@ -13,7 +13,7 @@ import RequireAuth from './require-auth';
 import Results from './results';
 import AuthModal from './auth-modal';
 import GameCard from './game-card';
-import { fetchTopRatedGames, selectGame } from '../actions';
+import { fetchTopRatedGames } from '../actions';
 import theme from '../theme/theme';
 
 export default function App(props) {
@@ -30,11 +30,6 @@ export default function App(props) {
     dispatch(fetchTopRatedGames());
   }, [dispatch]);
 
-  // select game and fetch data
-  const onSelectGame = useCallback((game, coverUrl, year) => {
-    dispatch(selectGame(game, coverUrl, year));
-  }, [dispatch]);
-
   return (
     <ChakraProvider theme={theme}>
       <BrowserRouter>
@@ -44,7 +39,7 @@ export default function App(props) {
           <GameCard isOpenAuthModal={isOpen} openAuthModal={onOpen} />
           <Routes>
             <Route element={<Games />} path="/" />
-            <Route element={<BrowseGames onSelectGame={onSelectGame} />} path="/browse" />
+            <Route element={<BrowseGames />} path="/browse" />
             <Route element={<RequireAuth> <NewGame /> </RequireAuth>} path="/games/new" />
             <Route element={<Game />} path="/games/:gameID" />
             <Route element={<Results />} path="/results" />
