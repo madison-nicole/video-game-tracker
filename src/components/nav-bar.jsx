@@ -4,16 +4,16 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import {
-  IconButton, Box, Flex, Avatar, Button,
-  Menu, MenuButton, MenuList, MenuItem, MenuDivider,
-  useColorModeValue, HStack, useColorMode, Center,
+  IconButton, Box, Flex, Button,
+  useColorModeValue, HStack, useColorMode,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon, BellIcon } from '@chakra-ui/icons';
 import SearchBar from './search-bar';
 import { signoutUser } from '../actions';
 import { useAuthenticated, useSearchResultsPreview } from '../hooks/redux-hooks';
+import NavProfileMenu from './nav-profile-menu';
 
-function NavBar({ onOpen, setAccountStatus }) {
+function NavBar({ onOpen, setAccountStatus, username }) {
   // hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -59,39 +59,7 @@ function NavBar({ onOpen, setAccountStatus }) {
               />
             </HStack>
           </Flex>
-          <Menu className="profile-menu">
-            <MenuButton
-              as={Button}
-              cursor="pointer"
-              minW={0}
-              rounded="full"
-              variant="link"
-            >
-              <Avatar
-                size="sm"
-                src="https://avatars.dicebear.com/api/male/username.svg"
-              />
-            </MenuButton>
-            <MenuList alignItems="center">
-              <br />
-              <Center>
-                <Avatar
-                  size="2xl"
-                  src="https://avatars.dicebear.com/api/male/username.svg"
-                />
-              </Center>
-              <br />
-              <Center>
-                <p>Username</p>
-              </Center>
-              <br />
-              <MenuDivider />
-              <MenuItem>Your Profile</MenuItem>
-              <MenuItem onClick={handleBrowseGames}>Browse Games</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem onClick={signOut}>Sign Out</MenuItem>
-            </MenuList>
-          </Menu>
+          <NavProfileMenu handleBrowseGames={handleBrowseGames} signOut={signOut} username={username} />
         </HStack>
       );
     } else {
@@ -129,7 +97,6 @@ function NavBar({ onOpen, setAccountStatus }) {
           <Flex justifyContent="flex-start" width="100%">
             <Button cursor="pointer" onClick={handleHomeButton}>insert logo here</Button>
           </Flex>
-
           <Flex alignItems="center" justifyContent="center" width="100%">
             {renderSearchBar()}
           </Flex>

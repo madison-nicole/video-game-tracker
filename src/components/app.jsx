@@ -19,6 +19,7 @@ import theme from '../theme/theme';
 export default function App(props) {
   // state
   const [accountStatus, setAccountStatus] = useState(true); // true if the user has an account
+  const [username, setUsername] = useState('');
 
   // hooks
   const dispatch = useDispatch();
@@ -34,8 +35,8 @@ export default function App(props) {
     <ChakraProvider theme={theme}>
       <BrowserRouter>
         <div>
-          <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} onOpen={onOpen} />
-          <AuthModal accountStatus={accountStatus} isOpen={isOpen} setAccountStatus={setAccountStatus} onClose={onClose} />
+          <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} username={username} onOpen={onOpen} />
+          <AuthModal accountStatus={accountStatus} isOpen={isOpen} setAccountStatus={setAccountStatus} setUsername={setUsername} username={username} onClose={onClose} />
           <GameCard isOpenAuthModal={isOpen} openAuthModal={onOpen} />
           <Routes>
             <Route element={<Games />} path="/" />

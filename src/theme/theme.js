@@ -2,7 +2,9 @@
 
 // 1. import `extendTheme` function
 import { extendTheme } from '@chakra-ui/react';
-import { Button, HStack } from './components';
+import {
+  Button, HStack, Heading,
+} from './components';
 
 // 3. extend the theme
 const theme = extendTheme(
@@ -11,26 +13,9 @@ const theme = extendTheme(
     initialColorMode: 'dark',
     useSystemColorMode: false,
     components: {
-      Button, HStack,
+      Button, HStack, Heading,
     },
   },
-  // {
-  //   // define new text styles
-  //   textStyles: {
-  //     navButtonText: {
-  //       fontSize: '13.5px',
-  //       fontWeight: '700',
-  //     },
-  //     largeNumberRankingsText: {
-  //       fontSize: '56px',
-  //       fontWeight: '700',
-  //     },
-  //     gameTitleRankingsText: {
-  //       fontSize: '18px',
-  //       fontWeight: '700',
-  //     },
-  //   },
-  // },
 );
 
 export default theme;

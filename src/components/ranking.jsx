@@ -7,15 +7,11 @@ function Ranking({ index }) {
       <Heading
         alignItems="center"
         className="number-rankings"
-        color="#cccccc"
         colorScheme="lightgray"
         display="flex"
-        fontSize={56}
-        fontWeight={700}
-        height="100%"
         justifyContent="center"
-        size="lg"
         textAlign="center"
+        variant="rankNumber"
         width={20}
       >
         {index + 1}

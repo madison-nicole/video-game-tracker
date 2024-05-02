@@ -105,7 +105,7 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
                 </Text>
                 <Stack mt="6" spacing="3">
                   <Text
-                    fontSize="14px"
+                    fontSize="13px"
                     ml="15px"
                     mr="15px"
                     textAlign="center"
@@ -136,16 +136,7 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
               <CardFooter>
                 <ButtonGroup spacing="2">
                   <Button
-                    _hover={{
-                      bg: '#9ae6b4',
-                    }}
-                    bgColor="#68d391"
-                    color="white"
-                    cursor="pointer"
-                    display={{ base: 'none', md: 'inline-flex' }}
-                    fontSize={13.5}
-                    fontWeight="700"
-                    variant="solid"
+                    variant="greenAdd"
                     onClick={() => logGame(title, navigate, userRating)}
                   >
                     ADD

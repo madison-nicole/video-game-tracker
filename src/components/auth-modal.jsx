@@ -9,7 +9,7 @@ import { signinUser, signupUser } from '../actions';
 import AuthModalButtons from './auth-modal-buttons';
 
 function AuthModal({
-  isOpen, onClose, accountStatus, setAccountStatus,
+  isOpen, onClose, accountStatus, setAccountStatus, username, setUsername,
 }) {
   // state
   const [email, setEmail] = useState('');
@@ -18,9 +18,6 @@ function AuthModal({
   // hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // Chakra modal setup
-  const finalRef = React.useRef(null);
 
   // to sign up a user
   const createUser = () => {
@@ -36,7 +33,7 @@ function AuthModal({
 
   return (
     <div>
-      <Modal blockScrollOnMount={false} finalFocusRef={finalRef} isOpen={isOpen} scrollBehavior="inside" onClose={onClose}>
+      <Modal blockScrollOnMount={false} isOpen={isOpen} scrollBehavior="inside" onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader> </ModalHeader>
@@ -53,6 +50,15 @@ function AuthModal({
             />
             <Input
               className="auth-input"
+              placeholder="Username"
+              size="sm"
+              type="text"
+              value={username}
+              width="-moz-fit-content"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              className="auth-input"
               placeholder="Password"
               size="sm"
               type="text"
@@ -63,7 +69,7 @@ function AuthModal({
           </ModalBody>
 
           <ModalFooter>
-            <AuthModalButtons account={accountStatus} login={loginUser} setAccount={setAccountStatus} signup={createUser} />
+            <AuthModalButtons account={accountStatus} logIn={loginUser} setAccount={setAccountStatus} signUp={createUser} />
           </ModalFooter>
         </ModalContent>
       </Modal>

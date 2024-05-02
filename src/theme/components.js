@@ -26,6 +26,17 @@ export const Button = defineStyleConfig({
       fontWeight: '700',
       variant: 'ghost',
     },
+    greenAdd: {
+      _hover: {
+        bg: '#9ae6b4',
+      },
+      bg: '#68d391',
+      cursor: 'pointer',
+      display: { base: 'none', md: 'inline-flex' },
+      fontSize: 13.5,
+      fontWeight: '700',
+      variant: 'solid',
+    },
   },
 });
 
@@ -35,6 +46,18 @@ export const HStack = defineStyleConfig({
       justify: 'flex-end',
       spacing: 3,
       flex: { base: 1, md: 0 },
+    },
+  },
+});
+
+export const Heading = defineStyleConfig({
+  variants: {
+    rankNumber: {
+      color: '#cccccc',
+      size: 'lg',
+      fontSize: 56,
+      fontWeight: 700,
+      height: '100%',
     },
   },
 });
