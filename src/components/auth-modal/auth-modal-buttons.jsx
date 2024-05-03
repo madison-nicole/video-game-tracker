@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@chakra-ui/react';
-import { signInPrompt, signUpPrompt } from '../utils/text-utils';
+import { signInPrompt, signUpPrompt } from '../../utils/text-utils';
 
 // a function to render modal buttons according to sign up / sign in
 function AuthModalButtons({

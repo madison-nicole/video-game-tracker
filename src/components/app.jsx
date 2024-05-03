@@ -11,7 +11,7 @@ import Games from './games';
 import NewGame from './new-game';
 import RequireAuth from './require-auth';
 import Results from './results';
-import AuthModal from './auth-modal';
+import AuthModal from './auth-modal/auth-modal';
 import GameCard from './game-card';
 import { fetchTopRatedGames } from '../actions';
 import theme from '../theme/theme';

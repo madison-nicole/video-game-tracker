@@ -31,10 +31,10 @@ export async function fetchGamesIGDB(query) {
  * @returns formatted cover url
  */
 export async function fetchGameCoverUrl(coverId) {
-  const query = `fields url; where id = ${coverId};`;
+  const query = 'fields url;';
 
   // Fetch cover art for the game
-  const response = await axios.post(IGDB_COVERS_URL, query, {
+  const response = await axios.post(`${IGDB_COVERS_URL}/${coverId}`, query, {
     headers: IGDB_HEADERS,
   });
 
@@ -49,9 +49,9 @@ export async function fetchGameCoverUrl(coverId) {
  * @returns release year (YYYY)
  */
 export async function fetchGameReleaseYear(releaseYearId) {
-  const query = `fields y; where id = ${releaseYearId};`;
+  const query = 'fields y;';
 
-  const response = await axios.post(IGDB_DATES_URL, query, {
+  const response = await axios.post(`${IGDB_DATES_URL}/${releaseYearId}`, query, {
     headers: IGDB_HEADERS,
   });
 
@@ -75,7 +75,11 @@ export async function fetchGameCovers(games) {
     headers: IGDB_HEADERS,
   });
 
-  return new Map(response.data.map((cover) => [cover.id, cover.url]));
+  const covers = {};
+  response.data.forEach((cover) => {
+    covers[cover.id] = cover.url;
+  });
+  return covers;
 }
 
 /**
@@ -93,5 +97,9 @@ export async function fetchGameReleaseYears(games) {
     headers: IGDB_HEADERS,
   });
 
-  return new Map(response.data.map((year) => [year.id, year.y]));
+  const years = {};
+  response.data.forEach((year) => {
+    years[year.id] = year.url;
+  });
+  return years;
 }

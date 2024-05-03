@@ -9,8 +9,8 @@ function ResultsList({ gamesData, onSelectGame }) {
   const { games, covers, years } = gamesData;
 
   const renderedGames = games?.map((game, index) => {
-    const coverUrl = `https:${covers.get(game.cover)}`.replace('thumb', 'cover_big');
-    const year = years?.get(game?.release_dates?.[0]);
+    const coverUrl = `https:${covers[(game.cover)]}`.replace('thumb', 'cover_big');
+    const year = years[game?.release_dates?.[0]];
     const title = game.name?.toUpperCase();
 
     // const { rating } = game;

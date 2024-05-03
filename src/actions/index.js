@@ -129,12 +129,12 @@ export function authError(error) {
   };
 }
 
-export function signinUser({ email, password }, navigate) {
-  // takes in an object with email and password (minimal user object)
+export function signinUser({ emailOrUsername, password }, navigate) {
+  // takes in an object with emailOrUsername and password (minimal user object)
   // returns a thunk method that takes dispatch as an argument
   return (dispatch) => {
     const fields = {
-      email, password,
+      emailOrUsername, password,
     };
     // does an axios.post on the /signin endpoint and passes in { email, password}
     axios.post(`${ROOT_URL}/signin`, fields)
@@ -153,12 +153,12 @@ export function signinUser({ email, password }, navigate) {
   };
 }
 
-export function signupUser({ email, password }, navigate) {
+export function signupUser({ username, email, password }, navigate) {
   // takes in an object with email and password (minimal user object)
   // returns a thunk method that takes dispatch as an argument
   return (dispatch) => {
     const fields = {
-      email, password,
+      username, email, password,
     };
     // does an axios.post on the /signin endpoint and passes in { email, password}
     axios.post(`${ROOT_URL}/signup`, fields)
@@ -191,7 +191,7 @@ export function signoutUser(navigate) {
 export function searchGamesPreview(searchTerm) {
   return (dispatch) => {
     // This is a really flexible API. You can supply whatever fields you want here.
-    const data = `search "${searchTerm}"; fields name, rating, cover, franchise, genres, summary, release_dates; where version_parent = null;`;
+    const data = `search "${searchTerm}"; fields name, rating, cover, franchise, genres, summary, release_dates; where version_parent = null & rating_count > 0;`;
 
     // Pretty much all of these endpoints use POST requests
     axios.post(IGDB_GAMES_URL, data, {
@@ -211,7 +211,7 @@ export function searchGamesPreview(searchTerm) {
 export function searchGames(searchTerm) {
   return async (dispatch) => {
     // query
-    const data = `search "${searchTerm}"; fields name, rating, rating_count, cover, franchise, genres, summary, release_dates; where version_parent = null; limit 100;`;
+    const data = `search "${searchTerm}"; fields name, rating, rating_count, cover, franchise, genres, summary, release_dates; where version_parent = null & rating_count > 0;`;
 
     try {
     // First, request games for the given search term
@@ -220,6 +220,8 @@ export function searchGames(searchTerm) {
       });
       // const games = response.data.filter((game) => game.rating_count !== undefined).sort((a, b) => b.rating_count - a.rating_count);
       const games = response.data;
+
+      console.log(games);
 
       // Then, fetch game covers and years for the games
       // Original request only returns IDs for covers and years
