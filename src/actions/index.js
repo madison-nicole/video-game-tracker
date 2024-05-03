@@ -173,6 +173,7 @@ export function signupUser({ username, email, password }, navigate) {
       .catch((error) => {
         // on error should
         dispatch(authError(`Sign Up Failed: ${error.response.data}`));
+        console.log(`error: ${error.response.data}`);
       });
   };
 }

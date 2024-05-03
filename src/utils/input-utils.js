@@ -2,9 +2,13 @@
 function isEmail(input) {
   // reg exp to detect email format
   // eslint-disable-next-line no-useless-escape
-  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const regex = '/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
+  const matches = String(input).match(regex);
+  console.log(input);
+  console.log(String(input));
+  console.log(matches);
 
-  if (input.match(re)) {
+  if (matches === null) {
     return true;
   } else {
     return false;

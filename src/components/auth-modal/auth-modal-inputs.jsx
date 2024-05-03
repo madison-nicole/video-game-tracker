@@ -1,7 +1,8 @@
 import React from 'react';
 import { ModalBody } from '@chakra-ui/react';
-import isEmail from '../utils/input-utils';
+import isEmail from '../../utils/input-utils';
 import AuthModalInput from './auth-modal-input';
+import PasswordInput from './password-input';
 
 function AuthModalInputs({
   email, username, password, setEmail, setPassword, account, setUsername,
@@ -28,7 +29,7 @@ function AuthModalInputs({
       <ModalBody className="auth-form">
         <AuthModalInput placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
         <AuthModalInput placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <AuthModalInput placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <PasswordInput password={password} setPassword={setPassword} />
       </ModalBody>
     );
   }
