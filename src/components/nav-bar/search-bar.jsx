@@ -10,9 +10,9 @@ import {
 } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 import debounce from 'lodash.debounce';
-import { searchGames, searchGamesPreview, selectGameAndLoadData } from '../actions';
-import { useSearchResultsPreview } from '../hooks/redux-hooks';
-import { useOnKeyDown, ENTER_KEY } from '../hooks/event-hooks';
+import { searchGames, searchGamesPreview, selectGameAndLoadData } from '../../actions';
+import { useSearchResultsPreview } from '../../hooks/redux-hooks';
+import { useOnKeyDown, ENTER_KEY } from '../../hooks/event-hooks';
 
 function SearchBar({ gamesData, onSelectGame }) {
   // state

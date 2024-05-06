@@ -8,8 +8,9 @@ export const usernameError = 'This username does not exist.';
 export const passwordError = 'This password is incorrect.';
 
 // success messages
-export const logInSuccess = 'Signed in.';
+export const signInSuccess = 'Signed in.';
 export const signUpSuccess = 'Account created.';
+export const signOutSuccess = 'Signed out.';
 
 // success message additions
 export const welcome = 'Welcome to GameDex!';

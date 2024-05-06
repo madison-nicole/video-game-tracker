@@ -4,15 +4,15 @@ import {
 } from 'react-router-dom';
 import { ChakraProvider, useDisclosure } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import NavBar from './nav-bar';
+import NavBar from './nav-bar/nav-bar';
 import Game from './game';
-import BrowseGames from './browse-games';
+import BrowseGames from './browse-games/browse-games';
 import Games from './games';
 import NewGame from './new-game';
 import RequireAuth from './require-auth';
-import Results from './results';
+import Results from './search-results/results';
 import AuthModal from './auth-modal/auth-modal';
-import GameCard from './game-card';
+import GameCard from './game/game-card';
 import { fetchTopRatedGames } from '../actions';
 import theme from '../theme/theme';
 

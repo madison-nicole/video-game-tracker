@@ -9,8 +9,8 @@ import {
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon, BellIcon } from '@chakra-ui/icons';
 import SearchBar from './search-bar';
-import { signoutUser } from '../actions';
-import { useAuthenticated, useSearchResultsPreview } from '../hooks/redux-hooks';
+import { signoutUser } from '../../actions';
+import { useAuthenticated, useSearchResultsPreview } from '../../hooks/redux-hooks';
 import NavProfileMenu from './nav-profile-menu';
 
 function NavBar({ onOpen, setAccountStatus, username }) {
@@ -59,7 +59,7 @@ function NavBar({ onOpen, setAccountStatus, username }) {
               />
             </HStack>
           </Flex>
-          <NavProfileMenu handleBrowseGames={handleBrowseGames} signOut={signOut} username={username} />
+          <NavProfileMenu handleBrowseGames={handleBrowseGames} signOut={signOut} />
         </HStack>
       );
     } else {
@@ -102,7 +102,7 @@ function NavBar({ onOpen, setAccountStatus, username }) {
           </Flex>
           <Flex alignItems="center" justifyContent="flex-end" width="100%">
             <HStack spacing={3}>
-              <Button id="light-dark-mode-button" onClick={toggleColorMode}>
+              <Button id="light-dark-mode-button" variant="ghostBW" onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
               {renderMenu()}

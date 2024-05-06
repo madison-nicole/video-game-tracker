@@ -17,7 +17,7 @@ export const IGDB_HEADERS = { 'x-api-key': API_KEY };
  * @param {string} query - IGDB API query, as described here https://api-docs.igdb.com/#reference
  * @returns an array of IGDB game objects
  */
-export async function fetchGamesIGDB(query) {
+export async function fetchGames(query) {
   const response = await axios.post(IGDB_GAMES_URL, query, {
     headers: IGDB_HEADERS,
   });
@@ -60,7 +60,7 @@ export async function fetchGameReleaseYear(releaseYearId) {
 
 /**
  * Fetches covers from an array of games
- * @returns a map of cover id to cover url
+ * @returns an object with cover id keys mappign to cover url values
  */
 export async function fetchGameCovers(games) {
   // Build cover query
@@ -84,7 +84,7 @@ export async function fetchGameCovers(games) {
 
 /**
  * Fetches release years from an array of games
- * @returns a map of release year id to year (YYYY)
+ * @returns an object with release year id keys maping to year (YYYY) values
  */
 export async function fetchGameReleaseYears(games) {
   const yearIds = games.map((game) => {

@@ -2,8 +2,12 @@ import React from 'react';
 import {
   Menu, MenuButton, Button, Avatar, MenuList, Center, MenuDivider, MenuItem,
 } from '@chakra-ui/react';
+import { useUserInfo } from '../../hooks/redux-hooks';
 
-function NavProfileMenu({ handleBrowseGames, signOut, username }) {
+function NavProfileMenu({ handleBrowseGames, signOut }) {
+  const userInfo = useUserInfo();
+  const username = userInfo?.username;
+
   return (
     <Menu className="profile-menu">
       <MenuButton

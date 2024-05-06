@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { selectGame } from '../actions';
+import { selectGame } from '../../actions';
 import ResultsList from './results-list';
-import JumpToTop from './jump-to-top';
-import { useSearchResults } from '../hooks/redux-hooks';
+import JumpToTop from '../jump-to-top';
+import { useSearchResults } from '../../hooks/redux-hooks';
 
 function Results({ search }) {
   // hooks

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Modal, ModalOverlay, ModalContent, ModalHeader,
   ModalFooter, ModalCloseButton,
@@ -9,7 +9,11 @@ import { useNavigate } from 'react-router';
 import { signinUser, signupUser } from '../../actions';
 import AuthModalButtons from './auth-modal-buttons';
 import AuthModalInputs from './auth-modal-inputs';
-import { signUpSuccess, welcome, logInSuccess } from '../../utils/text-utils';
+import {
+  signUpSuccess, welcome, signInSuccess,
+} from '../../utils/text-utils';
+import isEmail from '../../utils/input-utils';
+import { useAuthenticated } from '../../hooks/redux-hooks';
 
 function AuthModal({
   isOpen, onClose, accountStatus, setAccountStatus, username, setUsername,
@@ -17,14 +21,32 @@ function AuthModal({
   // state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailOrUsername, setEmailOrUsername] = useState('');
 
   // hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toast = useToast();
+  const authenticated = useAuthenticated();
+
+  useEffect(() => {
+    if (authenticated) {
+      toast({
+        position: 'top',
+        title: signInSuccess,
+        status: 'success',
+        duration: 2500,
+        isClosable: true,
+      });
+    }
+  }, [authenticated, toast]);
 
   // to sign up a user
   const createUser = () => {
+    if (!isEmail(email)) {
+      // error!
+    }
+
     dispatch(signupUser({ username, email, password }, navigate));
     onClose();
 
@@ -41,17 +63,17 @@ function AuthModal({
 
   // to log in a user
   const loginUser = () => {
-    dispatch(signinUser({ emailOrUsername: username, password }, navigate));
+    dispatch(signinUser({ emailOrUsername, password }, navigate));
     onClose();
 
     // if user is logged in successfully
-    toast({
-      position: 'top',
-      title: logInSuccess,
-      status: 'success',
-      duration: 3000,
-      isClosable: true,
-    });
+    // toast({
+    //   position: 'top',
+    //   title: logInSuccess,
+    //   status: 'success',
+    //   duration: 3000,
+    //   isClosable: true,
+    // });
   };
 
   return (
@@ -61,7 +83,17 @@ function AuthModal({
         <ModalContent marginTop="150px">
           <ModalHeader> </ModalHeader>
           <ModalCloseButton />
-          <AuthModalInputs account={accountStatus} email={email} password={password} setEmail={setEmail} setPassword={setPassword} setUsername={setUsername} username={username} />
+          <AuthModalInputs
+            account={accountStatus}
+            email={email}
+            emailOrUsername={emailOrUsername}
+            password={password}
+            setEmail={setEmail}
+            setEmailOrUsername={setEmailOrUsername}
+            setPassword={setPassword}
+            setUsername={setUsername}
+            username={username}
+          />
           <ModalFooter>
             <AuthModalButtons account={accountStatus} logIn={loginUser} setAccount={setAccountStatus} signUp={createUser} />
           </ModalFooter>

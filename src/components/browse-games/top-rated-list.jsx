@@ -1,28 +1,42 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
-  Card, CardBody, CardFooter, Image, Stack, Heading,
+  Card, CardBody, CardFooter, Image, Stack, Heading, Text,
+  Progress,
 } from '@chakra-ui/react';
-import alternateCardColor from '../utils/style-utils';
-import GameListButton from './game-list-button';
+import { useDispatch } from 'react-redux';
+import alternateCardColor from '../../utils/style-utils';
+import GameListButton from '../game/game-list-button';
+import Ranking from './ranking';
+import { selectGame } from '../../actions';
 
-function ResultsList({ gamesData, onSelectGame }) {
+function TopRatedList({ gamesData }) {
+  // hooks
+  const dispatch = useDispatch();
+
+  // store data
   const { games, covers, years } = gamesData;
 
-  const renderedGames = games?.map((game, index) => {
-    const coverUrl = `https:${covers[(game.cover)]}`.replace('thumb', 'cover_big');
-    const year = years[game?.release_dates?.[0]];
-    const title = game.name?.toUpperCase();
+  // select game and fetch data
+  const onSelectGame = useCallback((game, coverUrl, year) => {
+    dispatch(selectGame(game, coverUrl, year));
+  }, [dispatch]);
 
-    // const { rating } = game;
+  const renderedGames = games?.map((game, index) => {
+    const coverUrl = `https:${covers[game.cover]}`.replace('thumb', 'cover_big');
+    const year = years[game?.release_dates?.[0]];
+    const title = game.name.toUpperCase();
+    const { rating } = game;
     return (
       <Card
         direction={{ base: 'column', sm: 'row' }}
         key={game.id}
-        ml="250px"
-        mr="250px"
+        ml={40}
+        mr={40}
         overflow="hidden"
         variant={alternateCardColor(index)}
       >
+        <Ranking index={index} />
+
         <Image
           alignItems="center"
           alt="game cover photo"
@@ -30,9 +44,8 @@ function ResultsList({ gamesData, onSelectGame }) {
           borderStyle="solid"
           borderWidth={3}
           cursor="pointer"
-          maxH="100px"
+          maxH="140px"
           mb={3.5}
-          ml={3.5}
           mr={5}
           mt={3.5}
           objectFit="cover"
@@ -65,7 +78,22 @@ function ResultsList({ gamesData, onSelectGame }) {
             ml="25px"
             mr="50px"
             width="80%"
-          />
+          >
+            <Text
+              fontSize={18}
+              fontWeight={700}
+              mt="25px"
+              py="2"
+              textAlign="right"
+            >
+              {rating?.toFixed(2)}
+            </Text>
+
+            <Progress
+              colorScheme="green"
+              value={game.rating}
+            />
+          </Stack>
         </CardBody>
 
         <CardFooter
@@ -83,4 +111,4 @@ function ResultsList({ gamesData, onSelectGame }) {
   return renderedGames;
 }
 
-export default ResultsList;
+export default TopRatedList;

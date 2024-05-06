@@ -7,8 +7,8 @@ import {
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { clearSelectedGame, addNewGame } from '../actions';
-import { useAuthenticated, useSelectedGame } from '../hooks/redux-hooks';
+import { clearSelectedGame, addNewGame } from '../../actions';
+import { useAuthenticated, useSelectedGame } from '../../hooks/redux-hooks';
 
 function GameCard({ openAuthModal, isOpenAuthModal }) {
   // state
