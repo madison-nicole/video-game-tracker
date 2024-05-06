@@ -6,9 +6,9 @@ import {
   Slider, SliderTrack, SliderFilledTrack, SliderThumb,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
-import { clearSelectedGame, addNewGame } from '../../actions';
-import { useAuthenticated, useSelectedGame } from '../../hooks/redux-hooks';
+import { clearSelectedGame } from '../../actions';
+import { useAuthenticated, useSelectedGame, useUserInfo } from '../../hooks/redux-hooks';
+import { saveGame } from '../../api/gamedex';
 
 function GameCard({ openAuthModal, isOpenAuthModal }) {
   // state
@@ -16,9 +16,12 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
 
   // hooks
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const authenticated = useAuthenticated(); // to check if user is signed in
   const game = useSelectedGame(); // to grab data from selected game
+  const userInfo = useUserInfo();
+
+  // store the user data
+  const username = userInfo?.username;
 
   // store the game data
   const title = game?.name; // game title
@@ -32,21 +35,35 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
     dispatch(clearSelectedGame());
   }, [dispatch]);
 
+  const onLogGame = useCallback(() => {
+    if (!authenticated) { // if not logged in
+      openAuthModal();
+    } else if (userRating === 0) { // if no rating is made
+      saveGame(username, game); // store the game w/o a rating
+      onCloseGame();
+    } else {
+      // save the game with all data
+      saveGame(username, game, userRating);
+      onCloseGame();
+    }
+  }, [authenticated, game, onCloseGame, openAuthModal, userRating, username]);
+
   if (!game) {
     return null;
   }
 
-  function logGame(gameTitle, gameNavigate, gameRating) {
-    if (!authenticated) { // if not logged in
-      openAuthModal();
-    } else if (userRating === 0) { // if no rating is made
-      addNewGame(title, navigate); // store the game w/o a rating
-      onCloseGame();
-    } else {
-      addNewGame(title, navigate, userRating); // store all
-      onCloseGame();
-    }
-  }
+  // function logGame() {
+  //   if (!authenticated) { // if not logged in
+  //     openAuthModal();
+  //   } else if (userRating === 0) { // if no rating is made
+  //     saveGame(username, game); // store the game w/o a rating
+  //     onCloseGame();
+  //   } else {
+  //     // save the game with all data
+  //     saveGame(username, game, userRating);
+  //     onCloseGame();
+  //   }
+  // }
 
   return (
     <div>
@@ -73,7 +90,7 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
                 textAlign="center"
                 width="80%"
               >
-                {game.name}
+                {title}
               </Heading>
               <Text
                 fontSize="12px"
@@ -137,7 +154,7 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
                 <ButtonGroup spacing="2">
                   <Button
                     variant="greenAdd"
-                    onClick={() => logGame(title, navigate, userRating)}
+                    onClick={onLogGame}
                   >
                     ADD
                   </Button>

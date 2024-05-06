@@ -13,10 +13,6 @@ export async function getGame(id) {
   return response.data;
 }
 
-export async function addGame(fields) {
-  await axios.post(`${GAMEDEX_URL}/posts`, fields, { headers: { authorization: localStorage.getItem('token') } });
-}
-
 export async function updateGame(id, fields) {
   const response = await axios.put(`${GAMEDEX_URL}/posts/${id}`, fields, { headers: { authorization: localStorage.getItem('token') } });
   return response.data;
@@ -58,4 +54,18 @@ export async function isUsernameTaken(username) {
   } catch (error) {
     return false;
   }
+}
+
+/**
+ * Save a game to a user's logged games
+ * @param {string} username
+ * @param {object} game
+ * @param {object} review
+ * @returns game if game is successfuly saved, else throw error
+ */
+export async function saveGame(username, game, review) {
+  const fields = { username, game, review };
+
+  const response = await axios.post(`${GAMEDEX_URL}/users/${username}/games`, fields, { headers: { authorization: localStorage.getItem('token') } });
+  console.log(response.data);
 }
