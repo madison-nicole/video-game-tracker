@@ -66,6 +66,9 @@ export async function isUsernameTaken(username) {
 export async function saveGame(username, game, review) {
   const fields = { username, game, review };
 
+  console.log('fields');
+  console.log(fields.game);
+
   const response = await axios.post(`${GAMEDEX_URL}/users/${username}/games`, fields, { headers: { authorization: localStorage.getItem('token') } });
   console.log(response.data);
 }

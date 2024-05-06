@@ -36,34 +36,34 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   }, [dispatch]);
 
   const onLogGame = useCallback(() => {
+    // store the game model
+    const savedGame = {
+      id: game?.id,
+      title: game?.name,
+      coverUrl: game?.coverUrl,
+      summary: game?.summary,
+      releaseYear: game?.year,
+      avgRating,
+
+    };
+
+    console.log(savedGame);
+
     if (!authenticated) { // if not logged in
       openAuthModal();
     } else if (userRating === 0) { // if no rating is made
-      saveGame(username, game); // store the game w/o a rating
+      saveGame(username, savedGame); // store the game w/o a rating
       onCloseGame();
     } else {
       // save the game with all data
-      saveGame(username, game, userRating);
+      saveGame(username, savedGame, userRating);
       onCloseGame();
     }
-  }, [authenticated, game, onCloseGame, openAuthModal, userRating, username]);
+  }, [game?.id, game?.name, game?.coverUrl, game?.summary, game?.year, avgRating, authenticated, userRating, openAuthModal, username, onCloseGame]);
 
   if (!game) {
     return null;
   }
-
-  // function logGame() {
-  //   if (!authenticated) { // if not logged in
-  //     openAuthModal();
-  //   } else if (userRating === 0) { // if no rating is made
-  //     saveGame(username, game); // store the game w/o a rating
-  //     onCloseGame();
-  //   } else {
-  //     // save the game with all data
-  //     saveGame(username, game, userRating);
-  //     onCloseGame();
-  //   }
-  // }
 
   return (
     <div>
