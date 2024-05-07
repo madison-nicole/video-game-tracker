@@ -22,6 +22,7 @@ function NavBar({ onOpen, setAccountStatus, username }) {
   const authenticated = useAuthenticated();
   const resultsPreview = useSearchResultsPreview();
 
+  // button functions
   const signOut = () => {
     dispatch(signoutUser(navigate));
   };
@@ -40,11 +41,15 @@ function NavBar({ onOpen, setAccountStatus, username }) {
     navigate('/browse');
   }, [navigate]);
 
+  const handleYourProfile = useCallback(() => {
+    navigate(`/${username}`);
+  }, [navigate, username]);
+
   const handleHomeButton = useCallback(() => {
     navigate('/');
   }, [navigate]);
 
-  // if signed in, render a different menu than new users
+  // if signed in, render a different menu
   function renderMenu() {
     if (authenticated) {
       return (
@@ -59,7 +64,7 @@ function NavBar({ onOpen, setAccountStatus, username }) {
               />
             </HStack>
           </Flex>
-          <NavProfileMenu handleBrowseGames={handleBrowseGames} signOut={signOut} />
+          <NavProfileMenu handleBrowseGames={handleBrowseGames} handleYourProfile={handleYourProfile} signOut={signOut} username={username} />
         </HStack>
       );
     } else {

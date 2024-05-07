@@ -67,6 +67,5 @@ export async function saveGame(username, game, review) {
   const fields = { username, game, review };
 
   const response = await axios.post(`${GAMEDEX_URL}/users/${username}/games`, fields, { headers: { authorization: localStorage.getItem('token') } });
-  console.log('response.data');
-  console.log(response.data);
+  return response.data;
 }

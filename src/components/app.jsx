@@ -5,7 +5,7 @@ import {
 import { ChakraProvider, useDisclosure } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import NavBar from './nav-bar/nav-bar';
-import Game from './game';
+// import Game from './game';
 import BrowseGames from './browse-games/browse-games';
 import Games from './games';
 import NewGame from './new-game';
@@ -15,15 +15,20 @@ import AuthModal from './auth-modal/auth-modal';
 import GameCard from './game/game-card';
 import { fetchTopRatedGames } from '../actions';
 import theme from '../theme/theme';
+import { useUserInfo } from '../hooks/redux-hooks';
+import UserProfile from './user-profile/user-profile';
 
 export default function App(props) {
   // state
   const [accountStatus, setAccountStatus] = useState(true); // true if the user has an account
-  const [username, setUsername] = useState('');
 
   // hooks
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure(); // auth modal
+  const user = useUserInfo();
+
+  // store user information
+  const username = user?.username;
 
   // background processes
   // load top rated games
@@ -36,14 +41,15 @@ export default function App(props) {
       <BrowserRouter>
         <div>
           <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} username={username} onOpen={onOpen} />
-          <AuthModal accountStatus={accountStatus} isOpen={isOpen} setAccountStatus={setAccountStatus} setUsername={setUsername} username={username} onClose={onClose} />
+          <AuthModal accountStatus={accountStatus} isOpen={isOpen} setAccountStatus={setAccountStatus} username={username} onClose={onClose} />
           <GameCard isOpenAuthModal={isOpen} openAuthModal={onOpen} />
           <Routes>
             <Route element={<Games />} path="/" />
             <Route element={<BrowseGames />} path="/browse" />
             <Route element={<RequireAuth> <NewGame /> </RequireAuth>} path="/games/new" />
-            <Route element={<Game />} path="/games/:gameID" />
+            {/* <Route element={<Game />} path="/games/:gameID" /> */}
             <Route element={<Results />} path="/results" />
+            <Route element={<UserProfile user={user} username={username} />} path="/:username" />
             <Route element={<FallBack />} path="*" />
           </Routes>
         </div>
