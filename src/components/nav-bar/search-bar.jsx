@@ -52,7 +52,6 @@ function SearchBar({ gamesData, onSelectGame }) {
 
   //
   const onSelectGamePreview = useCallback((game) => {
-    console.log(game);
     dispatch(selectGameAndLoadData(game));
   }, [dispatch]);
 

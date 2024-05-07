@@ -99,7 +99,7 @@ export async function fetchGameReleaseYears(games) {
 
   const years = {};
   response.data.forEach((year) => {
-    years[year.id] = year.url;
+    years[year.id] = year.y;
   });
   return years;
 }

@@ -47,8 +47,6 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
 
     };
 
-    console.log(savedGame);
-
     if (!authenticated) { // if not logged in
       openAuthModal();
     } else if (userRating === 0) { // if no rating is made

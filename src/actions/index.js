@@ -212,7 +212,6 @@ export function selectGame(game, coverUrl, year) {
 
 export function selectGameAndLoadData(game) {
   return async (dispatch) => {
-    console.log('selectGame');
     const coverUrl = await IGDB.fetchGameCoverUrl(game.cover);
     const year = await IGDB.fetchGameReleaseYear(game.release_dates[0]);
 
