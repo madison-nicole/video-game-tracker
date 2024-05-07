@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react';
 
 function NavProfileMenu({
-  handleBrowseGames, signOut, username, handleYourProfile,
+  handleBrowseGames, signOut, username, handleYourProfile, handleSettings,
 }) {
   return (
     <Menu className="profile-menu">
@@ -36,7 +36,7 @@ function NavProfileMenu({
         <MenuDivider />
         <MenuItem onClick={handleYourProfile}>Your Profile</MenuItem>
         <MenuItem onClick={handleBrowseGames}>Browse Games</MenuItem>
-        <MenuItem>Settings</MenuItem>
+        <MenuItem onClick={handleSettings}>Settings</MenuItem>
         <MenuItem onClick={signOut}>Sign Out</MenuItem>
       </MenuList>
     </Menu>

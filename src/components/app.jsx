@@ -17,6 +17,7 @@ import { fetchTopRatedGames } from '../actions';
 import theme from '../theme/theme';
 import { useUserInfo } from '../hooks/redux-hooks';
 import UserProfile from './user-profile/user-profile';
+import Settings from './user-profile/settings/settings';
 
 export default function App(props) {
   // state
@@ -50,6 +51,7 @@ export default function App(props) {
             {/* <Route element={<Game />} path="/games/:gameID" /> */}
             <Route element={<Results />} path="/results" />
             <Route element={<UserProfile user={user} username={username} />} path="/:username" />
+            <Route element={<RequireAuth> <Settings user={user} username={username} /> </RequireAuth>} path="/:username/settings" />
             <Route element={<FallBack />} path="*" />
           </Routes>
         </div>

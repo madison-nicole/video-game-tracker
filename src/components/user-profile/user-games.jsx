@@ -9,7 +9,7 @@ function UserGames({ user }) {
   const dispatch = useDispatch();
 
   // store data
-  const { games } = user;
+  const games = user?.games;
 
   // select game and fetch data
   const onSelectGame = useCallback((game, coverUrl, year) => {

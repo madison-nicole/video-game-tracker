@@ -45,6 +45,10 @@ function NavBar({ onOpen, setAccountStatus, username }) {
     navigate(`/${username}`);
   }, [navigate, username]);
 
+  const handleSettings = useCallback(() => {
+    navigate(`/${username}/settings`);
+  }, [navigate, username]);
+
   const handleHomeButton = useCallback(() => {
     navigate('/');
   }, [navigate]);
@@ -61,10 +65,11 @@ function NavBar({ onOpen, setAccountStatus, username }) {
                 colorScheme="gray"
                 icon={<BellIcon />}
                 size="lg"
+                variant="ghost"
               />
             </HStack>
           </Flex>
-          <NavProfileMenu handleBrowseGames={handleBrowseGames} handleYourProfile={handleYourProfile} signOut={signOut} username={username} />
+          <NavProfileMenu handleBrowseGames={handleBrowseGames} handleSettings={handleSettings} handleYourProfile={handleYourProfile} signOut={signOut} username={username} />
         </HStack>
       );
     } else {
