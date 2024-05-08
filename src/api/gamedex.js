@@ -24,7 +24,7 @@ export async function deleteGame(id) {
 
 /**
  * Sign in user
- * @param {object} fields - username or email, passowrd
+ * @param {object} fields - username or email, password
  * @returns token and user data if successful
  */
 export async function signin(fields) {
@@ -67,5 +67,15 @@ export async function saveGame(username, game, review) {
   const fields = { username, game, review };
 
   const response = await axios.post(`${GAMEDEX_URL}/users/${username}/games`, fields, { headers: { authorization: localStorage.getItem('token') } });
+  return response.data;
+}
+
+/**
+ * Fetches user info
+ * @param {string} username
+ * @returns user info if successful
+ */
+export async function fetchUserInfo(username) {
+  const response = await axios.get(`${GAMEDEX_URL}/users/${username}/user-info`, username);
   return response.data;
 }

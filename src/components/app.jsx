@@ -15,18 +15,21 @@ import AuthModal from './auth-modal/auth-modal';
 import GameCard from './game/game-card';
 import { fetchTopRatedGames } from '../actions';
 import theme from '../theme/theme';
-import { useUserInfo } from '../hooks/redux-hooks';
+import { useAccountInfo, useUserInfo } from '../hooks/redux-hooks';
 import UserProfile from './user-profile/user-profile';
 import Settings from './user-profile/settings/settings';
 
 export default function App(props) {
+  const userInfo = useUserInfo();
+  console.log(userInfo);
+
   // state
   const [accountStatus, setAccountStatus] = useState(true); // true if the user has an account
 
   // hooks
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure(); // auth modal
-  const user = useUserInfo();
+  const user = useAccountInfo();
 
   // store user information
   const username = user?.username;

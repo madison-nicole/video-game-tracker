@@ -5,12 +5,14 @@ import postsReducer from './posts-reducer';
 import authReducer from './auth-reducer';
 import errorReducer from './error-reducer';
 import IGDBReducer from './igdb-reducer';
+import userReducer from './user-reducer';
 
 const rootReducer = combineReducers({
   posts: postsReducer,
   auth: authReducer,
   error: errorReducer,
   igdb: IGDBReducer,
+  user: userReducer,
 });
 
 export default rootReducer;

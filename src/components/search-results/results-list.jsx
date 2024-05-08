@@ -14,6 +14,7 @@ function ResultsList({ gamesData, onSelectGame }) {
     const title = game.name?.toUpperCase();
 
     // const { rating } = game;
+
     return (
       <Card
         direction={{ base: 'column', sm: 'row' }}

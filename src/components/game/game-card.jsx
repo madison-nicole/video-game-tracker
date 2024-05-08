@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { clearSelectedGame } from '../../actions';
-import { useAuthenticated, useSelectedGame, useUserInfo } from '../../hooks/redux-hooks';
+import { useAuthenticated, useSelectedGame, useAccountInfo } from '../../hooks/redux-hooks';
 import { saveGame } from '../../api/gamedex';
 
 function GameCard({ openAuthModal, isOpenAuthModal }) {
@@ -18,10 +18,10 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   const dispatch = useDispatch();
   const authenticated = useAuthenticated(); // to check if user is signed in
   const game = useSelectedGame(); // to grab data from selected game
-  const userInfo = useUserInfo();
+  const accountInfo = useAccountInfo();
 
   // store the user data
-  const username = userInfo?.username;
+  const username = accountInfo?.username;
 
   // store the game data
   const title = game?.name; // game title

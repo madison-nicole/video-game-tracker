@@ -39,6 +39,13 @@ export function useSearchResultsPreview() {
 /**
  * @returns an object with data for the user
  */
-export function useUserInfo() {
+export function useAccountInfo() {
   return useSelector((reduxState) => reduxState.auth.user);
+}
+
+/**
+ * @returns an object with data for the user
+ */
+export function useUserInfo() {
+  return useSelector((reduxState) => reduxState.user?.userInfo);
 }

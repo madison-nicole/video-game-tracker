@@ -11,9 +11,10 @@ function UserInfoInput({ currentValue }) {
   return (
     <Editable
       defaultValue={currentValue}
-      fontSize="2xl"
+      fontSize="14px"
       isPreviewFocusable={false}
       textAlign="left"
+      width="80%"
     >
       <EditablePreview />
       {/* Here is the custom input */}

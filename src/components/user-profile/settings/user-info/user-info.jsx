@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Button, Flex, FormControl, FormLabel, Heading, Input, Stack,
-  useColorModeValue, Avatar, AvatarBadge, IconButton, Center,
+  useColorModeValue, Avatar, AvatarBadge, IconButton, Center, Text,
   // Editable, EditablePreview, EditableInput,
 } from '@chakra-ui/react';
 import { SmallCloseIcon } from '@chakra-ui/icons';
@@ -32,14 +32,14 @@ function UserInfoSettings({ user, username }) {
         <Heading fontSize="24px" fontWeight={700} lineHeight={1.1}>
           User Information
         </Heading>
-        <FormControl id="userName" isRequired>
-          <FormLabel>Username</FormLabel>
+        <Flex alignItems="center" direction="row" justifyContent="space-between" width="70%">
+          <Text fontWeight={600}>Username</Text>
           <UserInfoInput currentValue={username} />
-        </FormControl>
-        <FormControl id="email" isRequired>
-          <FormLabel>Email</FormLabel>
+        </Flex>
+        <Flex alignItems="center" direction="row" justifyContent="space-between" width="70%">
+          <Text fontWeight={600}>Email</Text>
           <UserInfoInput currentValue={email} />
-        </FormControl>
+        </Flex>
         <FormControl id="password" isRequired>
           <FormLabel>Password</FormLabel>
           <Input
