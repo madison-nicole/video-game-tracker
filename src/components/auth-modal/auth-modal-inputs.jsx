@@ -6,7 +6,8 @@ import VerifyInputIcon from './verify-input-icon';
 import { isUsernameTaken } from '../../api/gamedex';
 
 function AuthModalInputs({
-  email, username, emailOrUsername, password, setEmail, setPassword, account, setUsername, setEmailOrUsername,
+  email, username, emailOrUsername, password, setEmail, setPassword,
+  account, setUsername, setEmailOrUsername, logInOnEnter, signUpOnEnter,
 }) {
   // check if username is taken
   const onUsernameBlur = useCallback(async () => {
@@ -21,10 +22,14 @@ function AuthModalInputs({
     return (
       <ModalBody className="auth-form">
         <HStack>
-          <AuthModalInput placeholder="Email or Username" value={emailOrUsername} onChange={(e) => setEmailOrUsername(e.target.value)} />
+          <AuthModalInput
+            placeholder="Email or Username"
+            value={emailOrUsername}
+            onChange={(e) => setEmailOrUsername(e.target.value)}
+          />
           <VerifyInputIcon />
         </HStack>
-        <PasswordInput password={password} setPassword={setPassword} />
+        <PasswordInput password={password} setPassword={setPassword} onEnter={logInOnEnter} />
       </ModalBody>
     );
   } else {
@@ -32,7 +37,7 @@ function AuthModalInputs({
       <ModalBody className="auth-form">
         <AuthModalInput placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
         <AuthModalInput placeholder="Username" value={username} onBlur={onUsernameBlur} onChange={(e) => setUsername(e.target.value)} />
-        <PasswordInput password={password} setPassword={setPassword} />
+        <PasswordInput password={password} setPassword={setPassword} onEnter={signUpOnEnter} />
       </ModalBody>
     );
   }

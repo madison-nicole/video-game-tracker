@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
-function PasswordInput({ password, setPassword }) {
+function PasswordInput({ password, setPassword, onEnter }) {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow((prev) => !prev);
 
@@ -16,6 +16,7 @@ function PasswordInput({ password, setPassword }) {
         size="sm"
         type={show ? 'text' : 'password'}
         onChange={(e) => setPassword(e.target.value)}
+        onKeyDown={onEnter}
       />
       <InputRightElement
         marginTop="5.5px"

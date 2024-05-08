@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Modal, ModalOverlay, ModalContent, ModalHeader,
   ModalFooter, ModalCloseButton,
@@ -14,6 +14,7 @@ import {
 } from '../../utils/text-utils';
 import isEmail from '../../utils/input-utils';
 import { useAuthenticated } from '../../hooks/redux-hooks';
+import { useOnKeyDown, ENTER_KEY } from '../../hooks/event-hooks';
 
 function AuthModal({
   isOpen, onClose, accountStatus, setAccountStatus, username, setUsername,
@@ -62,19 +63,25 @@ function AuthModal({
   };
 
   // to log in a user
-  const loginUser = () => {
+  const loginUser = useCallback(() => {
     dispatch(signinUser({ emailOrUsername, password }, navigate));
     onClose();
+  }, [dispatch, emailOrUsername, navigate, onClose, password]);
 
-    // if user is logged in successfully
-    // toast({
-    //   position: 'top',
-    //   title: logInSuccess,
-    //   status: 'success',
-    //   duration: 3000,
-    //   isClosable: true,
-    // });
-  };
+  // also log in when the user presses enter
+  const logInOnEnter = useOnKeyDown(loginUser, ENTER_KEY);
+
+  // sign up when the user presses enter
+  const signUpOnEnter = useOnKeyDown(createUser, ENTER_KEY);
+
+  // if user is logged in successfully
+  // toast({
+  //   position: 'top',
+  //   title: logInSuccess,
+  //   status: 'success',
+  //   duration: 3000,
+  //   isClosable: true,
+  // });
 
   return (
     <div>
@@ -87,11 +94,13 @@ function AuthModal({
             account={accountStatus}
             email={email}
             emailOrUsername={emailOrUsername}
+            logInOnEnter={logInOnEnter}
             password={password}
             setEmail={setEmail}
             setEmailOrUsername={setEmailOrUsername}
             setPassword={setPassword}
             setUsername={setUsername}
+            signUpOnEnter={signUpOnEnter}
             username={username}
           />
           <ModalFooter>
