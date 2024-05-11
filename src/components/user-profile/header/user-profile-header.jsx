@@ -4,11 +4,13 @@ import {
 import React from 'react';
 import SocialIconButtons from './social-icon-buttons';
 
-function UserProfileHeader({ username }) {
+function UserProfileHeader({ userInfo }) {
   // store user data
   const following = 85;
   const followers = 550;
   const profileLink = 'linktr.ee/xgigglypuff';
+
+  const username = userInfo?.username;
 
   return (
     <Flex alignItems="center" direction="row" justifyContent="flex-start" marginLeft="100px" marginRight="100px" marginTop="50px">

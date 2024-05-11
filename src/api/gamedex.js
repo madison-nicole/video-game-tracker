@@ -3,11 +3,6 @@ import axios from 'axios';
 // API url
 export const GAMEDEX_URL = 'http://localhost:9090/api';
 
-export async function getGames() {
-  const response = await axios.get(`${GAMEDEX_URL}/posts`);
-  return response.data;
-}
-
 export async function getGame(id) {
   const response = await axios.get(`${GAMEDEX_URL}/posts/${id}`);
   return response.data;
@@ -76,6 +71,22 @@ export async function saveGame(username, game, review) {
  * @returns user info if successful
  */
 export async function fetchUserInfo(username) {
-  const response = await axios.get(`${GAMEDEX_URL}/users/${username}/user-info`, username);
+  const response = await axios.get(`${GAMEDEX_URL}/users/${username}/user-info`, { headers: { authorization: localStorage.getItem('token') } });
+  return response.data;
+}
+
+/**
+ * Fetches a user's saved game
+ * @param {string} username
+ * @returns array of user's games
+ */
+export async function getUserGames(username) {
+  const response = await axios.get(`${GAMEDEX_URL}/users/${username}/games`);
+  return Array.from(response.data);
+}
+
+// to be removed
+export async function getGames(id) {
+  const response = await axios.get(`${GAMEDEX_URL}/posts/${id}`);
   return response.data;
 }

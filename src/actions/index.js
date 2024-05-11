@@ -10,6 +10,7 @@ export const ActionTypes = {
   DEAUTH_USER: 'DEAUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
   FETCH_USER_INFO: 'FETCH_USER_INFO',
+  FETCH_USER_GAMES: 'FETCH_USER_GAMES',
   ERROR_SET: 'ERROR_SET',
 
   // IGDB Actions
@@ -226,7 +227,7 @@ export function clearSelectedGame() {
   };
 }
 
-export function getUserInfo({ username }) {
+export function getUserInfo(username) {
   // takes in an object with email and password (minimal user object)
   // returns a thunk method that takes dispatch as an argument
   return async (dispatch) => {
@@ -234,6 +235,22 @@ export function getUserInfo({ username }) {
       const user = await GameDex.fetchUserInfo(username);
 
       dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
+    } catch (error) {
+      // For now, if we get an error, just log it.
+      // Add error handling later
+      console.log('error', error);
+    }
+  };
+}
+
+export function fetchUserGames(username) {
+  // takes in an object with email and password (minimal user object)
+  // returns a thunk method that takes dispatch as an argument
+  return async (dispatch) => {
+    try {
+      const games = await GameDex.getUserGames(username);
+
+      dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: games });
     } catch (error) {
       // For now, if we get an error, just log it.
       // Add error handling later

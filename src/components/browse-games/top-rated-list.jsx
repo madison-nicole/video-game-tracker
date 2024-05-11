@@ -102,7 +102,7 @@ function TopRatedList({ gamesData }) {
           justifyContent="flex-end"
           mr="20px"
         >
-          <GameListButton onAdd={() => onSelectGame(game, coverUrl, year)} />
+          <GameListButton id={game.id} onAdd={() => onSelectGame(game, coverUrl, year)} />
         </CardFooter>
       </Card>
     );

@@ -13,6 +13,7 @@ function AuthModalInputs({
   const onUsernameBlur = useCallback(async () => {
     if (username.length > 0) {
       const isTaken = await isUsernameTaken(username);
+      console.log('isTaken');
       console.log(isTaken);
     }
   }, [username]);

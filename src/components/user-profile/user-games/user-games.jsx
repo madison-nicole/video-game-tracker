@@ -1,18 +1,25 @@
-import React, { useCallback } from 'react';
-import { Card, SimpleGrid } from '@chakra-ui/react';
+import React, { useCallback, useEffect } from 'react';
+import { SimpleGrid } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { selectGame } from '../../../actions';
+import { fetchUserGames, selectGame } from '../../../actions';
 import UserGame from './user-game';
+import { useUserGames } from '../../../hooks/redux-hooks';
 
-function UserGames({ user }) {
+function UserGames({ username }) {
   // hooks
   const dispatch = useDispatch();
 
-  console.log(user);
+  // load user games redux on profile load
+  useEffect(() => {
+    if (username) {
+      dispatch(fetchUserGames(username));
+    }
+  }, [dispatch, username]);
 
-  // store data
-  const games = user?.games;
+  // store user's saved games
+  const games = useUserGames();
 
+  console.log('games');
   console.log(games);
 
   // select game and fetch data
@@ -20,20 +27,23 @@ function UserGames({ user }) {
     dispatch(selectGame(game, coverUrl, year));
   }, [dispatch]);
 
-  const renderedGames = games?.map((game, index) => {
-    const coverUrl = game?.coverUrl;
-    const year = game?.year;
+  if (!games) {
+    return null;
+  }
+
+  const renderGame = games?.map((game) => {
+    const { id, coverUrl, year } = game;
 
     return (
-      <SimpleGrid marginBottom="40px" marginTop="40px" spacing={4} templateColumns="repeat(auto-fill, minmax(200px, 1fr))">
-        <Card cursor="pointer" onClick={() => onSelectGame(game, coverUrl, year)} />
-        <UserGame coverUrl={coverUrl} />
-        <Card />
-      </SimpleGrid>
+      <UserGame coverUrl={coverUrl} key={id} selectGame={() => onSelectGame(game, coverUrl, year)} />
     );
   });
 
-  return renderedGames;
+  return (
+    <SimpleGrid margin="10px 80px 20px 80px" spacing={2} templateColumns="repeat(auto-fill, minmax(150px, 1fr))">
+      {renderGame}
+    </SimpleGrid>
+  );
 }
 
 export default UserGames;

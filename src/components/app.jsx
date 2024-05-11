@@ -5,7 +5,6 @@ import {
 import { ChakraProvider, useDisclosure } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import NavBar from './nav-bar/nav-bar';
-// import Game from './game';
 import BrowseGames from './browse-games/browse-games';
 import Games from './games';
 import NewGame from './new-game';
@@ -21,6 +20,7 @@ import Settings from './user-profile/settings/settings';
 
 export default function App(props) {
   const userInfo = useUserInfo();
+  console.log('userInfo');
   console.log(userInfo);
 
   // state

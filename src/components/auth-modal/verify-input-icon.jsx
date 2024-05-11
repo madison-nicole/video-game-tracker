@@ -6,6 +6,7 @@ function VerifyInputIcon(props) {
   // check if input is valid
   const [validInput, setValidInput] = useState(true);
 
+  console.log('setValidInput');
   console.log(setValidInput);
   const isLoading = true;
 

@@ -1,23 +1,23 @@
 import React from 'react';
 import {
-  Button, Flex, FormControl, FormLabel, Heading, Input, Stack,
-  useColorModeValue, Avatar, AvatarBadge, IconButton, Center, Text,
+  Button, Flex, Stack, useColorModeValue, Avatar,
+  AvatarBadge, IconButton, Center, Text,
   // Editable, EditablePreview, EditableInput,
 } from '@chakra-ui/react';
-import { SmallCloseIcon } from '@chakra-ui/icons';
+import { CheckIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import UserInfoInput from './user-info-input';
 
-function UserInfoSettings({ user, username }) {
+function UserInfoSettings({ username }) {
   // store data
-  const email = user?.email;
-  //   const password = user?.password;
-  //   const avatar = user?.avatar;
+
+  const bio = 'insert bio here';
+  const website = 'www.mylinks.com';
 
   return (
-    <Flex
-      align="flex-start"
+    <Flex align="flex-start"
       bg={useColorModeValue('gray.50', 'gray.800')}
       justify="center"
+      marginTop="15px"
     >
       <Stack
         bg={useColorModeValue('white', 'gray.700')}
@@ -29,27 +29,20 @@ function UserInfoSettings({ user, username }) {
         spacing={4}
         w="full"
       >
-        <Heading fontSize="24px" fontWeight={700} lineHeight={1.1}>
-          User Information
-        </Heading>
-        <Flex alignItems="center" direction="row" justifyContent="space-between" width="70%">
-          <Text fontWeight={600}>Username</Text>
-          <UserInfoInput currentValue={username} />
+        <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="10px 0px 30px 30px">
+          <Text fontWeight={600} width="18%">Username</Text>
+          <UserInfoInput currentValue={username} height="40px" />
         </Flex>
-        <Flex alignItems="center" direction="row" justifyContent="space-between" width="70%">
-          <Text fontWeight={600}>Email</Text>
-          <UserInfoInput currentValue={email} />
+        <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 30px 30px">
+          <Text fontWeight={600} width="18%">Bio</Text>
+          <UserInfoInput currentValue={bio} height="80px" />
         </Flex>
-        <FormControl id="password" isRequired>
-          <FormLabel>Password</FormLabel>
-          <Input
-            _placeholder={{ color: 'gray.500' }}
-            placeholder="password"
-            type="password"
-          />
-        </FormControl>
-        <FormControl id="ProfilePic">
-          <FormLabel>Profile Picture</FormLabel>
+        <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 50px 30px">
+          <Text fontWeight={600} width="18%">Website</Text>
+          <UserInfoInput currentValue={website} height="40px" />
+        </Flex>
+        <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 0px 30px">
+          <Text fontWeight={600} marginBottom="30px" width="18%">Profile Picture</Text>
           <Stack direction={['column', 'row']} spacing={6}>
             <Center>
               <Avatar size="xl" src="https://bit.ly/sage-adebayo">
@@ -68,11 +61,12 @@ function UserInfoSettings({ user, username }) {
               <Button>Update</Button>
             </Flex>
           </Stack>
-        </FormControl>
+        </Flex>
         <Flex direction="row" justifyContent="flex-end">
           <Button
+            leftIcon={<CheckIcon />}
             variant="solidPink"
-            w="10%"
+            w="80px"
           >
             SAVE
           </Button>

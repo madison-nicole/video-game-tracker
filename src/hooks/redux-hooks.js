@@ -37,7 +37,7 @@ export function useSearchResultsPreview() {
 }
 
 /**
- * @returns an object with data for the user
+ * @returns an object with account data for the user
  */
 export function useAccountInfo() {
   return useSelector((reduxState) => reduxState.auth.user);
@@ -48,4 +48,11 @@ export function useAccountInfo() {
  */
 export function useUserInfo() {
   return useSelector((reduxState) => reduxState.user?.userInfo);
+}
+
+/**
+ * @returns an object with saved game data for the user
+ */
+export function useUserGames() {
+  return useSelector((reduxState) => reduxState.user?.userGames);
 }
