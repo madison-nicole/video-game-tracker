@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 // import { useDispatch } from 'react-redux';
 import { Flex } from '@chakra-ui/react';
 import EditableButtons from './editable-buttons';
-import EditableUserInput from './editable-input';
+import EditableUserInput from './editable-user-input';
 
 function UserInfoInput({ currentValue, height }) {
   // hooks
@@ -28,7 +28,8 @@ function UserInfoInput({ currentValue, height }) {
   const onCancel = useCallback(() => {
     // setText(selectedGame.title);
     setEditMode(false);
-  }, []);
+    setText(currentValue);
+  }, [currentValue]);
 
   return (
     <Flex direction="row">

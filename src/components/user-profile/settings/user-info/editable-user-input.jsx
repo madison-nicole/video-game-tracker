@@ -18,6 +18,7 @@ function EditableUserInput({
         value={text}
         variant="outline"
         width="500px"
+        onBlur={() => setEditMode(false)}
       />
     );
   } else {
@@ -28,9 +29,9 @@ function EditableUserInput({
         cursor="default"
         defaultValue={currentValue}
         display="flex"
+        focusBorderColor="#68d391"
         fontSize="14px"
         height={height}
-        isDisabled
         mr="5px"
         placeholder={currentValue}
         textAlign="left"
@@ -38,7 +39,8 @@ function EditableUserInput({
         variant="filled"
         width="500px"
         onChange={onTextChange}
-        // onClick={setEditMode(true)}
+        onClick={() => setEditMode(true)}
+        onFocus={() => setEditMode(true)}
       />
     );
   }

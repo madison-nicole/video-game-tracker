@@ -1,17 +1,43 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Button, Flex, Stack, useColorModeValue, Avatar,
   AvatarBadge, IconButton, Center, Text,
+  InputGroup,
   // Editable, EditablePreview, EditableInput,
 } from '@chakra-ui/react';
 import { CheckIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import UserInfoInput from './user-info-input';
+import { useUserInfo } from '../../../../hooks/redux-hooks';
 
-function UserInfoSettings({ username }) {
+function UserInfoSettings(props) {
   // store data
+  const userInfo = useUserInfo();
 
-  const bio = 'insert bio here';
-  const website = 'www.mylinks.com';
+  const inputRef = useRef(null);
+
+  // state
+  const [photo, setPhoto] = useState('');
+  console.log(photo);
+
+  const {
+    username, bio, website, avatarUrl,
+  } = userInfo;
+
+  // const bio = 'insert bio here';
+  // const website = 'www.mylinks.com';
+  // const avatarUrl = 'https://bit.ly/sage-adebayo';
+
+  // upload profile photo functionality
+  const handleUpload = (e) => {
+    console.log(e);
+    if (e.target.files) {
+      setPhoto(e.target.files?.[0]);
+    }
+  };
+
+  const handleUpdate = () => {
+    inputRef.current?.click();
+  };
 
   return (
     <Flex align="flex-start"
@@ -45,11 +71,11 @@ function UserInfoSettings({ username }) {
           <Text fontWeight={600} marginBottom="30px" width="18%">Profile Picture</Text>
           <Stack direction={['column', 'row']} spacing={6}>
             <Center>
-              <Avatar size="xl" src="https://bit.ly/sage-adebayo">
+              <Avatar size="xl" src={avatarUrl}>
                 <AvatarBadge
                   aria-label="remove Image"
                   as={IconButton}
-                  colorScheme="red"
+                  colorScheme="pink"
                   icon={<SmallCloseIcon />}
                   rounded="full"
                   size="sm"
@@ -58,7 +84,16 @@ function UserInfoSettings({ username }) {
               </Avatar>
             </Center>
             <Flex alignItems="center" direction="row">
-              <Button>Update</Button>
+              <InputGroup onClick={handleUpdate}>
+                <input
+                  accept="image/*"
+                  hidden
+                  ref={inputRef}
+                  type="file"
+                  onChange={handleUpload}
+                />
+                <Button>Update</Button>
+              </InputGroup>
             </Flex>
           </Stack>
         </Flex>

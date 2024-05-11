@@ -19,9 +19,6 @@ function UserGames({ username }) {
   // store user's saved games
   const games = useUserGames();
 
-  console.log('games');
-  console.log(games);
-
   // select game and fetch data
   const onSelectGame = useCallback((game, coverUrl, year) => {
     dispatch(selectGame(game, coverUrl, year));
