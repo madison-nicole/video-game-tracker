@@ -6,6 +6,7 @@ import authReducer from './auth-reducer';
 import errorReducer from './error-reducer';
 import IGDBReducer from './igdb-reducer';
 import userReducer from './user-reducer';
+import twitchReducer from './twitch-reducer';
 
 const rootReducer = combineReducers({
   posts: postsReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   error: errorReducer,
   igdb: IGDBReducer,
   user: userReducer,
+  twitch: twitchReducer,
 });
 
 export default rootReducer;

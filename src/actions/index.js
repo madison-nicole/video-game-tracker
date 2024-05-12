@@ -1,6 +1,7 @@
 import * as IGDB from '../api/igdb';
 import { signInSuccess, signUpSuccess } from '../utils/text-utils';
 import * as GameDex from '../api/gamedex';
+import * as Twitch from '../api/twitch';
 
 // keys for actiontypes
 export const ActionTypes = {
@@ -20,6 +21,9 @@ export const ActionTypes = {
 
   SELECT_GAME: 'SELECT_GAME',
   CLEAR_SELECTED_GAME: 'CLEAR_SELECTED_GAME',
+
+  // Twitch Actions
+  TWITCH_TRENDING: 'TWITCH_TRENDING',
 };
 
 export function fetchGames() {
@@ -251,6 +255,20 @@ export function fetchUserGames(username) {
       const games = await GameDex.getUserGames(username);
 
       dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: games });
+    } catch (error) {
+      // For now, if we get an error, just log it.
+      // Add error handling later
+      console.log('error', error);
+    }
+  };
+}
+
+export function fetchTrendingGames() {
+  return async (dispatch) => {
+    try {
+      const games = await Twitch.getTrendingGames();
+
+      dispatch({ type: ActionTypes.TWITCH_TRENDING, payload: games });
     } catch (error) {
       // For now, if we get an error, just log it.
       // Add error handling later
