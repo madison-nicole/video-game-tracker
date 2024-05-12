@@ -62,7 +62,7 @@ function getSpan(index) {
   return 2;
 }
 
-function TrendingGames({ games }) {
+function TrendingGames(props) {
   const trending = useTrendingGames();
 
   function renderTrendingGames() {
@@ -71,6 +71,9 @@ function TrendingGames({ games }) {
       return (
         <GridItem colSpan={span} key={game.igdb_id} rowSpan={span}>
           <Image
+            _hover={{
+              cursor: 'pointer',
+            }}
             alignItems="center"
             alt="game cover photo"
             borderStyle="solid"

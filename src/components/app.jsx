@@ -21,7 +21,6 @@ import * as Twitch from '../api/twitch';
 
 export default function App(props) {
   const userInfo = useUserInfo();
-  console.log('userInfo');
   console.log(userInfo);
 
   // state
@@ -45,12 +44,11 @@ export default function App(props) {
   useEffect(() => {
     async function getTrendingGames() {
       // Get access token if it isn't stored already
-      const twitchToken = localStorage.getItem('twitchToken');
+      let twitchToken = localStorage.getItem('twitchToken');
       if (!twitchToken) {
-        await Twitch.getAccessToken();
+        twitchToken = await Twitch.getAccessToken();
         localStorage.setItem('twitchToken', twitchToken);
       }
-
       // Fetch trending games
       dispatch(fetchTrendingGames());
     }
