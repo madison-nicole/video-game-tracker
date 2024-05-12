@@ -16,6 +16,13 @@ export function useTopRated() {
 }
 
 /**
+ * @returns an array of trending games on twitch
+ */
+export function useTrendingGames() {
+  return useSelector((reduxState) => reduxState.twitch?.trending);
+}
+
+/**
  * @returns an object with data for the selected game
  */
 export function useSelectedGame() {
