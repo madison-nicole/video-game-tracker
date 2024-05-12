@@ -1,19 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button, Flex, Stack, useColorModeValue, Avatar,
   AvatarBadge, IconButton, Center, Text,
-  InputGroup,
-  // Editable, EditablePreview, EditableInput,
 } from '@chakra-ui/react';
 import { CheckIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import UserInfoInput from './user-info-input';
 import { useUserInfo } from '../../../../hooks/redux-hooks';
+// import UpdatePhotoButton from './update-photo-button';
+import UploadProfilePhoto from './upload-profile-photo';
 
 function UserInfoSettings(props) {
   // store data
   const userInfo = useUserInfo();
-
-  const inputRef = useRef(null);
 
   // state
   const [photo, setPhoto] = useState('');
@@ -26,18 +24,6 @@ function UserInfoSettings(props) {
   // const bio = 'insert bio here';
   // const website = 'www.mylinks.com';
   // const avatarUrl = 'https://bit.ly/sage-adebayo';
-
-  // upload profile photo functionality
-  const handleUpload = (e) => {
-    console.log(e);
-    if (e.target.files) {
-      setPhoto(e.target.files?.[0]);
-    }
-  };
-
-  const handleUpdate = () => {
-    inputRef.current?.click();
-  };
 
   return (
     <Flex align="flex-start"
@@ -84,16 +70,8 @@ function UserInfoSettings(props) {
               </Avatar>
             </Center>
             <Flex alignItems="center" direction="row">
-              <InputGroup onClick={handleUpdate}>
-                <input
-                  accept="image/*"
-                  hidden
-                  ref={inputRef}
-                  type="file"
-                  onChange={handleUpload}
-                />
-                <Button>Update</Button>
-              </InputGroup>
+              <UploadProfilePhoto setPhoto={setPhoto} />
+              {/* <UpdatePhotoButton setPhoto={setPhoto} /> */}
             </Flex>
           </Stack>
         </Flex>
