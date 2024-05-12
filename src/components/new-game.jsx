@@ -5,11 +5,14 @@ import { useNavigate } from 'react-router';
 import { addNewGame } from '../actions';
 
 function NewGame(props) {
+  // state
   const [value, setValue] = React.useState('');
-  const handleChange = (event) => setValue(event.target.value);
 
+  // hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleChange = (event) => setValue(event.target.value);
 
   const addGame = () => {
     dispatch(addNewGame(value, navigate));
