@@ -10,7 +10,9 @@ import {
 } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 import debounce from 'lodash.debounce';
-import { searchGames, searchGamesPreview, selectGameAndLoadData } from '../../actions';
+import {
+  searchGames, searchGamesPreview, selectGameAndLoadData, clearSearchResults,
+} from '../../actions';
 import { useSearchResultsPreview } from '../../hooks/redux-hooks';
 import { useOnKeyDown, ENTER_KEY } from '../../hooks/event-hooks';
 
@@ -35,6 +37,10 @@ function SearchBar({ gamesData, onSelectGame }) {
 
   const onSearchButtonClick = useCallback(() => {
     if (search.length > 0) { // only run if search exists
+      // clear previous results
+      dispatch(clearSearchResults());
+
+      // dispatch new search
       dispatch(searchGames(search));
       navigate('/results');
       onClose();

@@ -180,7 +180,7 @@ export function searchGames(searchTerm) {
       const years = await IGDB.fetchGameReleaseYears(games);
       // dispatch a new action type, which will put the search results into the Redux store
       dispatch({
-        type: ActionTypes.IGDB_SEARCH, games, covers, years,
+        type: ActionTypes.IGDB_SEARCH, payload: { games, covers, years },
       });
     } catch (error) {
       // For now, if we get an error, just log it.
@@ -287,5 +287,12 @@ export function fetchTrendingGames() {
         console.log('error', err);
       }
     }
+  };
+}
+
+export function clearSearchResults() {
+  return {
+    type: ActionTypes.IGDB_SEARCH,
+    payload: null,
   };
 }

@@ -27,8 +27,6 @@ function TrendingGames() {
   const hoverTimeoutRef = useRef();
   const trending = useTrendingGames();
 
-  console.log(trending);
-
   const onMouseEnterGridItem = useCallback((gameIdx) => {
     hoverTimeoutRef.current = setTimeout(() => {
       setHoveredGameIdx(gameIdx);

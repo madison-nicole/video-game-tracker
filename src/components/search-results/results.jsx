@@ -4,6 +4,7 @@ import { selectGame } from '../../actions';
 import ResultsList from './results-list';
 import JumpToTop from '../jump-to-top';
 import { useSearchResults } from '../../hooks/redux-hooks';
+import SkeletonList from '../skeleton-list';
 
 function Results({ search }) {
   // hooks
@@ -16,7 +17,7 @@ function Results({ search }) {
   }, [dispatch]);
 
   if (!results) {
-    return <div />;
+    return <div className="results-page"><SkeletonList /></div>;
   }
 
   return (

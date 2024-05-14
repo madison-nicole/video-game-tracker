@@ -12,7 +12,7 @@ const IGDBReducer = (state = initialState, action = {}) => {
     case ActionTypes.IGDB_SEARCH_PREVIEW:
       return { ...state, resultsPreview: action.payload };
     case ActionTypes.IGDB_SEARCH:
-      return { ...state, results: { games: action.games, covers: action.covers, years: action.years } };
+      return { ...state, results: action.payload };
     case ActionTypes.IGDB_TOP_RATED:
       return {
         ...state, topRated: { games: action.games, covers: action.covers, years: action.years },
