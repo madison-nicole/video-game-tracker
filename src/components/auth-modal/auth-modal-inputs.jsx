@@ -22,12 +22,14 @@ function AuthModalInputs({
   if (account) {
     return (
       <ModalBody className="auth-form">
+        {/* <HStack> */}
         <AuthModalInput
           placeholder="Email or Username"
           value={emailOrUsername}
           onChange={(e) => setEmailOrUsername(e.target.value)}
         />
         {/* <VerifyInputIcon /> */}
+        {/* </HStack> */}
         <PasswordInput password={password} setPassword={setPassword} onEnter={logInOnEnter} />
       </ModalBody>
     );
