@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { ModalBody, HStack } from '@chakra-ui/react';
+import { ModalBody } from '@chakra-ui/react';
 import AuthModalInput from './auth-modal-input';
 import PasswordInput from './password-input';
 // import VerifyInputIcon from './verify-input-icon';
@@ -22,14 +22,12 @@ function AuthModalInputs({
   if (account) {
     return (
       <ModalBody className="auth-form">
-        <HStack>
-          <AuthModalInput
-            placeholder="Email or Username"
-            value={emailOrUsername}
-            onChange={(e) => setEmailOrUsername(e.target.value)}
-          />
-          {/* <VerifyInputIcon /> */}
-        </HStack>
+        <AuthModalInput
+          placeholder="Email or Username"
+          value={emailOrUsername}
+          onChange={(e) => setEmailOrUsername(e.target.value)}
+        />
+        {/* <VerifyInputIcon /> */}
         <PasswordInput password={password} setPassword={setPassword} onEnter={logInOnEnter} />
       </ModalBody>
     );
