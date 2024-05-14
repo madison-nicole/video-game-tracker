@@ -11,8 +11,6 @@ import { selectGame } from '../../../actions';
 import TopRatedSkeleton from './top-rated-skeleton';
 
 function TopRatedList({ gamesData }) {
-  console.log(gamesData);
-
   // hooks
   const dispatch = useDispatch();
 

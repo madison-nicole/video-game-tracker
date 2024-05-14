@@ -5,10 +5,18 @@ import {
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { getSpan, TILE_INDEX_TO_GAME_INDEX } from '../../../utils/masonry-utils';
-import { useTwitchTrendingGames, useIgdbTrendingGames } from '../../../hooks/redux-hooks';
+import { useTwitchTrendingGames, useIgdbTrendingGames, useSelectedGame } from '../../../hooks/redux-hooks';
 import { selectGame } from '../../../actions';
 
-function getGameStyles(gameIdx, hoveredIdx) {
+function getGameStyles(gameIdx, hoveredIdx, modalOpen) {
+  if (modalOpen) {
+    return {
+      className: 'blue-gray-filter',
+      zIndex: 0,
+      filter: 'blur(2px) grayscale(100%)',
+    };
+  }
+
   if (hoveredIdx === null) return null;
 
   if (hoveredIdx === gameIdx) {
@@ -25,11 +33,15 @@ function getGameStyles(gameIdx, hoveredIdx) {
 }
 
 function TrendingGames() {
+  // hooks
   const dispatch = useDispatch();
-  const [hoveredGameIdx, setHoveredGameIdx] = useState(null);
   const hoverTimeoutRef = useRef();
   const trending = useTwitchTrendingGames();
   const igdbTrending = useIgdbTrendingGames();
+  const gameModal = useSelectedGame();
+
+  // state
+  const [hoveredGameIdx, setHoveredGameIdx] = useState(null);
 
   const onMouseEnterGridItem = useCallback((gameIdx) => {
     hoverTimeoutRef.current = setTimeout(() => {
@@ -60,7 +72,7 @@ function TrendingGames() {
       const span = getSpan(idx);
       const gameIdx = TILE_INDEX_TO_GAME_INDEX[idx];
       const game = trending[gameIdx];
-      const gameStyles = getGameStyles(gameIdx, hoveredGameIdx);
+      const gameStyles = getGameStyles(gameIdx, hoveredGameIdx, gameModal);
 
       if (game) {
         renderedGames.push(
@@ -85,6 +97,7 @@ function TrendingGames() {
               objectFit="cover"
               position="relative"
               src={game.box_art_url}
+              transition="filter 0.2s"
             />
           </GridItem>,
         );

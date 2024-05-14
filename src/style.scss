@@ -44,3 +44,10 @@ body, html {
 .trending-grid-item:hover ~ div {
     filter: grayscale(75%)!important;
 }
+
+.blue-gray-filter {
+    mask-image: url(./temp-media/bluegray90.png)!important;
+    mask-size: 100%!important;
+    mask-repeat: no-repeat!important;
+    mask-mode: luminance!important;
+}
