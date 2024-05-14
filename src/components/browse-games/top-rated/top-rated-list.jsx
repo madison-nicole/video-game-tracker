@@ -4,10 +4,10 @@ import {
   Progress,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import alternateCardColor from '../../utils/style-utils';
-import GameListButton from '../game/game-list-button';
+import alternateCardColor from '../../../utils/style-utils';
+import GameListButton from '../../game/game-list-button';
 import Ranking from './ranking';
-import { selectGame } from '../../actions';
+import { selectGame } from '../../../actions';
 
 function TopRatedList({ gamesData }) {
   // hooks

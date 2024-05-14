@@ -3,9 +3,9 @@ import {
   Tabs, TabList, TabPanels, Tab, TabPanel,
 } from '@chakra-ui/react';
 import JumpToTop from '../jump-to-top';
-import TopRatedList from './top-rated-list';
+import TopRatedList from './top-rated/top-rated-list';
 import { useTopRated } from '../../hooks/redux-hooks';
-import TrendingGames from './trending';
+import TrendingGames from './trending/trending';
 
 function BrowseGames(props) {
   // hooks
