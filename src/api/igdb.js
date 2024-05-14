@@ -88,7 +88,7 @@ export async function fetchGameCovers(games) {
  */
 export async function fetchGameReleaseYears(games) {
   const yearIds = games.map((game) => {
-    return game.release_dates?.[0];
+    return game.release_dates?.[0] ?? 0;
   });
 
   const query = `fields y; where id=(${yearIds.toString()}); limit 100;`;

@@ -3,8 +3,8 @@ import React, { useCallback, useRef, useState } from 'react';
 import {
   Grid, GridItem, Image,
 } from '@chakra-ui/react';
-import { useTrendingGames } from '../../../hooks/redux-hooks';
-import { TILE_INDEX_TO_GAME_INDEX, getSpan } from '../../../utils/masonry-utils';
+import { useTrendingGames } from '../../hooks/redux-hooks';
+import { getSpan, TILE_INDEX_TO_GAME_INDEX } from '../../utils/masonry-utils';
 
 function getGameStyles(gameIdx, hoveredIdx) {
   if (hoveredIdx === null) return null;
