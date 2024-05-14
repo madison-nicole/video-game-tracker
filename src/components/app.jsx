@@ -66,7 +66,7 @@ export default function App(props) {
           <Routes>
             <Route element={<BrowseGames />} path="/" />
             {/* temporary home page as browse games page */}
-            {/* <Route element={<BrowseGames />} path="/browse" /> */}
+            <Route element={<BrowseGames />} path="/browse" />
             <Route element={<RequireAuth> <NewGame /> </RequireAuth>} path="/games/new" />
             {/* <Route element={<Game />} path="/games/:gameID" /> */}
             <Route element={<Results />} path="/results" />

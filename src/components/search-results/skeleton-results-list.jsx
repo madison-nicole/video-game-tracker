@@ -2,12 +2,10 @@ import React from 'react';
 import {
   Card, Skeleton,
 } from '@chakra-ui/react';
-import alternateCardColor from '../utils/style-utils';
+import alternateCardColor from '../../utils/style-utils';
 
-function SkeletonList() {
+function SkeletonResultsList() {
   const renderedSkeleton = Array.from(Array(10).keys()).map((_, index) => {
-    // const { rating } = game;
-
     return (
       <Card
         direction={{ base: 'column', sm: 'row' }}
@@ -27,4 +25,4 @@ function SkeletonList() {
   return renderedSkeleton;
 }
 
-export default SkeletonList;
+export default SkeletonResultsList;

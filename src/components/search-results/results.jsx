@@ -4,7 +4,7 @@ import { selectGame } from '../../actions';
 import ResultsList from './results-list';
 import JumpToTop from '../jump-to-top';
 import { useSearchResults } from '../../hooks/redux-hooks';
-import SkeletonList from '../skeleton-list';
+import SkeletonList from './skeleton-results-list';
 
 function Results({ search }) {
   // hooks
