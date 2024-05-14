@@ -6,7 +6,7 @@ import { ChakraProvider, useDisclosure } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import NavBar from './nav-bar/nav-bar';
 import BrowseGames from './browse-games/browse-games';
-import Games from './games';
+// import Games from './games';
 import NewGame from './new-game';
 import RequireAuth from './require-auth';
 import Results from './search-results/results';
@@ -64,8 +64,9 @@ export default function App(props) {
           <AuthModal accountStatus={accountStatus} isOpen={isOpen} setAccountStatus={setAccountStatus} username={username} onClose={onClose} />
           <GameCard isOpenAuthModal={isOpen} openAuthModal={onOpen} />
           <Routes>
-            <Route element={<Games />} path="/" />
-            <Route element={<BrowseGames />} path="/browse" />
+            <Route element={<BrowseGames />} path="/" />
+            {/* temporary home page as browse games page */}
+            {/* <Route element={<BrowseGames />} path="/browse" /> */}
             <Route element={<RequireAuth> <NewGame /> </RequireAuth>} path="/games/new" />
             {/* <Route element={<Game />} path="/games/:gameID" /> */}
             <Route element={<Results />} path="/results" />

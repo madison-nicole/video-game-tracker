@@ -29,15 +29,15 @@ function UserProfile({ username }) {
       <Tabs colorScheme="gray" marginTop="75px" variant="soft-rounded">
         <TabList display="flex" justifyContent="center" margin={10}>
           <Tab cursor="pointer" fontSize={13.5} fontWeight={700}>GAMES</Tab>
-          <Tab cursor="pointer" fontSize={13.5} fontWeight={700}>STATS</Tab>
+          {/* <Tab cursor="pointer" fontSize={13.5} fontWeight={700}>STATS</Tab> */}
         </TabList>
         <TabPanels>
           <TabPanel>
             <UserGames username={username} />
           </TabPanel>
-          <TabPanel>
+          {/* <TabPanel>
             INSERT STATS HERE
-          </TabPanel>
+          </TabPanel> */}
         </TabPanels>
       </Tabs>
       <JumpToTop />

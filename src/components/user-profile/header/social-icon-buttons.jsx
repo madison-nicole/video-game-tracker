@@ -1,7 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faInstagram, faSquareXTwitter, faTwitch, faYoutube, faDiscord,
+  faInstagram, faSquareXTwitter, faTwitch,
+  faYoutube, faDiscord, faSteam,
 
 } from '@fortawesome/free-brands-svg-icons';
 import { Flex, IconButton } from '@chakra-ui/react';
@@ -39,6 +40,12 @@ function SocialIconButtons(props) {
         aria-label="social media name"
         cursor="pointer"
         icon={<FontAwesomeIcon icon={faDiscord} size="lg" />}
+        variant="ghost"
+      />
+      <IconButton
+        aria-label="social media name"
+        cursor="pointer"
+        icon={<FontAwesomeIcon icon={faSteam} size="lg" />}
         variant="ghost"
       />
     </Flex>

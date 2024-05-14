@@ -40,3 +40,7 @@ body, html {
   .results-page {
     margin: 80px 40px 80px 40px;
   }
+
+.trending-grid-item:hover ~ div {
+    filter: grayscale(75%)!important;
+}

@@ -23,7 +23,7 @@ function Settings({ user, username }) {
       <Tabs colorScheme="gray" marginTop="75px" variant="soft-rounded">
         <TabList display="flex" justifyContent="center" margin={10}>
           <Tab cursor="pointer" fontSize={13.5} fontWeight={700}>EDIT PROFILE</Tab>
-          <Tab cursor="pointer" fontSize={13.5} fontWeight={700}>ACCOUNT SETTINGS</Tab>
+          {/* <Tab cursor="pointer" fontSize={13.5} fontWeight={700}>ACCOUNT SETTINGS</Tab> */}
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -39,9 +39,9 @@ function Settings({ user, username }) {
               </Heading>
             </Flex>
           </TabPanel>
-          <TabPanel>
+          {/* <TabPanel>
             INSERT ACCOUNT SETTINGS HERE
-          </TabPanel>
+          </TabPanel> */}
         </TabPanels>
       </Tabs>
       <JumpToTop />

@@ -2,12 +2,16 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import {
-  IconButton, Box, Flex, Button,
+  // IconButton,
+  Box, Flex, Button, Image,
   useColorModeValue, HStack, useColorMode,
 } from '@chakra-ui/react';
-import { MoonIcon, SunIcon, BellIcon } from '@chakra-ui/icons';
+import {
+  MoonIcon, SunIcon,
+  // BellIcon
+} from '@chakra-ui/icons';
 import SearchBar from './search-bar';
 import { signoutUser } from '../../actions';
 import { useAuthenticated, useSearchResultsPreview } from '../../hooks/redux-hooks';
@@ -17,7 +21,7 @@ function NavBar({ onOpen, setAccountStatus, username }) {
   // hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation().pathname;
+  // const location = useLocation().pathname;
   const { colorMode, toggleColorMode } = useColorMode();
   const authenticated = useAuthenticated();
   const resultsPreview = useSearchResultsPreview();
@@ -60,13 +64,14 @@ function NavBar({ onOpen, setAccountStatus, username }) {
         <HStack variant="navButtonRow">
           <Flex alignItems="center">
             <HStack spacing={3}>
-              <IconButton
+              {/* notification button to re-add  */}
+              {/* <IconButton
                 aria-label="View notifications"
                 colorScheme="gray"
                 icon={<BellIcon />}
                 size="lg"
                 variant="ghost"
-              />
+              /> */}
             </HStack>
           </Flex>
           <NavProfileMenu handleBrowseGames={handleBrowseGames} handleSettings={handleSettings} handleYourProfile={handleYourProfile} signOut={signOut} username={username} />
@@ -91,13 +96,13 @@ function NavBar({ onOpen, setAccountStatus, username }) {
 
   // render a search bar when not on the home page
   function renderSearchBar() {
-    if (location === '/') {
-      return null;
-    } else {
-      return (
-        <SearchBar gamesData={resultsPreview} />
-      );
-    }
+    // temp browse games homepage
+    // if (location === '/') {
+    //   return null;
+    // } else {
+    return (
+      <SearchBar gamesData={resultsPreview} />
+    );
   }
 
   return (
@@ -105,7 +110,9 @@ function NavBar({ onOpen, setAccountStatus, username }) {
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex alignItems="center" h={16} justifyContent="space-between">
           <Flex justifyContent="flex-start" width="100%">
-            <Button cursor="pointer" onClick={handleHomeButton}>insert logo here</Button>
+            <Button cursor="pointer" onClick={handleHomeButton}>
+              <Image borderRadius="8px" src="./temp-media/temp-logo.png" />
+            </Button>
           </Flex>
           <Flex alignItems="center" justifyContent="center" width="100%">
             {renderSearchBar()}

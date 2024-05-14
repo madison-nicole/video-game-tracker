@@ -6,8 +6,8 @@ import SocialIconButtons from './social-icon-buttons';
 
 function UserProfileHeader({ userInfo }) {
   // store user data
-  const following = 85;
-  const followers = 550;
+  // const following = 85;
+  // const followers = 550;
   const profileLink = 'linktr.ee/xgigglypuff';
 
   const username = userInfo?.username;
@@ -27,12 +27,12 @@ function UserProfileHeader({ userInfo }) {
         </Text>
       </Flex>
       <Flex alignItems="flex-end" direction="column" justifyContent="flex-end" width="100%">
-        <Text>
+        {/* <Text>
           {following} Following
         </Text>
         <Text>
           {followers} Followers
-        </Text>
+        </Text> */}
         <Button src={`https://${profileLink}`} variant="link">
           {profileLink}
         </Button>
