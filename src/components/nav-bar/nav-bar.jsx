@@ -110,8 +110,8 @@ function NavBar({ onOpen, setAccountStatus, username }) {
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex alignItems="center" h={16} justifyContent="space-between">
           <Flex justifyContent="flex-start" width="100%">
-            <Button cursor="pointer" onClick={handleHomeButton}>
-              <Image borderRadius="8px" src="./temp-media/temp-logo.png" />
+            <Button cursor="pointer" variant="link" onClick={handleHomeButton}>
+              <Image _hover={{ filter: 'brightness(0.8)' }} borderRadius="8px" height="32px" src="src/temp-media/temp-logo.png" />
             </Button>
           </Flex>
           <Flex alignItems="center" justifyContent="center" width="100%">
