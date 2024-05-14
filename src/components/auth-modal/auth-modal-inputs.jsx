@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { ModalBody, HStack } from '@chakra-ui/react';
 import AuthModalInput from './auth-modal-input';
 import PasswordInput from './password-input';
-import VerifyInputIcon from './verify-input-icon';
+// import VerifyInputIcon from './verify-input-icon';
 import { isUsernameTaken } from '../../api/gamedex';
 
 function AuthModalInputs({
@@ -28,7 +28,7 @@ function AuthModalInputs({
             value={emailOrUsername}
             onChange={(e) => setEmailOrUsername(e.target.value)}
           />
-          <VerifyInputIcon />
+          {/* <VerifyInputIcon /> */}
         </HStack>
         <PasswordInput password={password} setPassword={setPassword} onEnter={logInOnEnter} />
       </ModalBody>
