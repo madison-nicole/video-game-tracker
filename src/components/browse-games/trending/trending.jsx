@@ -3,8 +3,10 @@ import React, { useCallback, useRef, useState } from 'react';
 import {
   Grid, GridItem, Image,
 } from '@chakra-ui/react';
-import { useTrendingGames } from '../../hooks/redux-hooks';
-import { getSpan, TILE_INDEX_TO_GAME_INDEX } from '../../utils/masonry-utils';
+import { useDispatch } from 'react-redux';
+import { getSpan, TILE_INDEX_TO_GAME_INDEX } from '../../../utils/masonry-utils';
+import { useTwitchTrendingGames, useIgdbTrendingGames } from '../../../hooks/redux-hooks';
+import { selectGame } from '../../../actions';
 
 function getGameStyles(gameIdx, hoveredIdx) {
   if (hoveredIdx === null) return null;
@@ -23,9 +25,11 @@ function getGameStyles(gameIdx, hoveredIdx) {
 }
 
 function TrendingGames() {
+  const dispatch = useDispatch();
   const [hoveredGameIdx, setHoveredGameIdx] = useState(null);
   const hoverTimeoutRef = useRef();
-  const trending = useTrendingGames();
+  const trending = useTwitchTrendingGames();
+  const igdbTrending = useIgdbTrendingGames();
 
   const onMouseEnterGridItem = useCallback((gameIdx) => {
     hoverTimeoutRef.current = setTimeout(() => {
@@ -38,6 +42,17 @@ function TrendingGames() {
     clearTimeout(hoverTimeoutRef);
   }, []);
 
+  const onSelectGame = useCallback((twitchGame) => {
+    const igdbGame = igdbTrending?.games?.find((game) => `${game.id}` === twitchGame.igdb_id);
+    if (!igdbGame) {
+      return;
+    }
+    const igdbCover = `https:${igdbTrending?.covers?.[igdbGame?.cover]}`.replace('thumb', 'cover_big');
+    const igdbYear = igdbTrending?.years[igdbGame?.release_dates?.[0]];
+
+    dispatch(selectGame(igdbGame, igdbCover, igdbYear));
+  }, [dispatch, igdbTrending]);
+
   function renderTrendingGames() {
     const renderedGames = [];
 
@@ -45,7 +60,6 @@ function TrendingGames() {
       const span = getSpan(idx);
       const gameIdx = TILE_INDEX_TO_GAME_INDEX[idx];
       const game = trending[gameIdx];
-
       const gameStyles = getGameStyles(gameIdx, hoveredGameIdx);
 
       if (game) {
@@ -54,6 +68,7 @@ function TrendingGames() {
             colSpan={span}
             key={game.igdb_id}
             rowSpan={span}
+            onClick={() => onSelectGame(game)}
             onMouseEnter={() => onMouseEnterGridItem(gameIdx)}
             onMouseLeave={onMouseLeaveGridItem}
           >
