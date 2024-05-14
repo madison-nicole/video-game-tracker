@@ -8,8 +8,11 @@ import alternateCardColor from '../../../utils/style-utils';
 import GameListButton from '../../game/game-list-button';
 import Ranking from './ranking';
 import { selectGame } from '../../../actions';
+import TopRatedSkeleton from './top-rated-skeleton';
 
 function TopRatedList({ gamesData }) {
+  console.log(gamesData);
+
   // hooks
   const dispatch = useDispatch();
 
@@ -20,6 +23,11 @@ function TopRatedList({ gamesData }) {
   const onSelectGame = useCallback((game, coverUrl, year) => {
     dispatch(selectGame(game, coverUrl, year));
   }, [dispatch]);
+
+  // render a skeleton loading state
+  if (!games) {
+    return <TopRatedSkeleton />;
+  }
 
   const renderedGames = games?.map((game, index) => {
     const coverUrl = `https:${covers[game.cover]}`.replace('thumb', 'cover_big');

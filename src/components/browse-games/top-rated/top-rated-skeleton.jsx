@@ -9,7 +9,7 @@ function TopRatedSkeleton(props) {
     return (
       <Card
         direction={{ base: 'column', sm: 'row' }}
-        // height="131px"
+        height="168px"
         // eslint-disable-next-line react/no-array-index-key
         key={index}
         ml={40}
