@@ -18,8 +18,15 @@ export function useTopRated() {
 /**
  * @returns an array of trending games on twitch
  */
-export function useTrendingGames() {
+export function useTwitchTrendingGames() {
   return useSelector((reduxState) => reduxState.twitch?.trending);
+}
+
+/**
+ * @returns an array of trending games on twitch
+ */
+export function useIgdbTrendingGames() {
+  return useSelector((reduxState) => reduxState.igdb?.trending);
 }
 
 /**
