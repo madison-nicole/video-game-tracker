@@ -18,6 +18,7 @@ function ResultsList({ gamesData, onSelectGame }) {
     return (
       <Card
         direction={{ base: 'column', sm: 'row' }}
+        height="131px"
         key={game.id}
         ml="250px"
         mr="250px"
