@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useCallback, useRef, useState } from 'react';
-import { Grid, GridItem, Image } from '@chakra-ui/react';
+import {
+  Grid, GridItem, Image,
+} from '@chakra-ui/react';
 import { useTrendingGames } from '../../hooks/redux-hooks';
 import { getSpan, TILE_INDEX_TO_GAME_INDEX } from '../../utils/masonry-utils';
 
@@ -24,6 +26,8 @@ function TrendingGames() {
   const [hoveredGameIdx, setHoveredGameIdx] = useState(null);
   const hoverTimeoutRef = useRef();
   const trending = useTrendingGames();
+
+  console.log(trending);
 
   const onMouseEnterGridItem = useCallback((gameIdx) => {
     hoverTimeoutRef.current = setTimeout(() => {
