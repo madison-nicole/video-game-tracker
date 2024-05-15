@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton,
   Heading, Button, Text, Image, Stack, ButtonGroup,
@@ -18,7 +18,7 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   const accountInfo = useAccountInfo();
 
   // state
-  const [userRating, setUserRating] = useState(game?.userRating ?? 0);
+  const [userRating, setUserRating] = useState(0);
 
   // store the user data
   const username = accountInfo?.username;
@@ -29,6 +29,12 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
 
   // Chakra modal setup
   const finalRef = React.useRef(null);
+
+  useEffect(() => {
+    if (game?.userRating) {
+      setUserRating(game?.userRating);
+    }
+  }, [game]);
 
   const onCloseGame = useCallback(() => {
     setUserRating(0);
