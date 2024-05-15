@@ -144,7 +144,7 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
                   <Slider
                     aria-label="Your game rating"
                     colorScheme="green"
-                    defaultValue={0}
+                    value={userRating}
                     onChange={(val) => setUserRating(val)}
                   >
                     <SliderTrack>
