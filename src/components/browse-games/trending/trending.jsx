@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useCallback, useRef, useState } from 'react';
 import {
-  Grid, GridItem, Image,
+  Grid, GridItem, Image, Skeleton,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { getSpan, TILE_INDEX_TO_GAME_INDEX } from '../../../utils/masonry-utils';
@@ -71,7 +71,7 @@ function TrendingGames() {
     for (let idx = 0; idx < 78; idx += 1) {
       const span = getSpan(idx);
       const gameIdx = TILE_INDEX_TO_GAME_INDEX[idx];
-      const game = trending[gameIdx];
+      const game = trending?.[gameIdx];
       const gameStyles = getGameStyles(gameIdx, hoveredGameIdx, gameModal);
 
       if (game) {
@@ -84,31 +84,29 @@ function TrendingGames() {
             onMouseEnter={() => onMouseEnterGridItem(gameIdx)}
             onMouseLeave={onMouseLeaveGridItem}
           >
-            <Image
-              {...gameStyles}
-              _hover={{
-                cursor: 'pointer',
-              }}
-              alignItems="center"
-              alt="game cover photo"
-              borderStyle="solid"
-              borderWidth={3}
-              cursor="pointer"
-              objectFit="cover"
-              position="relative"
-              src={game.box_art_url}
-              transition="filter 0.2s"
-            />
+            {!game ? (
+              <Image
+                {...gameStyles}
+                _hover={{
+                  cursor: 'pointer',
+                }}
+                alignItems="center"
+                alt="game cover photo"
+                borderStyle="solid"
+                borderWidth={3}
+                cursor="pointer"
+                objectFit="cover"
+                position="relative"
+                src={game.box_art_url}
+                transition="filter 0.2s"
+              />
+            ) : <Skeleton h="100%" minH="200px" w="100%" />}
           </GridItem>,
         );
       }
     }
 
     return renderedGames;
-  }
-
-  if (!trending) {
-    return null;
   }
 
   return (
