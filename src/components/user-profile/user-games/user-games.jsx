@@ -22,10 +22,8 @@ function UserGames({ username }) {
 
   // select game and fetch data
   const onSelectGame = useCallback((game) => {
-    console.log(userInfo);
     const userRating = userInfo?.games?.[game.id];
     const { coverUrl, releaseYear, avgRating } = game;
-    console.log(game);
     dispatch(selectGame(game, coverUrl, releaseYear, avgRating, userRating));
   }, [dispatch, userInfo]);
 
