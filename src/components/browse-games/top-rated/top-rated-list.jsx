@@ -18,8 +18,8 @@ function TopRatedList({ gamesData }) {
   const { games, covers, years } = gamesData;
 
   // select game and fetch data
-  const onSelectGame = useCallback((game, coverUrl, year) => {
-    dispatch(selectGame(game, coverUrl, year));
+  const onSelectGame = useCallback((game, coverUrl, year, avgRating) => {
+    dispatch(selectGame(game, coverUrl, year, avgRating));
   }, [dispatch]);
 
   // render a skeleton loading state
@@ -56,7 +56,7 @@ function TopRatedList({ gamesData }) {
           mt={3.5}
           objectFit="cover"
           src={coverUrl}
-          onClick={() => onSelectGame(game, coverUrl, year)}
+          onClick={() => onSelectGame(game, coverUrl, year, rating)}
         />
 
         <CardBody
@@ -71,7 +71,7 @@ function TopRatedList({ gamesData }) {
             fontSize={18}
             fontWeight="700"
             width="100%"
-            onClick={() => onSelectGame(game, coverUrl, year)}
+            onClick={() => onSelectGame(game, coverUrl, year, rating)}
           >
             {title}
           </Heading>
@@ -108,7 +108,7 @@ function TopRatedList({ gamesData }) {
           justifyContent="flex-end"
           mr="20px"
         >
-          <GameListButton id={game.id} onAdd={() => onSelectGame(game, coverUrl, year)} />
+          <GameListButton id={game.id} onAdd={() => onSelectGame(game, coverUrl, year, rating)} />
         </CardFooter>
       </Card>
     );

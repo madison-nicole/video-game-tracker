@@ -25,7 +25,7 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
 
   // store the game data
   const title = game?.name; // game title
-  const avgRating = game?.rating?.toFixed(2); // avg rating rounded to two decimals
+  const avgRating = game?.avgRating?.toFixed(2); // avg rating rounded to two decimals
 
   // Chakra modal setup
   const finalRef = React.useRef(null);

@@ -61,8 +61,9 @@ function TrendingGames() {
     }
     const igdbCover = `https:${igdbTrending?.covers?.[igdbGame?.cover]}`.replace('thumb', 'cover_big');
     const igdbYear = igdbTrending?.years[igdbGame?.release_dates?.[0]];
+    const igdbRating = igdbGame.rating;
 
-    dispatch(selectGame(igdbGame, igdbCover, igdbYear));
+    dispatch(selectGame(igdbGame, igdbCover, igdbYear, igdbRating));
   }, [dispatch, igdbTrending]);
 
   function renderTrendingGames() {

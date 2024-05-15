@@ -13,7 +13,7 @@ function ResultsList({ gamesData, onSelectGame }) {
     const year = years[game?.release_dates?.[0]];
     const title = game.name?.toUpperCase();
 
-    // const { rating } = game;
+    const { rating } = game;
 
     return (
       <Card
@@ -39,7 +39,7 @@ function ResultsList({ gamesData, onSelectGame }) {
           mt={3.5}
           objectFit="cover"
           src={coverUrl}
-          onClick={() => onSelectGame(game, coverUrl, year)}
+          onClick={() => onSelectGame(game, coverUrl, year, rating)}
         />
 
         <CardBody
@@ -54,7 +54,7 @@ function ResultsList({ gamesData, onSelectGame }) {
             fontSize={18}
             fontWeight="700"
             width="100%"
-            onClick={() => onSelectGame(game, coverUrl, year)}
+            onClick={() => onSelectGame(game, coverUrl, year, rating)}
           >
             {title}
           </Heading>
@@ -76,7 +76,7 @@ function ResultsList({ gamesData, onSelectGame }) {
           justifyContent="flex-end"
           mr="20px"
         >
-          <GameListButton onAdd={() => onSelectGame(game, coverUrl, year)} />
+          <GameListButton onAdd={() => onSelectGame(game, coverUrl, year, rating)} />
         </CardFooter>
       </Card>
     );

@@ -12,8 +12,8 @@ function Results({ search }) {
   const dispatch = useDispatch();
 
   // function for loading the individual game page
-  const onSelectGame = useCallback((game, coverUrl, year) => {
-    dispatch(selectGame(game, coverUrl, year));
+  const onSelectGame = useCallback((game, coverUrl, year, avgRating) => {
+    dispatch(selectGame(game, coverUrl, year, avgRating));
   }, [dispatch]);
 
   if (!results) {
