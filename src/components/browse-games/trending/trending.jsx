@@ -84,7 +84,7 @@ function TrendingGames() {
             onMouseEnter={() => onMouseEnterGridItem(gameIdx)}
             onMouseLeave={onMouseLeaveGridItem}
           >
-            {!game ? (
+            {game ? (
               <Image
                 {...gameStyles}
                 _hover={{
