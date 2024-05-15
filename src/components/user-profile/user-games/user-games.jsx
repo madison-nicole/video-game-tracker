@@ -3,7 +3,7 @@ import { SimpleGrid } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { fetchUserGames, selectGame } from '../../../actions';
 import UserGame from './user-game';
-import { useUserGames } from '../../../hooks/redux-hooks';
+import { useUserGames, useUserInfo } from '../../../hooks/redux-hooks';
 
 function UserGames({ username }) {
   // hooks
@@ -18,13 +18,16 @@ function UserGames({ username }) {
 
   // store user's saved games
   const games = useUserGames();
+  const userInfo = useUserInfo();
 
   // select game and fetch data
   const onSelectGame = useCallback((game) => {
+    console.log(userInfo);
+    const userRating = userInfo?.games?.[game.id];
     const { coverUrl, releaseYear, avgRating } = game;
     console.log(game);
-    dispatch(selectGame(game, coverUrl, releaseYear, avgRating));
-  }, [dispatch]);
+    dispatch(selectGame(game, coverUrl, releaseYear, avgRating, userRating));
+  }, [dispatch, userInfo]);
 
   if (!games) {
     return null;

@@ -11,14 +11,14 @@ import { useAuthenticated, useSelectedGame, useAccountInfo } from '../../hooks/r
 import { saveGame } from '../../api/gamedex';
 
 function GameCard({ openAuthModal, isOpenAuthModal }) {
-  // state
-  const [userRating, setUserRating] = useState(0);
-
   // hooks
   const dispatch = useDispatch();
   const authenticated = useAuthenticated(); // to check if user is signed in
   const game = useSelectedGame(); // to grab data from selected game
   const accountInfo = useAccountInfo();
+
+  // state
+  const [userRating, setUserRating] = useState(game?.userRating ?? 0);
 
   // store the user data
   const username = accountInfo?.username;

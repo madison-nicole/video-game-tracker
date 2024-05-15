@@ -211,12 +211,12 @@ export function fetchTopRatedGames() {
   };
 }
 
-export function selectGame(game, coverUrl, year, avgRating) {
+export function selectGame(game, coverUrl, year, avgRating, userRating = undefined) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.SELECT_GAME,
       payload: {
-        ...game, coverUrl, year, avgRating,
+        ...game, coverUrl, year, avgRating, userRating,
       },
     });
   };
