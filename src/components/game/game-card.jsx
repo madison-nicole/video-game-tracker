@@ -107,7 +107,7 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
                 <Image
                   alt="Game cover"
                   borderRadius="lg"
-                  maxH="280px"
+                  h="280px"
                   src={game.coverUrl}
                 />
                 <Text

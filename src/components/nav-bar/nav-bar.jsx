@@ -111,7 +111,7 @@ function NavBar({ onOpen, setAccountStatus, username }) {
         <Flex alignItems="center" h={16} justifyContent="space-between">
           <Flex justifyContent="flex-start" width="100%">
             <Button cursor="pointer" variant="link" onClick={handleHomeButton}>
-              <Image _hover={{ filter: 'brightness(0.8)' }} borderRadius="8px" height="32px" src="src/temp-media/temp-logo.png" />
+              <Image _hover={{ filter: 'brightness(0.8)' }} borderRadius="8px" height="32px" src="src/media/temp-logo.png" />
             </Button>
           </Flex>
           <Flex alignItems="center" justifyContent="center" width="100%">
