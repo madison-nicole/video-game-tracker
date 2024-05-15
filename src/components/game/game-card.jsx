@@ -39,7 +39,7 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
     // store the game model
     const savedGame = {
       id: game?.id,
-      title: game?.name,
+      name: game?.name,
       coverUrl: game?.coverUrl,
       summary: game?.summary,
       releaseYear: game?.year,

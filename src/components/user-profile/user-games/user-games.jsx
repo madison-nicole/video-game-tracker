@@ -20,8 +20,10 @@ function UserGames({ username }) {
   const games = useUserGames();
 
   // select game and fetch data
-  const onSelectGame = useCallback((game, coverUrl, year) => {
-    dispatch(selectGame(game, coverUrl, year));
+  const onSelectGame = useCallback((game) => {
+    const { coverUrl, releaseYear, avgRating } = game;
+    console.log(game);
+    dispatch(selectGame(game, coverUrl, releaseYear, avgRating));
   }, [dispatch]);
 
   if (!games) {
@@ -29,10 +31,10 @@ function UserGames({ username }) {
   }
 
   const renderGame = games?.map((game) => {
-    const { id, coverUrl, year } = game;
+    const { id, coverUrl } = game;
 
     return (
-      <UserGame coverUrl={coverUrl} key={id} selectGame={() => onSelectGame(game, coverUrl, year)} />
+      <UserGame coverUrl={coverUrl} key={id} selectGame={() => onSelectGame(game)} />
     );
   });
 

@@ -55,11 +55,11 @@ export function fetchGame(id, navigate) {
 }
 
 // add the game to the database
-export function addNewGame(title, navigate, userRating) {
+export function addNewGame(name, navigate, userRating) {
   return async (dispatch) => {
     try {
       const fields = {
-        title, rating: userRating, content: '', coverUrl: '', tags: '',
+        name, rating: userRating, content: '', coverUrl: '', tags: '',
       };
       await GameDex.addGame(fields);
       navigate('/');
@@ -70,11 +70,11 @@ export function addNewGame(title, navigate, userRating) {
 }
 
 // update game information when clicking the save button
-export function updateGame(id, navigate, newTitle) {
+export function updateGame(id, navigate, newName) {
   return async (dispatch) => {
     try {
       const fields = {
-        title: newTitle, rating: '', content: '', coverUrl: '', tags: '',
+        name: newName, rating: '', content: '', coverUrl: '', tags: '',
       };
       const game = await GameDex.updateGame(fields);
       dispatch({ type: ActionTypes.FETCH_POST, payload: game });
@@ -211,9 +211,14 @@ export function fetchTopRatedGames() {
   };
 }
 
-export function selectGame(game, coverUrl, year) {
+export function selectGame(game, coverUrl, year, avgRating) {
   return (dispatch) => {
-    dispatch({ type: ActionTypes.SELECT_GAME, payload: { ...game, coverUrl, year } });
+    dispatch({
+      type: ActionTypes.SELECT_GAME,
+      payload: {
+        ...game, coverUrl, year, avgRating,
+      },
+    });
   };
 }
 
