@@ -16,25 +16,24 @@ function UserGame({ coverUrl, selectGame }) {
       }}
     >
       <ShowButtons display={hovered} />
-      <div className={hovered ? 'gray-on-hover' : ''}>
-        <Card
-          alignItems="center"
-          cursor="pointer"
-          justifyContent="center"
-          maxW="fit-content"
-          onClick={selectGame}
-        >
-          <CardBody padding="4px">
-            <Image
-              alt="Game cover"
-              borderRadius="lg"
-              maxH="200px"
-              src={coverUrl}
-              transition="opacity 0.3s"
-            />
-          </CardBody>
-        </Card>
-      </div>
+      <Card
+        alignItems="center"
+        className={hovered ? 'gray-on-hover' : 'not-gray-on-hover'}
+        cursor="pointer"
+        justifyContent="center"
+        maxW="fit-content"
+        onClick={selectGame}
+      >
+        <CardBody padding="4px">
+          <Image
+            alt="Game cover"
+            borderRadius="lg"
+            maxH="200px"
+            src={coverUrl}
+            transition="opacity 0.3s"
+          />
+        </CardBody>
+      </Card>
     </div>
   );
 }

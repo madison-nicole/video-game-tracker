@@ -72,15 +72,6 @@ function AuthModal({
   // sign up when the user presses enter
   const signUpOnEnter = useOnKeyDown(createUser, ENTER_KEY);
 
-  // if user is logged in successfully
-  // toast({
-  //   position: 'top',
-  //   title: logInSuccess,
-  //   status: 'success',
-  //   duration: 3000,
-  //   isClosable: true,
-  // });
-
   return (
     <div>
       <Modal blockScrollOnMount={false} isOpen={isOpen} scrollBehavior="inside" onClose={onClose}>

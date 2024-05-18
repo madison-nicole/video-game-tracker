@@ -8,8 +8,12 @@ function ShowButtons({ display }) {
 
   return (
     <ButtonGroup
-      display={display ? 'block' : 'none'}
+      alignItems="center"
+      display={display ? 'flex' : 'none'}
+      height="208px"
+      justifyContent="center"
       position="absolute"
+      width="158px"
       zIndex={3}
     >
       <IconButton
