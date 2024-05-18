@@ -75,7 +75,7 @@ export function loadUser() {
     try {
       const user = await GameDex.fetchUser();
       if (user) {
-        dispatch({ type: ActionTypes.AUTH_USER, payload: signInSuccess });
+        dispatch({ type: ActionTypes.AUTH_USER, payload: undefined });
         dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
       }
     } catch (error) {
