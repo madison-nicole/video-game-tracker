@@ -66,13 +66,14 @@ export async function saveGame(username, game, review) {
 }
 
 /**
- * Fetches user info
- * @param {string} username
- * @returns user info if successful
+ * Check local storage for user token, fetch user if token is stored
+ * @returns user if token is in local storage, otherwise undefined
  */
-export async function fetchUserInfo(username) {
-  const response = await axios.get(`${GAMEDEX_URL}/users/${username}/user-info`, { headers: { authorization: localStorage.getItem('token') } });
-  return response.data;
+export async function fetchUser() {
+  const token = localStorage.getItem('token');
+  if (!token) return undefined;
+  const response = await axios.get(`${GAMEDEX_URL}/users`, { headers: { authorization: token } });
+  return response.data.user;
 }
 
 /**

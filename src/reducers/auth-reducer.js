@@ -12,7 +12,7 @@ const authReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case ActionTypes.AUTH_USER:
       return {
-        authenticated: true, error: false, user: action.payload, msg: action.msg,
+        authenticated: true, error: false, msg: action.payload,
       };
     case ActionTypes.DEAUTH_USER:
       return {

@@ -1,23 +1,11 @@
 import {
   Tab, Tabs, TabList, TabPanel, TabPanels, Heading, Flex,
 } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import UserInfoSettings from './user-info/user-info';
 import JumpToTop from '../../jump-to-top';
-import { getUserInfo } from '../../../actions';
 
 function Settings({ user, username }) {
-  // hooks
-  const dispatch = useDispatch();
-
-  // load user info to redux on profile load
-  useEffect(() => {
-    if (username) {
-      dispatch(getUserInfo(username));
-    }
-  }, [dispatch, username]);
-
   return (
     <>
       <Tabs colorScheme="gray" marginTop="75px" variant="soft-rounded">

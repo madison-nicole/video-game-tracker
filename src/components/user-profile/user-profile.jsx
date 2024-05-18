@@ -1,26 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Flex, Tabs, TabList, Tab, TabPanels, TabPanel,
 } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
 import UserGames from './user-games/user-games';
 import UserProfileHeader from './header/user-profile-header';
 import JumpToTop from '../jump-to-top';
-import { getUserInfo } from '../../actions';
 import { useUserInfo } from '../../hooks/redux-hooks';
 
-function UserProfile({ username }) {
-  // hooks
-  const dispatch = useDispatch();
-
-  // load user info to redux on profile load
-  useEffect(() => {
-    if (username) {
-      dispatch(getUserInfo(username));
-    }
-  }, [dispatch, username]);
-
-  // store user info
+function UserProfile() {
   const userInfo = useUserInfo();
 
   return (
@@ -33,7 +20,7 @@ function UserProfile({ username }) {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserGames username={username} />
+            <UserGames username={userInfo.username} />
           </TabPanel>
           {/* <TabPanel>
             INSERT STATS HERE

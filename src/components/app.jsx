@@ -10,34 +10,38 @@ import RequireAuth from './require-auth';
 import Results from './search-results/results';
 import AuthModal from './auth-modal/auth-modal';
 import GameCard from './game/game-card';
-import { clearAuthError, fetchTopRatedGames, fetchTrendingGames } from '../actions';
+import {
+  clearAuthError, fetchTopRatedGames, fetchTrendingGames, loadUser,
+} from '../actions';
 import theme from '../theme/theme';
-import { useAccountInfo, useUserInfo } from '../hooks/redux-hooks';
+import { useUserInfo } from '../hooks/redux-hooks';
 import UserProfile from './user-profile/user-profile';
 import Settings from './user-profile/settings/settings';
 import * as Twitch from '../api/twitch';
 
 export default function App(props) {
-  const userInfo = useUserInfo();
-  console.log(userInfo);
-
   // state
   const [accountStatus, setAccountStatus] = useState(true); // true if the user has an account
 
   // hooks
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure(); // auth modal
-  const user = useAccountInfo();
+  const user = useUserInfo();
+
+  // store username
+  const username = user?.username;
 
   const closeAuthModal = useCallback(() => {
     dispatch(clearAuthError());
     onClose();
   }, [dispatch, onClose]);
 
-  // store user information
-  const username = user?.username;
-
   // background processes
+  // load user (check local storage for token)
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
   // load top rated games
   useEffect(() => {
     dispatch(fetchTopRatedGames());
@@ -63,7 +67,7 @@ export default function App(props) {
     <ChakraProvider theme={theme}>
       <BrowserRouter>
         <div>
-          <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} onOpen={onOpen} />
+          <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} username={username} onOpen={onOpen} />
           <AuthModal accountStatus={accountStatus} isOpen={isOpen} setAccountStatus={setAccountStatus} onClose={closeAuthModal} />
           <GameCard isOpenAuthModal={isOpen} openAuthModal={onOpen} />
           <Routes>

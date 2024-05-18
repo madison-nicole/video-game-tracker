@@ -16,7 +16,7 @@ function UserGame({ coverUrl, selectGame }) {
       }}
     >
       <ShowButtons display={hovered} />
-      <div className={hovered ? 'gray-on-hover' : ''}>
+      <div className={hovered ? 'gray-on-hover' : 'not-gray-on-hover'}>
         <Card
           alignItems="center"
           cursor="pointer"
