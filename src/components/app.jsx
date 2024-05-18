@@ -18,6 +18,7 @@ import { useUserInfo } from '../hooks/redux-hooks';
 import UserProfile from './user-profile/user-profile';
 import Settings from './user-profile/settings/settings';
 import * as Twitch from '../api/twitch';
+import AuthToaster from './auth-toaster';
 
 export default function App(props) {
   // state
@@ -80,6 +81,7 @@ export default function App(props) {
             <Route element={<RequireAuth> <Settings user={user} username={username} /> </RequireAuth>} path="/:username/settings" />
             <Route element={<FallBack />} path="*" />
           </Routes>
+          <AuthToaster onAuth={closeAuthModal} />
         </div>
       </BrowserRouter>
     </ChakraProvider>

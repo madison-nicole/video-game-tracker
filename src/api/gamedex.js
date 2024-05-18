@@ -34,7 +34,8 @@ export async function signin(fields) {
  */
 export async function signup(fields) {
   const response = await axios.post(`${GAMEDEX_URL}/signup`, fields);
-  return response.data.token;
+  const { token, user } = response.data;
+  return { token, user };
 }
 
 /**

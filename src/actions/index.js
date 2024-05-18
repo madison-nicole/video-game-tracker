@@ -126,9 +126,10 @@ export function signupUser({ username, email, password }, navigate) {
       const fields = {
         username, email, password,
       };
-      const token = await GameDex.signup(fields);
-      dispatch({ type: ActionTypes.AUTH_USER, payload: { username, email }, msg: signUpSuccess });
+      const { token, user } = await GameDex.signup(fields);
       localStorage.setItem('token', token);
+      dispatch({ type: ActionTypes.AUTH_USER, payload: signUpSuccess });
+      dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
     } catch (error) {
       dispatch(authError(error.response.data.error));
     }

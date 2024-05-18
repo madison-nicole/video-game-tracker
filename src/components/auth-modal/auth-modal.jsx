@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   Modal, ModalOverlay, ModalContent, ModalHeader,
   ModalFooter, ModalCloseButton,
-  useToast,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -10,7 +9,6 @@ import { signinUser, signupUser } from '../../actions';
 import AuthModalButtons from './auth-modal-buttons';
 import AuthModalInputs from './auth-modal-inputs';
 import isEmail from '../../utils/input-utils';
-import { useAuthMsg, useAuthenticated } from '../../hooks/redux-hooks';
 import { useOnKeyDown, ENTER_KEY } from '../../hooks/event-hooks';
 
 function AuthModal({
@@ -25,22 +23,6 @@ function AuthModal({
   // hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const toast = useToast();
-  const authenticated = useAuthenticated();
-  const message = useAuthMsg();
-
-  useEffect(() => {
-    if (authenticated && message) {
-      toast({
-        position: 'top',
-        status: 'success',
-        duration: 2500,
-        isClosable: true,
-        ...message,
-      });
-      onClose();
-    }
-  }, [authenticated, message, onClose, toast]);
 
   // Clear state on close
   useEffect(() => {
