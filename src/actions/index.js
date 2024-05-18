@@ -5,8 +5,6 @@ import * as Twitch from '../api/twitch';
 
 // keys for actiontypes
 export const ActionTypes = {
-  FETCH_POSTS: 'FETCH_POSTS',
-  FETCH_POST: 'FETCH_POST',
   FETCH_USER_INFO: 'FETCH_USER_INFO',
   FETCH_USER_GAMES: 'FETCH_USER_GAMES',
   ERROR_SET: 'ERROR_SET',
@@ -29,33 +27,6 @@ export const ActionTypes = {
   // Twitch Actions
   TWITCH_TRENDING: 'TWITCH_TRENDING',
 };
-
-export function fetchGames() {
-  // ActionCreator returns a function
-  // that gets called with dispatch
-  // (arg) => { } is a function
-  return async (dispatch) => {
-    try {
-      const games = await GameDex.getGames();
-      dispatch({ type: ActionTypes.FETCH_POSTS, payload: games });
-    } catch (error) {
-      dispatch({ type: ActionTypes.ERROR_SET, message: error });
-    }
-  };
-}
-
-// fetch individual game data when clicking on a game in the list
-export function fetchGame(id, navigate) {
-  return async (dispatch) => {
-    try {
-      const game = await GameDex.getGame(id);
-      navigate(`/games/${id}`);
-      dispatch({ type: ActionTypes.FETCH_POST, payload: game });
-    } catch (error) {
-      dispatch({ type: ActionTypes.ERROR_SET, message: error });
-    }
-  };
-}
 
 // add the game to the database
 export function addNewGame(name, navigate, userRating) {
@@ -99,6 +70,20 @@ export function deleteGame(id, navigate) {
   };
 }
 
+export function loadUser() {
+  return async (dispatch) => {
+    try {
+      const user = await GameDex.fetchUser();
+      if (user) {
+        dispatch({ type: ActionTypes.AUTH_USER, payload: undefined });
+        dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 // trigger to deauth if there is error
 // can also use in your error reducer if you have one to display an error message
 export function authError(error) {
@@ -123,7 +108,9 @@ export function signinUser({ emailOrUsername, password }, navigate) {
         emailOrUsername, password,
       };
       const { token, user } = await GameDex.signin(fields);
-      dispatch({ type: ActionTypes.AUTH_USER, payload: user, msg: signInSuccess });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: signInSuccess });
+      dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
+
       localStorage.setItem('token', token);
     } catch (error) {
       dispatch(authError(error.response.data));
@@ -155,6 +142,22 @@ export function signoutUser(navigate) {
     localStorage.removeItem('token');
     dispatch({ type: ActionTypes.DEAUTH_USER });
     navigate('/');
+  };
+}
+
+export function fetchUserGames(username) {
+  // takes in an object with email and password (minimal user object)
+  // returns a thunk method that takes dispatch as an argument
+  return async (dispatch) => {
+    try {
+      const games = await GameDex.getUserGames(username);
+
+      dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: games });
+    } catch (error) {
+      // For now, if we get an error, just log it.
+      // Add error handling later
+      console.log('error', error);
+    }
   };
 }
 
@@ -243,38 +246,6 @@ export function selectGameAndLoadData(game) {
 export function clearSelectedGame() {
   return (dispatch) => {
     dispatch({ type: ActionTypes.CLEAR_SELECTED_GAME });
-  };
-}
-
-export function getUserInfo(username) {
-  // takes in an object with email and password (minimal user object)
-  // returns a thunk method that takes dispatch as an argument
-  return async (dispatch) => {
-    try {
-      const user = await GameDex.fetchUserInfo(username);
-
-      dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
-    } catch (error) {
-      // For now, if we get an error, just log it.
-      // Add error handling later
-      console.log('error', error);
-    }
-  };
-}
-
-export function fetchUserGames(username) {
-  // takes in an object with email and password (minimal user object)
-  // returns a thunk method that takes dispatch as an argument
-  return async (dispatch) => {
-    try {
-      const games = await GameDex.getUserGames(username);
-
-      dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: games });
-    } catch (error) {
-      // For now, if we get an error, just log it.
-      // Add error handling later
-      console.log('error', error);
-    }
   };
 }
 
