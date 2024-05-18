@@ -1,12 +1,12 @@
 // import React, { ReactNode } from 'react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 // import { useLocation } from 'react-router-dom';
 import {
   // IconButton,
   Box, Flex, Button, Image,
-  useColorModeValue, HStack, useColorMode,
+  useColorModeValue, HStack, useColorMode, useToast,
 } from '@chakra-ui/react';
 import {
   MoonIcon, SunIcon,
@@ -14,13 +14,16 @@ import {
 } from '@chakra-ui/icons';
 import SearchBar from './search-bar';
 import { signoutUser } from '../../actions';
-import { useAuthenticated, useSearchResultsPreview } from '../../hooks/redux-hooks';
+import { useAuthMsg, useAuthenticated, useSearchResultsPreview } from '../../hooks/redux-hooks';
 import NavProfileMenu from './nav-profile-menu';
 
 function NavBar({ onOpen, setAccountStatus, username }) {
   // hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const toast = useToast();
+  const message = useAuthMsg();
+
   // const location = useLocation().pathname;
   const { colorMode, toggleColorMode } = useColorMode();
   const authenticated = useAuthenticated();
@@ -56,6 +59,18 @@ function NavBar({ onOpen, setAccountStatus, username }) {
   const handleHomeButton = useCallback(() => {
     navigate('/');
   }, [navigate]);
+
+  useEffect(() => {
+    if (!authenticated && message) {
+      toast({
+        position: 'top',
+        status: 'success',
+        duration: 2500,
+        isClosable: true,
+        ...message,
+      });
+    }
+  }, [authenticated, message, toast]);
 
   // if signed in, render a different menu
   function renderMenu() {

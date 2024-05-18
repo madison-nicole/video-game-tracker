@@ -3,6 +3,7 @@ import { signOutSuccess } from '../utils/text-utils';
 
 const initialState = {
   authenticated: false,
+  error: false,
   user: {},
   msg: '',
 };
@@ -10,11 +11,22 @@ const initialState = {
 const authReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case ActionTypes.AUTH_USER:
-      return { authenticated: true, user: action.payload, msg: action.msg };
+      return {
+        authenticated: true, error: false, user: action.payload, msg: action.msg,
+      };
     case ActionTypes.DEAUTH_USER:
-      return { authenticated: false, user: {}, msg: signOutSuccess };
+      return {
+        authenticated: false, error: false, user: {}, msg: signOutSuccess,
+      };
     case ActionTypes.AUTH_ERROR:
-      return { authenticated: false, user: {}, msg: action.msg };
+      return {
+        authenticated: false,
+        error: true,
+        user: {},
+        msg: action.msg,
+      };
+    case ActionTypes.CLEAR_AUTH_ERROR:
+      return { ...state, error: false, msg: '' };
     default:
       return state;
   }

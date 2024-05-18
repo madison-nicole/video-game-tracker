@@ -9,6 +9,28 @@ export function useAuthenticated() {
 }
 
 /**
+ * Function will check whether or not there is an authentication error
+ * @returns the error message or undefined
+ */
+export function useAuthError() {
+  return useSelector((reduxState) => {
+    if (reduxState.auth.error) {
+      return reduxState.auth.msg;
+    }
+    return undefined;
+  });
+}
+
+/**
+ * @returns the authentication message
+ */
+export function useAuthMsg() {
+  return useSelector((reduxState) => {
+    return reduxState.auth.msg;
+  });
+}
+
+/**
  * @returns an object with data for the top 100 rated games
  */
 export function useTopRated() {

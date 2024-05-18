@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   BrowserRouter, Routes, Route,
 } from 'react-router-dom';
@@ -10,7 +10,7 @@ import RequireAuth from './require-auth';
 import Results from './search-results/results';
 import AuthModal from './auth-modal/auth-modal';
 import GameCard from './game/game-card';
-import { fetchTopRatedGames, fetchTrendingGames } from '../actions';
+import { clearAuthError, fetchTopRatedGames, fetchTrendingGames } from '../actions';
 import theme from '../theme/theme';
 import { useAccountInfo, useUserInfo } from '../hooks/redux-hooks';
 import UserProfile from './user-profile/user-profile';
@@ -28,6 +28,11 @@ export default function App(props) {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure(); // auth modal
   const user = useAccountInfo();
+
+  const closeAuthModal = useCallback(() => {
+    dispatch(clearAuthError());
+    onClose();
+  }, [dispatch, onClose]);
 
   // store user information
   const username = user?.username;
@@ -58,8 +63,8 @@ export default function App(props) {
     <ChakraProvider theme={theme}>
       <BrowserRouter>
         <div>
-          <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} username={username} onOpen={onOpen} />
-          <AuthModal accountStatus={accountStatus} isOpen={isOpen} setAccountStatus={setAccountStatus} username={username} onClose={onClose} />
+          <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} onOpen={onOpen} />
+          <AuthModal accountStatus={accountStatus} isOpen={isOpen} setAccountStatus={setAccountStatus} onClose={closeAuthModal} />
           <GameCard isOpenAuthModal={isOpen} openAuthModal={onOpen} />
           <Routes>
             <Route element={<BrowseGames />} path="/" />

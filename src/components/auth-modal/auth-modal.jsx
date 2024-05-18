@@ -9,17 +9,15 @@ import { useNavigate } from 'react-router';
 import { signinUser, signupUser } from '../../actions';
 import AuthModalButtons from './auth-modal-buttons';
 import AuthModalInputs from './auth-modal-inputs';
-import {
-  signUpSuccess, welcome, signInSuccess,
-} from '../../utils/text-utils';
 import isEmail from '../../utils/input-utils';
-import { useAuthenticated } from '../../hooks/redux-hooks';
+import { useAuthMsg, useAuthenticated } from '../../hooks/redux-hooks';
 import { useOnKeyDown, ENTER_KEY } from '../../hooks/event-hooks';
 
 function AuthModal({
-  isOpen, onClose, accountStatus, setAccountStatus, username, setUsername,
+  isOpen, onClose, accountStatus, setAccountStatus,
 }) {
   // state
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailOrUsername, setEmailOrUsername] = useState('');
@@ -29,18 +27,30 @@ function AuthModal({
   const navigate = useNavigate();
   const toast = useToast();
   const authenticated = useAuthenticated();
+  const message = useAuthMsg();
 
   useEffect(() => {
-    if (authenticated) {
+    if (authenticated && message) {
       toast({
         position: 'top',
-        title: signInSuccess,
         status: 'success',
         duration: 2500,
         isClosable: true,
+        ...message,
       });
+      onClose();
     }
-  }, [authenticated, toast]);
+  }, [authenticated, message, onClose, toast]);
+
+  // Clear state on close
+  useEffect(() => {
+    if (!isOpen) {
+      setUsername('');
+      setEmail('');
+      setEmailOrUsername('');
+      setPassword('');
+    }
+  }, [isOpen]);
 
   // to sign up a user
   const createUser = () => {
@@ -49,24 +59,12 @@ function AuthModal({
     }
 
     dispatch(signupUser({ username, email, password }, navigate));
-    onClose();
-
-    // if account is created successfully
-    toast({
-      position: 'top',
-      title: signUpSuccess,
-      description: welcome,
-      status: 'success',
-      duration: 4500,
-      isClosable: true,
-    });
   };
 
   // to log in a user
   const loginUser = useCallback(() => {
     dispatch(signinUser({ emailOrUsername, password }, navigate));
-    onClose();
-  }, [dispatch, emailOrUsername, navigate, onClose, password]);
+  }, [dispatch, emailOrUsername, navigate, password]);
 
   // also log in when the user presses enter
   const logInOnEnter = useOnKeyDown(loginUser, ENTER_KEY);

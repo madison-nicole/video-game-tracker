@@ -7,12 +7,15 @@ import * as Twitch from '../api/twitch';
 export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',
   FETCH_POST: 'FETCH_POST',
-  AUTH_USER: 'AUTH_USER',
-  DEAUTH_USER: 'DEAUTH_USER',
-  AUTH_ERROR: 'AUTH_ERROR',
   FETCH_USER_INFO: 'FETCH_USER_INFO',
   FETCH_USER_GAMES: 'FETCH_USER_GAMES',
   ERROR_SET: 'ERROR_SET',
+
+  // Auth Actions
+  AUTH_USER: 'AUTH_USER',
+  DEAUTH_USER: 'DEAUTH_USER',
+  AUTH_ERROR: 'AUTH_ERROR',
+  CLEAR_AUTH_ERROR: 'CLEAR_AUTH_ERROR',
 
   // IGDB Actions
   IGDB_SEARCH_PREVIEW: 'IGDB_SEARCH_PREVIEW',
@@ -101,7 +104,13 @@ export function deleteGame(id, navigate) {
 export function authError(error) {
   return {
     type: ActionTypes.AUTH_ERROR,
-    message: error,
+    msg: error,
+  };
+}
+
+export function clearAuthError() {
+  return {
+    type: ActionTypes.CLEAR_AUTH_ERROR,
   };
 }
 
@@ -117,7 +126,7 @@ export function signinUser({ emailOrUsername, password }, navigate) {
       dispatch({ type: ActionTypes.AUTH_USER, payload: user, msg: signInSuccess });
       localStorage.setItem('token', token);
     } catch (error) {
-      dispatch(authError(`Sign In Failed: ${error.response.data}`));
+      dispatch(authError(error.response.data));
     }
   };
 }
@@ -134,7 +143,7 @@ export function signupUser({ username, email, password }, navigate) {
       dispatch({ type: ActionTypes.AUTH_USER, payload: { username, email }, msg: signUpSuccess });
       localStorage.setItem('token', token);
     } catch (error) {
-      dispatch(authError(`Sign Up Failed: ${error.response.data}`));
+      dispatch(authError(error.response.data.error));
     }
   };
 }

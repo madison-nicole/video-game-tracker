@@ -4,16 +4,18 @@ import AuthModalInput from './auth-modal-input';
 import PasswordInput from './password-input';
 // import VerifyInputIcon from './verify-input-icon';
 import { isUsernameTaken } from '../../api/gamedex';
+import { useAuthError } from '../../hooks/redux-hooks';
 
 function AuthModalInputs({
   email, username, emailOrUsername, password, setEmail, setPassword,
   account, setUsername, setEmailOrUsername, logInOnEnter, signUpOnEnter,
 }) {
+  const authError = useAuthError();
+
   // check if username is taken
   const onUsernameBlur = useCallback(async () => {
     if (username.length > 0) {
       const isTaken = await isUsernameTaken(username);
-      console.log('isTaken');
       console.log(isTaken);
     }
   }, [username]);
@@ -31,6 +33,7 @@ function AuthModalInputs({
         {/* <VerifyInputIcon /> */}
         {/* </HStack> */}
         <PasswordInput password={password} setPassword={setPassword} onEnter={logInOnEnter} />
+        <div>{authError}</div>
       </ModalBody>
     );
   } else {
@@ -39,6 +42,7 @@ function AuthModalInputs({
         <AuthModalInput placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
         <AuthModalInput placeholder="Username" value={username} onBlur={onUsernameBlur} onChange={(e) => setUsername(e.target.value)} />
         <PasswordInput password={password} setPassword={setPassword} onEnter={signUpOnEnter} />
+        <div>{authError}</div>
       </ModalBody>
     );
   }
