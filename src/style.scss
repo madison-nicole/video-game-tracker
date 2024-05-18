@@ -76,4 +76,5 @@ body, html {
 
 .gray-on-hover:hover {
     filter: blur(1.5px);
+    transition: filter .3s;
 }
