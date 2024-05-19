@@ -6,7 +6,7 @@ import { CheckIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux';
 import UserInfoInput from './user-info-input';
 import { useUserInfo } from '../../../../hooks/redux-hooks';
-// import UpdatePhotoButton from './update-photo-button';
+import uploadImage from '../../../../api/s3';
 import UploadProfilePhoto from './update-profile-photo';
 import { updateUser } from '../../../../actions';
 
@@ -19,20 +19,32 @@ function UserInfoSettings(props) {
   const [username, setUsername] = useState(userInfo?.username);
   const [bio, setBio] = useState(userInfo?.bio ?? '');
   const [website, setWebsite] = useState(userInfo?.website ?? '');
+  const [img, setImg] = useState('');
 
-  // const bio = 'insert bio here';
-  // const website = 'www.mylinks.com';
-  // const avatarUrl = 'https://bit.ly/sage-adebayo';
+  // upload new profile photo
+  const handleUpload = useCallback((e) => {
+    const file = e.target.files[0];
+    // Get url of the file and set it to the src of preview
+    if (file) {
+      setImg({ preview: window.URL.createObjectURL(file), file });
+    }
+  }, []);
 
-  const onSaveUser = useCallback(() => {
+  const onSaveUser = useCallback(async (e) => {
+    e.preventDefault();
+
+    // save new image url
+    const avatarUrl = await uploadImage(img.file);
+
     const newUser = {
       ...userInfo,
       username,
       bio,
       website,
+      avatarUrl,
     };
     dispatch(updateUser(userInfo.username, newUser));
-  }, [bio, dispatch, userInfo, username, website]);
+  }, [bio, dispatch, img.file, userInfo, username, website]);
 
   // initialize user info fields
   useEffect(() => {
@@ -73,7 +85,7 @@ function UserInfoSettings(props) {
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 0px 30px">
           <Text fontWeight={600} marginBottom="30px" width="18%">Profile Picture</Text>
-          <UploadProfilePhoto userInfo={userInfo} />
+          <UploadProfilePhoto handleUpload={handleUpload} img={img} userInfo={userInfo} />
         </Flex>
         <Flex direction="row" justifyContent="flex-end">
           <Button

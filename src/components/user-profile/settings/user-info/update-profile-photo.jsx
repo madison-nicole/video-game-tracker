@@ -1,23 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import {
   InputGroup, Button, Flex, Center, Avatar,
   Stack, AvatarBadge, IconButton,
 } from '@chakra-ui/react';
 import { SmallCloseIcon } from '@chakra-ui/icons';
 
-function UpdateProfilePhoto({ userInfo }) {
-  // state
-  const [img, setImg] = useState('');
-
-  // upload new profile photo
-  function handleUpload(event) {
-    const file = event.target.files[0];
-    // Get url of the file and set it to the src of preview
-    if (file) {
-      setImg({ preview: window.URL.createObjectURL(file), file });
-    }
-  }
-
+function UpdateProfilePhoto({ img, handleUpload }) {
   const inputRef = useRef(null);
 
   const handleUpdate = () => {
