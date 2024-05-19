@@ -4,8 +4,6 @@ import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 
 // show edit and delete buttons on game card hover
 function ShowButtons({ display }) {
-  console.log(display);
-
   return (
     <ButtonGroup
       alignItems="center"
@@ -27,6 +25,7 @@ function ShowButtons({ display }) {
         icon={<DeleteIcon />}
         isRound
         variant="ghost"
+
       />
     </ButtonGroup>
   );
