@@ -6,9 +6,6 @@ import {
 import { SmallCloseIcon } from '@chakra-ui/icons';
 
 function UpdateProfilePhoto({ userInfo }) {
-//   <img id="preview" alt="preview" src={img.preview} />
-  // <input type="file" name="coverImage" onChange={onImageUpload} />
-
   // state
   const [img, setImg] = useState('');
 
@@ -31,6 +28,7 @@ function UpdateProfilePhoto({ userInfo }) {
     <Stack direction={['column', 'row']} spacing={6}>
       <Center>
         <Avatar
+          alt="profile photo preview"
           size="xl"
           src={img.preview}
         >
