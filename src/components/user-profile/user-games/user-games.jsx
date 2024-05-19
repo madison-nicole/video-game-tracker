@@ -32,10 +32,10 @@ function UserGames({ username }) {
   }
 
   const renderGame = games?.map((game) => {
-    const { id, coverUrl } = game;
+    const { id } = game;
 
     return (
-      <UserGame coverUrl={coverUrl} key={id} selectGame={() => onSelectGame(game)} username={username} />
+      <UserGame game={game} key={id} selectGame={() => onSelectGame(game)} username={username} />
     );
   });
 

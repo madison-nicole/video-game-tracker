@@ -97,9 +97,6 @@ export async function getGames(id) {
  * @returns game if game is successfuly saved, else throw error
  */
 export async function deleteGame(username, gameId) {
-  const fields = { username, gameId };
-
-  const response = await axios.delete(`${GAMEDEX_URL}/users/${username}/games`, fields, { headers: { authorization: localStorage.getItem('token') } });
-  console.log(response);
+  const response = await axios.delete(`${GAMEDEX_URL}/users/${username}/games`, { headers: { authorization: localStorage.getItem('token') }, data: { gameId } });
   return response.data;
 }

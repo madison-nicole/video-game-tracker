@@ -159,7 +159,6 @@ export function deleteUserGame(userGames, username, gameId) {
       const newGames = [...userGames];
       const deletedGameIdx = newGames.findIndex((game) => game.id === gameId);
       newGames.splice(deletedGameIdx, 1);
-      console.log(userGames, newGames);
       dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: newGames });
       dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
     } catch (error) {

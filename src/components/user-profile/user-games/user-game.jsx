@@ -3,7 +3,7 @@ import { Image, CardBody, Card } from '@chakra-ui/react';
 import EditSavedGameButtons from './edit-saved-game-buttons';
 import { useAuthenticated } from '../../../hooks/redux-hooks';
 
-function UserGame({ coverUrl, selectGame, username }) {
+function UserGame({ game, selectGame, username }) {
   // hooks
   const authenticated = useAuthenticated(); // to check if user is signed in
 
@@ -21,7 +21,7 @@ function UserGame({ coverUrl, selectGame, username }) {
           setHovered(false);
         }}
       >
-        <EditSavedGameButtons display={hovered} username={username} />
+        <EditSavedGameButtons display={hovered} game={game} username={username} />
         <Card
           alignItems="center"
           className={hovered ? 'gray-on-hover' : 'not-gray-on-hover'}
@@ -35,7 +35,7 @@ function UserGame({ coverUrl, selectGame, username }) {
               alt="Game cover"
               borderRadius="lg"
               maxH="200px"
-              src={coverUrl}
+              src={game.coverUrl}
               transition="opacity 0.3s"
             />
           </CardBody>
@@ -57,7 +57,7 @@ function UserGame({ coverUrl, selectGame, username }) {
               alt="Game cover"
               borderRadius="lg"
               maxH="200px"
-              src={coverUrl}
+              src={game.coverUrl}
               transition="opacity 0.3s"
             />
           </CardBody>
