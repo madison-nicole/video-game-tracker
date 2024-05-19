@@ -98,8 +98,8 @@ export async function deleteGame(username, gameId) {
  * @param {object} review
  * @returns game if game is successfuly saved, else throw error
  */
-export async function updateGame(username, gameId, review) {
-  const fields = { username, gameId, review };
+export async function updateGame(username, game, review) {
+  const fields = { username, game, review };
 
   const response = await axios.put(`${GAMEDEX_URL}/users/${username}/games`, fields, { headers: { authorization: localStorage.getItem('token') } });
   return response.data;

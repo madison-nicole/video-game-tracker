@@ -6,7 +6,7 @@ import { useUserGames } from '../../hooks/redux-hooks';
 function GameListButton({ onAdd, onEdit, id }) {
   // check if game is in your logged games library
   const userGames = useUserGames();
-  const gameInLibrary = userGames.find((game) => Number(game.id) === id);
+  const gameInLibrary = userGames.find((game) => String(game.id) === String(id));
 
   // if game is logged, show a check button which can edit the entry
   if (gameInLibrary) {

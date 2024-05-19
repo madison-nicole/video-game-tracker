@@ -22,6 +22,8 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   const userInfo = useUserInfo();
   const userGames = useUserGames();
 
+  console.log(userGames);
+
   // state
   const [userRating, setUserRating] = useState(0);
   const [editMode, setEditMode] = useState(false);
@@ -33,21 +35,28 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   const title = game?.name;
   const avgRating = game?.avgRating?.toFixed(2); // avg rating rounded to two decimals
   const id = game?.id;
-  const gameInLibrary = userGames.find((savedGame) => Number(savedGame.id) === id);
+  const gameInLibrary = userGames.find((savedGame) => String(savedGame.id) === String(id));
 
   // render the edit mode of the game card
-  if (gameInLibrary) {
-    setEditMode(true);
-  }
+  useEffect(() => {
+    if (gameInLibrary) {
+      console.log('true');
+      setEditMode(true);
+    } else {
+      console.log('false');
+      setEditMode(false);
+    }
+  }, [gameInLibrary]);
 
   // Chakra modal setup
   const finalRef = React.useRef(null);
 
   useEffect(() => {
-    if (game?.userRating) {
-      setUserRating(game?.userRating);
+    const rating = userInfo.games?.[game?.id];
+    if (rating) {
+      setUserRating(rating);
     }
-  }, [game]);
+  }, [game, userInfo.games]);
 
   const onCloseGame = useCallback(() => {
     setUserRating(0);
@@ -82,10 +91,12 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   // delete the game from user games
   const onDeleteGame = useCallback(
     () => {
+      console.log(id);
       // delete the saved game entry
       dispatch(deleteUserGame(userGames, username, id));
+      onCloseGame();
     },
-    [id, dispatch, userGames, username],
+    [dispatch, userGames, username, id, onCloseGame],
   );
 
   // update the saved game entry
@@ -93,8 +104,9 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
     () => {
       // delete the saved game entry
       dispatch(updateUserGame(userGames, username, game, userRating));
+      onCloseGame();
     },
-    [dispatch, userGames, username, game, userRating],
+    [dispatch, userGames, username, game, userRating, onCloseGame],
   );
 
   if (!game) {

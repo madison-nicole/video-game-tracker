@@ -17,7 +17,7 @@ function includeGame(game) {
     return false;
   }
 
-  if (EXCLUDED_GAME_IDS.findIndex((excludedId) => excludedId === game.igdb_id) !== -1) {
+  if (EXCLUDED_GAME_IDS.findIndex((excludedId) => String(excludedId) === String(game.igdb_id)) !== -1) {
     return false;
   }
 

@@ -157,7 +157,7 @@ export function deleteUserGame(userGames, username, gameId) {
     try {
       const user = await GameDex.deleteGame(username, gameId);
       const newGames = [...userGames];
-      const deletedGameIdx = newGames.findIndex((game) => game.id === gameId);
+      const deletedGameIdx = newGames.findIndex((game) => String(game.id) === String(gameId));
       newGames.splice(deletedGameIdx, 1);
       dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: newGames });
       dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
@@ -174,7 +174,7 @@ export function updateUserGame(userGames, username, game, review) {
     try {
       const user = await GameDex.updateGame(username, game, review);
       const newGames = [...userGames];
-      const gameIdx = newGames.findIndex((savedGame) => game.id === savedGame.id);
+      const gameIdx = newGames.findIndex((savedGame) => String(game.id) === String(savedGame.id));
       newGames[gameIdx] = game;
       dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: newGames });
       dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });

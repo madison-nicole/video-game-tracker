@@ -55,7 +55,7 @@ function TrendingGames() {
   }, []);
 
   const onSelectGame = useCallback((twitchGame) => {
-    const igdbGame = igdbTrending?.games?.find((game) => `${game.id}` === twitchGame.igdb_id);
+    const igdbGame = igdbTrending?.games?.find((game) => String(game.id) === String(twitchGame.igdb_id));
     if (!igdbGame) {
       return;
     }
