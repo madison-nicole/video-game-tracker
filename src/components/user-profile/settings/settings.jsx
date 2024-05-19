@@ -4,6 +4,7 @@ import {
 import React from 'react';
 import UserInfoSettings from './user-info/user-info';
 import JumpToTop from '../../jump-to-top';
+import SocialLinksSettings from './social-links/social-links';
 
 function Settings({ user, username }) {
   return (
@@ -25,6 +26,7 @@ function Settings({ user, username }) {
               <Heading fontSize="17px" fontWeight={700} maxW="60%" textAlign="left">
                 SOCIAL LINKS
               </Heading>
+              <SocialLinksSettings />
             </Flex>
           </TabPanel>
           {/* <TabPanel>
