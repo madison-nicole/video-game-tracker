@@ -6,13 +6,15 @@ import {
   Slider, SliderTrack, SliderFilledTrack, SliderThumb,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { addUserGame, clearSelectedGame, deleteUserGame } from '../../actions';
+import {
+  addUserGame, clearSelectedGame, deleteUserGame, updateUserGame,
+} from '../../actions';
 import {
   useAuthenticated, useSelectedGame, useUserGames, useUserInfo,
 } from '../../hooks/redux-hooks';
 import GameCardButtons from './game-card-buttons';
 
-function GameCard({ openAuthModal, isOpenAuthModal, editMode }) {
+function GameCard({ openAuthModal, isOpenAuthModal }) {
   // hooks
   const dispatch = useDispatch();
   const authenticated = useAuthenticated(); // to check if user is signed in
@@ -22,6 +24,7 @@ function GameCard({ openAuthModal, isOpenAuthModal, editMode }) {
 
   // state
   const [userRating, setUserRating] = useState(0);
+  const [editMode, setEditMode] = useState(false);
 
   // store the user data
   const username = userInfo?.username;
@@ -30,6 +33,12 @@ function GameCard({ openAuthModal, isOpenAuthModal, editMode }) {
   const title = game?.name;
   const avgRating = game?.avgRating?.toFixed(2); // avg rating rounded to two decimals
   const id = game?.id;
+  const gameInLibrary = userGames.find((savedGame) => Number(savedGame.id) === id);
+
+  // render the edit mode of the game card
+  if (gameInLibrary) {
+    setEditMode(true);
+  }
 
   // Chakra modal setup
   const finalRef = React.useRef(null);
@@ -77,6 +86,15 @@ function GameCard({ openAuthModal, isOpenAuthModal, editMode }) {
       dispatch(deleteUserGame(userGames, username, id));
     },
     [id, dispatch, userGames, username],
+  );
+
+  // update the saved game entry
+  const onUpdateGame = useCallback(
+    () => {
+      // delete the saved game entry
+      dispatch(updateUserGame(userGames, username, game, userRating));
+    },
+    [dispatch, userGames, username, game, userRating],
   );
 
   if (!game) {
@@ -169,7 +187,7 @@ function GameCard({ openAuthModal, isOpenAuthModal, editMode }) {
                 </Stack>
               </CardBody>
               <CardFooter>
-                <GameCardButtons editMode={editMode} onDelete={onDeleteGame} onSave={onLogGame} />
+                <GameCardButtons editMode={editMode} onDelete={onDeleteGame} onSave={onLogGame} onUpdate={onUpdateGame} />
               </CardFooter>
             </Card>
           </ModalBody>

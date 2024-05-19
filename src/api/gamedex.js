@@ -3,16 +3,6 @@ import axios from 'axios';
 // API url
 export const GAMEDEX_URL = 'http://localhost:9090/api';
 
-export async function getGame(id) {
-  const response = await axios.get(`${GAMEDEX_URL}/posts/${id}`);
-  return response.data;
-}
-
-export async function updateGame(id, fields) {
-  const response = await axios.put(`${GAMEDEX_URL}/posts/${id}`, fields, { headers: { authorization: localStorage.getItem('token') } });
-  return response.data;
-}
-
 /**
  * Sign in user
  * @param {object} fields - username or email, password
@@ -94,9 +84,23 @@ export async function getGames(id) {
  * @param {string} username
  * @param {object} game
  * @param {object} review
- * @returns game if game is successfuly saved, else throw error
+ * @returns user object if game is successfuly deleted, else throw error
  */
 export async function deleteGame(username, gameId) {
   const response = await axios.delete(`${GAMEDEX_URL}/users/${username}/games`, { headers: { authorization: localStorage.getItem('token') }, data: { gameId } });
+  return response.data;
+}
+
+/**
+ * Update a game from a user's logged games
+ * @param {string} username
+ * @param {object} game
+ * @param {object} review
+ * @returns game if game is successfuly saved, else throw error
+ */
+export async function updateGame(username, gameId, review) {
+  const fields = { username, gameId, review };
+
+  const response = await axios.put(`${GAMEDEX_URL}/users/${username}/games`, fields, { headers: { authorization: localStorage.getItem('token') } });
   return response.data;
 }

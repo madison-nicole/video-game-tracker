@@ -167,6 +167,23 @@ export function deleteUserGame(userGames, username, gameId) {
   };
 }
 
+// Update game from saved games
+// Update user games and user info
+export function updateUserGame(userGames, username, game, review) {
+  return async (dispatch) => {
+    try {
+      const user = await GameDex.updateGame(username, game, review);
+      const newGames = [...userGames];
+      const gameIdx = newGames.findIndex((savedGame) => game.id === savedGame.id);
+      newGames[gameIdx] = game;
+      dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: newGames });
+      dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
+    } catch (error) {
+      dispatch({ type: ActionTypes.ERROR_SET, message: error });
+    }
+  };
+}
+
 export function fetchUserGames(username) {
   // takes in an object with email and password (minimal user object)
   // returns a thunk method that takes dispatch as an argument
