@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  Button, Flex, Stack, useColorModeValue, Avatar,
-  AvatarBadge, IconButton, Center, Text,
+  Button, Flex, Stack, useColorModeValue, Text,
 } from '@chakra-ui/react';
-import { CheckIcon, SmallCloseIcon } from '@chakra-ui/icons';
+import { CheckIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux';
 import UserInfoInput from './user-info-input';
 import { useUserInfo } from '../../../../hooks/redux-hooks';
 // import UpdatePhotoButton from './update-photo-button';
-import UploadProfilePhoto from './upload-profile-photo';
+import UploadProfilePhoto from './update-profile-photo';
 import { updateUser } from '../../../../actions';
 
 function UserInfoSettings(props) {
@@ -20,9 +19,6 @@ function UserInfoSettings(props) {
   const [username, setUsername] = useState(userInfo?.username);
   const [bio, setBio] = useState(userInfo?.bio ?? '');
   const [website, setWebsite] = useState(userInfo?.website ?? '');
-
-  const [photo, setPhoto] = useState('');
-  console.log(photo);
 
   // const bio = 'insert bio here';
   // const website = 'www.mylinks.com';
@@ -77,25 +73,7 @@ function UserInfoSettings(props) {
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 0px 30px">
           <Text fontWeight={600} marginBottom="30px" width="18%">Profile Picture</Text>
-          <Stack direction={['column', 'row']} spacing={6}>
-            <Center>
-              <Avatar size="xl" src={userInfo.avatarUrl}>
-                <AvatarBadge
-                  aria-label="remove Image"
-                  as={IconButton}
-                  colorScheme="pink"
-                  icon={<SmallCloseIcon />}
-                  rounded="full"
-                  size="sm"
-                  top="-10px"
-                />
-              </Avatar>
-            </Center>
-            <Flex alignItems="center" direction="row">
-              <UploadProfilePhoto setPhoto={setPhoto} />
-              {/* <UpdatePhotoButton setPhoto={setPhoto} /> */}
-            </Flex>
-          </Stack>
+          <UploadProfilePhoto userInfo={userInfo} />
         </Flex>
         <Flex direction="row" justifyContent="flex-end">
           <Button

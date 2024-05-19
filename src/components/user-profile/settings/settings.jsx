@@ -22,7 +22,7 @@ function Settings({ user, username }) {
               </Heading>
             </Flex>
             <UserInfoSettings username={username} />
-            <Flex justify="center" marginTop="60px">
+            <Flex justify="center" marginTop="80px">
               <Heading fontSize="17px" fontWeight={700} maxW="60%" textAlign="left">
                 SOCIAL LINKS
               </Heading>
