@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton } from '@chakra-ui/react';
-import { CheckCircleIcon, AddIcon } from '@chakra-ui/icons';
+import { CheckIcon, AddIcon } from '@chakra-ui/icons';
 import { useUserGames } from '../../hooks/redux-hooks';
 
 function GameListButton({ onAdd, id }) {
@@ -12,11 +12,13 @@ function GameListButton({ onAdd, id }) {
   if (gameInLibrary) {
     return (
       <IconButton
+        _hover={{ bg: '#68d391' }}
         aria-label="Game is in your library"
-        color="#9ae6b4"
-        fontSize="30px"
-        fontWeight={800}
-        icon={<CheckCircleIcon />}
+        bg="#9ae6b4"
+        color="white"
+        fontSize="12px"
+        fontWeight={900}
+        icon={<CheckIcon />}
         isRound
         size="sm"
         variant="outline"
