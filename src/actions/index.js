@@ -28,21 +28,6 @@ export const ActionTypes = {
   TWITCH_TRENDING: 'TWITCH_TRENDING',
 };
 
-// add the game to the database
-export function addNewGame(name, navigate, userRating) {
-  return async (dispatch) => {
-    try {
-      const fields = {
-        name, rating: userRating, content: '', coverUrl: '', tags: '',
-      };
-      await GameDex.addGame(fields);
-      navigate('/');
-    } catch (error) {
-      dispatch({ type: ActionTypes.ERROR_SET, message: error });
-    }
-  };
-}
-
 // update game information when clicking the save button
 export function updateGame(id, navigate, newName) {
   return async (dispatch) => {
@@ -75,8 +60,10 @@ export function loadUser() {
     try {
       const user = await GameDex.fetchUser();
       if (user) {
+        const games = await GameDex.getUserGames(user.username);
         dispatch({ type: ActionTypes.AUTH_USER, payload: undefined });
         dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
+        dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: games });
       }
     } catch (error) {
       console.log(error);
@@ -108,8 +95,10 @@ export function signinUser({ emailOrUsername, password }, navigate) {
         emailOrUsername, password,
       };
       const { token, user } = await GameDex.signin(fields);
+      const games = await GameDex.getUserGames(user.username);
       dispatch({ type: ActionTypes.AUTH_USER, payload: signInSuccess });
       dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
+      dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: games });
 
       localStorage.setItem('token', token);
     } catch (error) {
@@ -143,6 +132,21 @@ export function signoutUser(navigate) {
     localStorage.removeItem('token');
     dispatch({ type: ActionTypes.DEAUTH_USER });
     navigate('/');
+  };
+}
+
+// Add new game
+// Update user games and user info
+export function addNewGame(userGames, username, game, review) {
+  return async (dispatch) => {
+    try {
+      const { user, newGame } = await GameDex.saveGame(username, game, review);
+      const newGames = [...userGames, newGame];
+      dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: newGames });
+      dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
+    } catch (error) {
+      dispatch({ type: ActionTypes.ERROR_SET, message: error });
+    }
   };
 }
 
