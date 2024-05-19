@@ -17,7 +17,7 @@ function UserProfileHeader() {
     <Flex alignItems="center" direction="row" justifyContent="flex-start" marginLeft="100px" marginRight="100px" marginTop="50px">
       <Avatar
         size="2xl"
-        src="https://avatars.dicebear.com/api/male/username.svg"
+        src=""
       />
       <Flex alignItems="flex-start" direction="column" justifyContent="center" marginLeft="25px" marginRight="25px" width="250px">
         <Text fontSize="24px" fontWeight={700} marginTop="20px">
