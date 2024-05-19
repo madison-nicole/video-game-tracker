@@ -31,15 +31,15 @@ export async function fetchGames(query) {
  * @returns formatted cover url
  */
 export async function fetchGameCoverUrl(coverId) {
-  const query = 'fields url;';
+  const query = `fields url; where id=${coverId};`;
 
   // Fetch cover art for the game
-  const response = await axios.post(`${IGDB_COVERS_URL}/${coverId}`, query, {
+  const response = await axios.post(IGDB_COVERS_URL, query, {
     headers: IGDB_HEADERS,
   });
 
-  const cover = response.data[0];
-  const coverUrl = `https://${cover.url.replace('thumb', 'cover_big')}`;
+  const cover = response.data?.[0];
+  const coverUrl = cover ? `https://${cover.url.replace('thumb', 'cover_big')}` : undefined;
   return coverUrl;
 }
 
@@ -49,13 +49,13 @@ export async function fetchGameCoverUrl(coverId) {
  * @returns release year (YYYY)
  */
 export async function fetchGameReleaseYear(releaseYearId) {
-  const query = 'fields y;';
+  const query = `fields y; where id=${releaseYearId};`;
 
-  const response = await axios.post(`${IGDB_DATES_URL}/${releaseYearId}`, query, {
+  const response = await axios.post(IGDB_DATES_URL, query, {
     headers: IGDB_HEADERS,
   });
 
-  return response.data.y;
+  return response.data?.[0]?.y;
 }
 
 /**

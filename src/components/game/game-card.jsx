@@ -22,7 +22,7 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   const userInfo = useUserInfo();
   const userGames = useUserGames();
 
-  console.log(userGames);
+  console.log(game);
 
   // state
   const [userRating, setUserRating] = useState(0);
@@ -40,10 +40,8 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   // render the edit mode of the game card
   useEffect(() => {
     if (gameInLibrary) {
-      console.log('true');
       setEditMode(true);
     } else {
-      console.log('false');
       setEditMode(false);
     }
   }, [gameInLibrary]);

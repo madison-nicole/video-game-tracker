@@ -275,10 +275,19 @@ export function selectGame(game, coverUrl, year, avgRating, userRating = undefin
 
 export function selectGameAndLoadData(game) {
   return async (dispatch) => {
-    const coverUrl = await IGDB.fetchGameCoverUrl(game.cover);
-    const year = await IGDB.fetchGameReleaseYear(game.release_dates[0]);
+    try {
+      const coverUrl = await IGDB.fetchGameCoverUrl(game.cover);
+      const year = await IGDB.fetchGameReleaseYear(game.release_dates[0]);
 
-    dispatch({ type: ActionTypes.SELECT_GAME, payload: { ...game, coverUrl, year } });
+      dispatch({
+        type: ActionTypes.SELECT_GAME,
+        payload: {
+          ...game, coverUrl, year, avgRating: game.rating, userRating: undefined,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 

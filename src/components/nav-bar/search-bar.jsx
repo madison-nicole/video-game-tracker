@@ -56,7 +56,7 @@ function SearchBar({ gamesData, onSelectGame }) {
     }
   }, [onOpen, resultsCache.length]);
 
-  //
+  // select game
   const onSelectGamePreview = useCallback((game) => {
     dispatch(selectGameAndLoadData(game));
   }, [dispatch]);
