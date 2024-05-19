@@ -18,7 +18,7 @@ function EditableButtons({
           icon={<CheckIcon />}
           mr="4px"
           size="sm"
-          onClick={onSave}
+          onMouseDown={onSave}
         />
         <IconButton
           aria-label="Cancel edit"

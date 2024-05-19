@@ -4,11 +4,10 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
-// import { useUserInfo } from '../../../../hooks/redux-hooks';
 import { useDispatch } from 'react-redux';
 import UserInfoInput from '../user-info/user-info-input';
 import { useUserInfo } from '../../../../hooks/redux-hooks';
-import { updateUser } from '../../../../api/gamedex';
+import { updateUser } from '../../../../actions';
 
 const SOCIALS = {
   TWITCH: 'twitch',
@@ -37,7 +36,6 @@ function SocialLinksSettings() {
     if (userInfo?.socials) {
       Object.entries(userInfo.socials).forEach((entry) => {
         const social = entry[0];
-        console.log(social);
         const url = entry[1];
         switch (social) {
           case SOCIALS.TWITCH:
@@ -65,7 +63,7 @@ function SocialLinksSettings() {
   }, [userInfo]);
 
   const onSave = useCallback(() => {
-    const socials = { ...userInfo?.socials };
+    const socials = {};
     if (twitchUrl && twitchUrl !== '') {
       socials.twitch = twitchUrl;
     }
@@ -85,7 +83,6 @@ function SocialLinksSettings() {
       socials.discord = discordUrl;
     }
     const newUser = { ...userInfo, socials };
-    console.log('newUser', newUser);
     dispatch(updateUser(userInfo.username, newUser));
   }, [discordUrl, dispatch, instagramUrl, steamUrl, twitchUrl, twitterUrl, userInfo, youtubeUrl]);
 

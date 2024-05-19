@@ -3,7 +3,7 @@ import { ModalBody } from '@chakra-ui/react';
 import AuthModalInput from './auth-modal-input';
 import PasswordInput from './password-input';
 // import VerifyInputIcon from './verify-input-icon';
-import { isUsernameTaken } from '../../api/gamedex';
+import { fetchUser } from '../../api/gamedex';
 import { useAuthError } from '../../hooks/redux-hooks';
 
 function AuthModalInputs({
@@ -15,7 +15,7 @@ function AuthModalInputs({
   // check if username is taken
   const onUsernameBlur = useCallback(async () => {
     if (username.length > 0) {
-      const isTaken = await isUsernameTaken(username);
+      const isTaken = await fetchUser(username);
       console.log(isTaken);
     }
   }, [username]);

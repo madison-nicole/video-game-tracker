@@ -1,17 +1,33 @@
 import {
   Avatar, Button, Flex, Text,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import SocialIconButtons from './social-icon-buttons';
+import { fetchUser } from '../../../api/gamedex';
 
 function UserProfileHeader() {
   // store user data
   // const following = 85;
   // const followers = 550;
-  const profileLink = 'linktr.ee/xgigglypuff';
+  // const profileLink = 'linktr.ee/xgigglypuff';
 
   const { username } = useParams();
+  const [userInfo, setUserInfo] = useState();
+
+  console.log(userInfo);
+
+  useEffect(() => {
+    async function loadUser() {
+      const user = await fetchUser(username);
+      setUserInfo(user);
+    }
+    loadUser();
+  }, [username]);
+
+  if (!userInfo) {
+    return null;
+  }
 
   return (
     <Flex alignItems="center" direction="row" justifyContent="flex-start" marginLeft="100px" marginRight="100px" marginTop="50px">
@@ -24,7 +40,7 @@ function UserProfileHeader() {
           {username}
         </Text>
         <Text fontSize="14px" marginTop="10px">
-          insert user bio here
+          {userInfo?.bio}
         </Text>
       </Flex>
       <Flex alignItems="flex-end" direction="column" justifyContent="flex-end" width="100%">
@@ -34,10 +50,10 @@ function UserProfileHeader() {
         <Text>
           {followers} Followers
         </Text> */}
-        <Button src={`https://${profileLink}`} variant="link">
-          {profileLink}
+        <Button href={`https://${userInfo?.website}`} variant="link">
+          {userInfo?.website }
         </Button>
-        <SocialIconButtons />
+        <SocialIconButtons socials={userInfo?.socials} />
       </Flex>
     </Flex>
   );

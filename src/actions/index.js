@@ -58,7 +58,8 @@ export function deleteGame(id, navigate) {
 export function loadUser() {
   return async (dispatch) => {
     try {
-      const user = await GameDex.fetchUser();
+      const user = await GameDex.loadUser();
+      console.log(user);
       if (user) {
         const games = await GameDex.getUserGames(user.username);
         dispatch({ type: ActionTypes.AUTH_USER, payload: undefined });

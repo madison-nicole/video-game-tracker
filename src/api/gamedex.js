@@ -29,12 +29,12 @@ export async function signup(fields) {
  * @param {string} username
  * @returns true if username is taken, false if not
  */
-export async function isUsernameTaken(username) {
+export async function fetchUser(username) {
   try {
-    await axios.get(`${GAMEDEX_URL}/users/${username}`);
-    return true;
+    const response = await axios.get(`${GAMEDEX_URL}/users/${username}`);
+    return response.data;
   } catch (error) {
-    return false;
+    return error;
   }
 }
 
@@ -67,7 +67,7 @@ export async function saveGame(username, game, review) {
  * Check local storage for user token, fetch user if token is stored
  * @returns user if token is in local storage, otherwise undefined
  */
-export async function fetchUser() {
+export async function loadUser() {
   const token = localStorage.getItem('token');
   if (!token) throw new Error('No token found');
   const response = await axios.get(`${GAMEDEX_URL}/users`, { headers: { authorization: token } });
