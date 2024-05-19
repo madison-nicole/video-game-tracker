@@ -1,12 +1,14 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuthenticated } from '../hooks/redux-hooks';
+import { Navigate, useParams } from 'react-router-dom';
+import { useAuthenticated, useUserInfo } from '../hooks/redux-hooks';
 
 function RequireAuth({ children }) {
   const authenticated = useAuthenticated();
+  const userInfo = useUserInfo();
+  const { username } = useParams();
 
-  if (!authenticated) {
-    return <Navigate to="/signin" />;
+  if (!authenticated || userInfo?.username !== username) {
+    return <Navigate to="/" />;
   } else {
     return children;
   }
