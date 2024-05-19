@@ -17,7 +17,7 @@ function NavProfileMenu({
       >
         <Avatar
           size="sm"
-          src="https://avatars.dicebear.com/api/male/username.svg"
+          src=""
         />
       </MenuButton>
       <MenuList alignItems="center">
@@ -25,7 +25,7 @@ function NavProfileMenu({
         <Center>
           <Avatar
             size="2xl"
-            src="https://avatars.dicebear.com/api/male/username.svg"
+            src=""
           />
         </Center>
         <br />
