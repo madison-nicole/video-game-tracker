@@ -20,6 +20,13 @@ import Settings from './user-profile/settings/settings';
 import * as Twitch from '../api/twitch';
 import AuthToaster from './auth-toaster';
 
+function setDefaultDarkMode() {
+  const userColorMode = localStorage.getItem('user-color-mode');
+  if (!userColorMode || userColorMode === 'dark') {
+    localStorage.setItem('chakra-ui-color-mode', 'dark');
+  }
+}
+
 export default function App(props) {
   // state
   const [accountStatus, setAccountStatus] = useState(true); // true if the user has an account
@@ -37,7 +44,6 @@ export default function App(props) {
     onClose();
   }, [dispatch, onClose]);
 
-  // background processes
   // load user (check local storage for token)
   useEffect(() => {
     dispatch(loadUser());
@@ -66,6 +72,7 @@ export default function App(props) {
 
   return (
     <ChakraProvider theme={theme}>
+      {setDefaultDarkMode()}
       <BrowserRouter>
         <div>
           <NavBar accountStatus={accountStatus} setAccountStatus={setAccountStatus} username={username} onOpen={onOpen} />
