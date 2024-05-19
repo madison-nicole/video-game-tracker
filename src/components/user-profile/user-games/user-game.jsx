@@ -21,7 +21,7 @@ function UserGame({ game, selectGame, username }) {
           setHovered(false);
         }}
       >
-        <EditSavedGameButtons display={hovered} game={game} username={username} />
+        <EditSavedGameButtons display={hovered} game={game} selectGame={selectGame} username={username} />
         <Card
           alignItems="center"
           className={hovered ? 'gray-on-hover' : 'not-gray-on-hover'}

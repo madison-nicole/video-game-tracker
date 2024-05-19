@@ -6,7 +6,9 @@ import { deleteUserGame } from '../../../actions';
 import { useUserGames } from '../../../hooks/redux-hooks';
 
 // show edit and delete buttons on game card hover
-function EditSavedGameButtons({ game, display, username }) {
+function EditSavedGameButtons({
+  game, display, username, selectGame,
+}) {
   // hooks
   const dispatch = useDispatch();
   const userGames = useUserGames();
@@ -37,6 +39,7 @@ function EditSavedGameButtons({ game, display, username }) {
         icon={<EditIcon />}
         isRound
         variant="ghost"
+        onClick={selectGame}
       />
       <IconButton
         aria-label="Delete the saved game entry"
