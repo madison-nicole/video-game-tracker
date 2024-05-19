@@ -13,10 +13,6 @@ export async function updateGame(id, fields) {
   return response.data;
 }
 
-export async function deleteGame(id) {
-  await axios.delete(`${GAMEDEX_URL}/posts/${id}`, { headers: { authorization: localStorage.getItem('token') } });
-}
-
 /**
  * Sign in user
  * @param {object} fields - username or email, password
@@ -90,5 +86,20 @@ export async function getUserGames(username) {
 // to be removed
 export async function getGames(id) {
   const response = await axios.get(`${GAMEDEX_URL}/posts/${id}`);
+  return response.data;
+}
+
+/**
+ * Delete a game from a user's logged games
+ * @param {string} username
+ * @param {object} game
+ * @param {object} review
+ * @returns game if game is successfuly saved, else throw error
+ */
+export async function deleteGame(username, gameId) {
+  const fields = { username, gameId };
+
+  const response = await axios.delete(`${GAMEDEX_URL}/users/${username}/games`, fields, { headers: { authorization: localStorage.getItem('token') } });
+  console.log(response);
   return response.data;
 }

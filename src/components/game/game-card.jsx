@@ -6,7 +6,7 @@ import {
   Slider, SliderTrack, SliderFilledTrack, SliderThumb,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { addNewGame, clearSelectedGame } from '../../actions';
+import { addUserGame, clearSelectedGame } from '../../actions';
 import {
   useAuthenticated, useSelectedGame, useUserGames, useUserInfo,
 } from '../../hooks/redux-hooks';
@@ -58,11 +58,11 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
     if (!authenticated) { // if not logged in
       openAuthModal();
     } else if (userRating === 0) { // if no rating is made
-      dispatch(addNewGame(userGames, username, savedGame));
+      dispatch(addUserGame(userGames, username, savedGame));
       onCloseGame();
     } else {
       // save the game with all data
-      dispatch(addNewGame(userGames, username, savedGame, userRating));
+      dispatch(addUserGame(userGames, username, savedGame, userRating));
       onCloseGame();
     }
   }, [userGames, game?.id, game?.name, game?.coverUrl, game?.summary, game?.year, avgRating, authenticated, userRating, openAuthModal, dispatch, username, onCloseGame]);

@@ -137,11 +137,29 @@ export function signoutUser(navigate) {
 
 // Add new game
 // Update user games and user info
-export function addNewGame(userGames, username, game, review) {
+export function addUserGame(userGames, username, game, review) {
   return async (dispatch) => {
     try {
       const { user, newGame } = await GameDex.saveGame(username, game, review);
       const newGames = [...userGames, newGame];
+      dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: newGames });
+      dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
+    } catch (error) {
+      dispatch({ type: ActionTypes.ERROR_SET, message: error });
+    }
+  };
+}
+
+// Delete game from saved games
+// Update user games and user info
+export function deleteUserGame(userGames, username, gameId) {
+  return async (dispatch) => {
+    try {
+      const user = await GameDex.deleteGame(username, gameId);
+      const newGames = [...userGames];
+      const deletedGameIdx = newGames.findIndex((game) => game.id === gameId);
+      newGames.splice(deletedGameIdx, 1);
+      console.log(userGames, newGames);
       dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: newGames });
       dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: user });
     } catch (error) {

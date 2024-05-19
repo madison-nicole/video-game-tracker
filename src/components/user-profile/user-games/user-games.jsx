@@ -35,7 +35,7 @@ function UserGames({ username }) {
     const { id, coverUrl } = game;
 
     return (
-      <UserGame coverUrl={coverUrl} key={id} selectGame={() => onSelectGame(game)} />
+      <UserGame coverUrl={coverUrl} key={id} selectGame={() => onSelectGame(game)} username={username} />
     );
   });
 
