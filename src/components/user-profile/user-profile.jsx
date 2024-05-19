@@ -5,14 +5,11 @@ import {
 import UserGames from './user-games/user-games';
 import UserProfileHeader from './header/user-profile-header';
 import JumpToTop from '../jump-to-top';
-import { useUserInfo } from '../../hooks/redux-hooks';
 
 function UserProfile() {
-  const userInfo = useUserInfo();
-
   return (
     <Flex direction="column">
-      <UserProfileHeader userInfo={userInfo} />
+      <UserProfileHeader />
       <Tabs colorScheme="gray" marginTop="75px" variant="soft-rounded">
         <TabList display="flex" justifyContent="center" margin={10}>
           <Tab cursor="pointer" fontSize={13.5} fontWeight={700}>GAMES</Tab>
@@ -20,7 +17,7 @@ function UserProfile() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserGames username={userInfo.username} />
+            <UserGames />
           </TabPanel>
           {/* <TabPanel>
             INSERT STATS HERE

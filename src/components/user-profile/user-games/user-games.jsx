@@ -1,31 +1,42 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SimpleGrid } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { fetchUserGames, selectGame } from '../../../actions';
+import { useParams } from 'react-router';
+import { selectGame } from '../../../actions';
 import UserGame from './user-game';
-import { useUserGames, useUserInfo } from '../../../hooks/redux-hooks';
+import { useUserInfo } from '../../../hooks/redux-hooks';
+import { getUserGames } from '../../../api/gamedex';
 
-function UserGames({ username }) {
+function UserGames() {
   // hooks
+  const { username: usernameParam } = useParams();
   const dispatch = useDispatch();
+  const [games, setGames] = useState([]);
 
   // load user games redux on profile load
   useEffect(() => {
-    if (username) {
-      dispatch(fetchUserGames(username));
+    async function loadUserGames() {
+      const userGames = await getUserGames(usernameParam);
+      console.log(userGames);
+      setGames(userGames);
     }
-  }, [dispatch, username]);
+    loadUserGames();
+  }, [dispatch, usernameParam]);
 
-  // store user's saved games
-  const games = useUserGames();
+  // browsing user
   const userInfo = useUserInfo();
+
+  // own profile page or someone else's
+  const isUserPage = userInfo.username === usernameParam;
 
   // select game and fetch data
   const onSelectGame = useCallback((game) => {
-    const userRating = userInfo?.games?.[game.id];
-    const { coverUrl, releaseYear, avgRating } = game;
-    dispatch(selectGame(game, coverUrl, releaseYear, avgRating, userRating));
-  }, [dispatch, userInfo]);
+    if (isUserPage) {
+      const userRating = userInfo?.games?.[game.id];
+      const { coverUrl, releaseYear, avgRating } = game;
+      dispatch(selectGame(game, coverUrl, releaseYear, avgRating, userRating));
+    }
+  }, [isUserPage, userInfo?.games, dispatch]);
 
   if (!games) {
     return null;
@@ -35,7 +46,7 @@ function UserGames({ username }) {
     const { id } = game;
 
     return (
-      <UserGame game={game} key={id} selectGame={() => onSelectGame(game)} username={username} />
+      <UserGame game={game} isUserPage={isUserPage} key={id} selectGame={() => onSelectGame(game)} username={usernameParam} />
     );
   });
 

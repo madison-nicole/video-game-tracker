@@ -3,7 +3,9 @@ import { Image, CardBody, Card } from '@chakra-ui/react';
 import EditSavedGameButtons from './edit-saved-game-buttons';
 import { useAuthenticated } from '../../../hooks/redux-hooks';
 
-function UserGame({ game, selectGame, username }) {
+function UserGame({
+  isUserPage, game, selectGame, username,
+}) {
   // hooks
   const authenticated = useAuthenticated(); // to check if user is signed in
 
@@ -11,7 +13,7 @@ function UserGame({ game, selectGame, username }) {
   const [hovered, setHovered] = useState(false);
 
   // if it is your profile - signed in
-  if (authenticated) {
+  if (authenticated && isUserPage) {
     return (
       <div
         onMouseEnter={(e) => {
