@@ -26,8 +26,8 @@ function Settings({ user, username }) {
               <Heading fontSize="17px" fontWeight={700} maxW="60%" textAlign="left">
                 SOCIAL LINKS
               </Heading>
-              <SocialLinksSettings />
             </Flex>
+            <SocialLinksSettings />
           </TabPanel>
           {/* <TabPanel>
             INSERT ACCOUNT SETTINGS HERE

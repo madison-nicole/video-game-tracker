@@ -6,7 +6,7 @@ import JumpToTop from '../jump-to-top';
 import { useSearchResults } from '../../hooks/redux-hooks';
 import SkeletonList from './skeleton-results-list';
 
-function Results({ search }) {
+function Results(props) {
   // hooks
   const results = useSearchResults();
   const dispatch = useDispatch();

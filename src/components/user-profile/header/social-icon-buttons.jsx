@@ -39,13 +39,13 @@ function SocialIconButtons(props) {
       <IconButton
         aria-label="social media name"
         cursor="pointer"
-        icon={<FontAwesomeIcon icon={faDiscord} size="lg" />}
+        icon={<FontAwesomeIcon icon={faSteam} size="lg" />}
         variant="ghost"
       />
       <IconButton
         aria-label="social media name"
         cursor="pointer"
-        icon={<FontAwesomeIcon icon={faSteam} size="lg" />}
+        icon={<FontAwesomeIcon icon={faDiscord} size="lg" />}
         variant="ghost"
       />
     </Flex>

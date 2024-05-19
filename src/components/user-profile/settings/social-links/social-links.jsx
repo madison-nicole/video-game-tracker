@@ -4,15 +4,16 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
-// import UserInfoInput from '../user-info/user-info-input';
 // import { useUserInfo } from '../../../../hooks/redux-hooks';
-import SocialLinkInput from './social-link-input';
+import UserInfoInput from '../user-info/user-info-input';
 
 function SocialLinksSettings({ username }) {
   // store data
 //   const userInfo = useUserInfo();
+//   const links = userInfo.socials;
 
   // store links
+  //   const twitchUrl = links.twitch;
   const twitchUrl = '';
   const twitterUrl = '';
   const instagramUrl = '';
@@ -38,27 +39,27 @@ function SocialLinksSettings({ username }) {
       >
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="10px 0px 30px 30px">
           <Text fontWeight={600} width="18%">Twitch</Text>
-          <SocialLinkInput currentValue={twitchUrl} height="40px" />
-        </Flex>
-        <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 30px 30px">
-          <Text fontWeight={600} width="18%">Twitter</Text>
-          <SocialLinkInput currentValue={twitterUrl} height="40px" />
+          <UserInfoInput currentValue={twitchUrl} height="40px" />
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 30px 30px">
           <Text fontWeight={600} width="18%">Instagram</Text>
-          <SocialLinkInput currentValue={instagramUrl} height="40px" />
+          <UserInfoInput currentValue={instagramUrl} height="40px" />
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 30px 30px">
-          <Text fontWeight={600} width="18%">Steam</Text>
-          <SocialLinkInput currentValue={steamUrl} height="40px" />
+          <Text fontWeight={600} width="18%">Twitter</Text>
+          <UserInfoInput currentValue={twitterUrl} height="40px" />
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 30px 30px">
           <Text fontWeight={600} width="18%">YouTube</Text>
-          <SocialLinkInput currentValue={youtubeUrl} height="40px" />
+          <UserInfoInput currentValue={youtubeUrl} height="40px" />
+        </Flex>
+        <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 30px 30px">
+          <Text fontWeight={600} width="18%">Steam</Text>
+          <UserInfoInput currentValue={steamUrl} height="40px" />
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 50px 30px">
           <Text fontWeight={600} width="18%">Discord</Text>
-          <SocialLinkInput currentValue={discordUrl} height="40px" />
+          <UserInfoInput currentValue={discordUrl} height="40px" />
         </Flex>
         <Flex direction="row" justifyContent="flex-end">
           <Button
