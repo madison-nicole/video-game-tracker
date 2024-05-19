@@ -23,6 +23,9 @@ function SocialLinksSettings() {
   const userInfo = useUserInfo();
   const dispatch = useDispatch();
 
+  const [isSaving, setIsSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
   // store links
   const [twitchUrl, setTwitchUrl] = useState('');
   const [twitterUrl, setTwitterUrl] = useState('');
@@ -30,6 +33,12 @@ function SocialLinksSettings() {
   const [steamUrl, setSteamUrl] = useState('');
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [discordUrl, setDiscordUrl] = useState('');
+
+  // clear save sate on page load
+  useEffect(() => {
+    setIsSaving(false);
+    setSaved(false);
+  }, []);
 
   // set urls on page load
   useEffect(() => {
@@ -62,7 +71,8 @@ function SocialLinksSettings() {
     }
   }, [userInfo]);
 
-  const onSave = useCallback(() => {
+  const onSave = useCallback(async () => {
+    setIsSaving(true);
     const socials = {};
     if (twitchUrl && twitchUrl !== '') {
       socials.twitch = twitchUrl;
@@ -83,7 +93,11 @@ function SocialLinksSettings() {
       socials.discord = discordUrl;
     }
     const newUser = { ...userInfo, socials };
-    dispatch(updateUser(userInfo.username, newUser));
+    const user = await dispatch(updateUser(userInfo.username, newUser));
+    if (user) {
+      setSaved(true);
+    }
+    setIsSaving(false);
   }, [discordUrl, dispatch, instagramUrl, steamUrl, twitchUrl, twitterUrl, userInfo, youtubeUrl]);
 
   return (
@@ -128,12 +142,14 @@ function SocialLinksSettings() {
         </Flex>
         <Flex direction="row" justifyContent="flex-end">
           <Button
-            leftIcon={<CheckIcon />}
+            isLoading={isSaving}
+            leftIcon={saved ? <CheckIcon /> : null}
+            loadingText="SAVING"
             variant="solidPink"
-            w="80px"
+            w="85px"
             onClick={onSave}
           >
-            SAVE
+            {saved ? ('SAVED') : ('SAVE')}
           </Button>
         </Flex>
       </Stack>

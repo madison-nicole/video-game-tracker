@@ -140,10 +140,11 @@ export function updateUser(username, user) {
   return async (dispatch) => {
     try {
       const newUser = await GameDex.updateUser(username, user);
-      console.log(newUser);
       dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: newUser });
+      return newUser;
     } catch (error) {
       console.log(error);
+      return undefined;
     }
   };
 }

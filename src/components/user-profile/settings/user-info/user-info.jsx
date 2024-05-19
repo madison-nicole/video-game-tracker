@@ -21,6 +21,8 @@ function UserInfoSettings(props) {
   const [bio, setBio] = useState(userInfo?.bio ?? '');
   const [website, setWebsite] = useState(userInfo?.website ?? '');
   const [img, setImg] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   // upload new profile photo
   const handleUpload = useCallback((e) => {
@@ -32,19 +34,28 @@ function UserInfoSettings(props) {
   }, []);
 
   const onSaveUser = useCallback(async (e) => {
-    e.preventDefault();
+    try {
+      setIsSaving(true);
+      e.preventDefault();
 
-    // save new image url
-    const avatarUrl = await uploadImage(img.file);
+      // save new image url
+      const avatarUrl = await uploadImage(img.file);
 
-    const newUser = {
-      ...userInfo,
-      username,
-      bio,
-      website,
-      avatarUrl,
-    };
-    dispatch(updateUser(userInfo.username, newUser));
+      const newUser = {
+        ...userInfo,
+        username,
+        bio,
+        website,
+        avatarUrl,
+      };
+      const user = await dispatch(updateUser(userInfo.username, newUser));
+      if (user) {
+        setSaved(true);
+      }
+      setIsSaving(false);
+    } catch (error) {
+      setIsSaving(false);
+    }
   }, [bio, dispatch, img.file, userInfo, username, website]);
 
   // initialize user info fields
@@ -55,6 +66,11 @@ function UserInfoSettings(props) {
       setWebsite(userInfo.website ?? '');
     }
   }, [userInfo]);
+
+  useEffect(() => {
+    setIsSaving(false);
+    setSaved(false);
+  }, []);
 
   return (
     <Flex align="flex-start"
@@ -90,12 +106,14 @@ function UserInfoSettings(props) {
         </Flex>
         <Flex direction="row" justifyContent="flex-end">
           <Button
-            leftIcon={<CheckIcon />}
+            isLoading={isSaving}
+            leftIcon={saved ? <CheckIcon /> : null}
+            loadingText="SAVING"
             variant="solidPink"
-            w="80px"
+            w="85px"
             onClick={onSaveUser}
           >
-            SAVE
+            {saved ? ('SAVED') : ('SAVE')}
           </Button>
         </Flex>
       </Stack>
