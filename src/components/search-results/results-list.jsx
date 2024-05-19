@@ -76,7 +76,7 @@ function ResultsList({ gamesData, onSelectGame }) {
           justifyContent="flex-end"
           mr="20px"
         >
-          <GameListButton onAdd={() => onSelectGame(game, coverUrl, year, rating)} />
+          <GameListButton id={game.id} onAdd={() => onSelectGame(game, coverUrl, year, rating)} />
         </CardFooter>
       </Card>
     );

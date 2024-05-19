@@ -1,9 +1,9 @@
 import React from 'react';
 import { IconButton } from '@chakra-ui/react';
-import { CheckCircleIcon, AddIcon } from '@chakra-ui/icons';
+import { CheckIcon, AddIcon } from '@chakra-ui/icons';
 import { useUserGames } from '../../hooks/redux-hooks';
 
-function GameListButton({ onAdd, id }) {
+function GameListButton({ onAdd, onEdit, id }) {
   // check if game is in your logged games library
   const userGames = useUserGames();
   const gameInLibrary = userGames.find((game) => Number(game.id) === id);
@@ -16,10 +16,11 @@ function GameListButton({ onAdd, id }) {
         color="#9ae6b4"
         fontSize="30px"
         fontWeight={800}
-        icon={<CheckCircleIcon />}
+        icon={<CheckIcon />}
         isRound
         size="sm"
         variant="outline"
+        onClick={onEdit}
       />
     );
     // else show a plus button to add the game to your gamedex

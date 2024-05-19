@@ -37,6 +37,17 @@ export const Button = defineStyleConfig({
       fontWeight: '700',
       variant: 'solid',
     },
+    redSolid: {
+      _hover: {
+        bg: '#bd3333',
+      },
+      bg: '#e53e3e',
+      cursor: 'pointer',
+      display: { base: 'none', md: 'inline-flex' },
+      fontSize: 13.5,
+      fontWeight: '700',
+      variant: 'solid',
+    },
   },
 });
 

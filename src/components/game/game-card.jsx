@@ -1,17 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton,
-  Heading, Button, Text, Image, Stack, ButtonGroup,
+  Heading, Text, Image, Stack,
   Card, CardBody, CardFooter,
   Slider, SliderTrack, SliderFilledTrack, SliderThumb,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { addUserGame, clearSelectedGame } from '../../actions';
+import { addUserGame, clearSelectedGame, deleteUserGame } from '../../actions';
 import {
   useAuthenticated, useSelectedGame, useUserGames, useUserInfo,
 } from '../../hooks/redux-hooks';
+import GameCardButtons from './game-card-buttons';
 
-function GameCard({ openAuthModal, isOpenAuthModal }) {
+function GameCard({ openAuthModal, isOpenAuthModal, editMode }) {
   // hooks
   const dispatch = useDispatch();
   const authenticated = useAuthenticated(); // to check if user is signed in
@@ -26,8 +27,9 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   const username = userInfo?.username;
 
   // store the game data
-  const title = game?.name; // game title
+  const title = game?.name;
   const avgRating = game?.avgRating?.toFixed(2); // avg rating rounded to two decimals
+  const id = game?.id;
 
   // Chakra modal setup
   const finalRef = React.useRef(null);
@@ -43,10 +45,11 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
     dispatch(clearSelectedGame());
   }, [dispatch]);
 
+  // save + log the game
   const onLogGame = useCallback(() => {
     // store the game model
     const savedGame = {
-      id: game?.id,
+      id,
       name: game?.name,
       coverUrl: game?.coverUrl,
       summary: game?.summary,
@@ -65,7 +68,16 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
       dispatch(addUserGame(userGames, username, savedGame, userRating));
       onCloseGame();
     }
-  }, [userGames, game?.id, game?.name, game?.coverUrl, game?.summary, game?.year, avgRating, authenticated, userRating, openAuthModal, dispatch, username, onCloseGame]);
+  }, [id, game?.name, game?.coverUrl, game?.summary, game?.year, avgRating, authenticated, userRating, openAuthModal, dispatch, userGames, username, onCloseGame]);
+
+  // delete the game from user games
+  const onDeleteGame = useCallback(
+    () => {
+      // delete the saved game entry
+      dispatch(deleteUserGame(userGames, username, id));
+    },
+    [id, dispatch, userGames, username],
+  );
 
   if (!game) {
     return null;
@@ -157,14 +169,7 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
                 </Stack>
               </CardBody>
               <CardFooter>
-                <ButtonGroup spacing="2">
-                  <Button
-                    variant="greenAdd"
-                    onClick={onLogGame}
-                  >
-                    ADD
-                  </Button>
-                </ButtonGroup>
+                <GameCardButtons editMode={editMode} onDelete={onDeleteGame} onSave={onLogGame} />
               </CardFooter>
             </Card>
           </ModalBody>
