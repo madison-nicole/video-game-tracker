@@ -2,15 +2,16 @@ import {
   Avatar, Button, Flex, Text,
 } from '@chakra-ui/react';
 import React from 'react';
+import { useParams } from 'react-router';
 import SocialIconButtons from './social-icon-buttons';
 
-function UserProfileHeader({ userInfo }) {
+function UserProfileHeader() {
   // store user data
   // const following = 85;
   // const followers = 550;
   const profileLink = 'linktr.ee/xgigglypuff';
 
-  const username = userInfo?.username;
+  const { username } = useParams();
 
   return (
     <Flex alignItems="center" direction="row" justifyContent="flex-start" marginLeft="100px" marginRight="100px" marginTop="50px">

@@ -9,30 +9,34 @@ import { getUserGames } from '../../../api/gamedex';
 
 function UserGames() {
   // hooks
-  const { username } = useParams();
+  const { username: usernameParam } = useParams();
   const dispatch = useDispatch();
   const [games, setGames] = useState([]);
 
   // load user games redux on profile load
   useEffect(() => {
     async function loadUserGames() {
-      const userGames = await getUserGames(username);
+      const userGames = await getUserGames(usernameParam);
+      console.log(userGames);
       setGames(userGames);
     }
     loadUserGames();
-  }, [dispatch, username]);
+  }, [dispatch, usernameParam]);
 
-  // store user's saved games
+  // browsing user
   const userInfo = useUserInfo();
+
+  // own profile page or someone else's
+  const isUserPage = userInfo.username === usernameParam;
 
   // select game and fetch data
   const onSelectGame = useCallback((game) => {
-    if (userInfo.username === username) {
+    if (isUserPage) {
       const userRating = userInfo?.games?.[game.id];
       const { coverUrl, releaseYear, avgRating } = game;
       dispatch(selectGame(game, coverUrl, releaseYear, avgRating, userRating));
     }
-  }, [dispatch, userInfo?.games, userInfo.username, username]);
+  }, [isUserPage, userInfo?.games, dispatch]);
 
   if (!games) {
     return null;
@@ -42,7 +46,7 @@ function UserGames() {
     const { id } = game;
 
     return (
-      <UserGame game={game} key={id} selectGame={() => onSelectGame(game)} username={username} />
+      <UserGame game={game} isUserPage={isUserPage} key={id} selectGame={() => onSelectGame(game)} username={usernameParam} />
     );
   });
 
