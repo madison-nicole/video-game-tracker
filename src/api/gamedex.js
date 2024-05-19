@@ -39,6 +39,17 @@ export async function isUsernameTaken(username) {
 }
 
 /**
+ * Update user
+ * @param {*} user new user object
+ * @returns updated user
+ */
+export async function updateUser(username, user) {
+  const fields = { user };
+  const response = await axios.put(`${GAMEDEX_URL}/users/${username}`, fields, { headers: { authorization: localStorage.getItem('token') } });
+  return response.data;
+}
+
+/**
  * Save a game to a user's logged games
  * @param {string} username
  * @param {object} game

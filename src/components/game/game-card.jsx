@@ -22,8 +22,6 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   const userInfo = useUserInfo();
   const userGames = useUserGames();
 
-  console.log(game);
-
   // state
   const [userRating, setUserRating] = useState(0);
   const [editMode, setEditMode] = useState(false);
@@ -89,7 +87,6 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   // delete the game from user games
   const onDeleteGame = useCallback(
     () => {
-      console.log(id);
       // delete the saved game entry
       dispatch(deleteUserGame(userGames, username, id));
       onCloseGame();

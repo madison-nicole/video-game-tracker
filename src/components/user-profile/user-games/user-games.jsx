@@ -17,7 +17,6 @@ function UserGames() {
   useEffect(() => {
     async function loadUserGames() {
       const userGames = await getUserGames(usernameParam);
-      console.log(userGames);
       setGames(userGames);
     }
     loadUserGames();

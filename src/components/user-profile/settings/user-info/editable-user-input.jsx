@@ -19,6 +19,7 @@ function EditableUserInput({
         variant="outline"
         width="500px"
         onBlur={() => setEditMode(false)}
+        onChange={onTextChange}
       />
     );
   } else {
@@ -27,18 +28,16 @@ function EditableUserInput({
         alignItems="center"
         color="#5f6774"
         cursor="default"
-        defaultValue={currentValue}
         display="flex"
         focusBorderColor="#68d391"
         fontSize="14px"
         height={height}
         mr="5px"
-        placeholder={currentValue}
         textAlign="left"
         value={text}
         variant="filled"
         width="500px"
-        onChange={onTextChange}
+        onChange={() => {}}
         onClick={() => setEditMode(true)}
         onFocus={() => setEditMode(true)}
       />

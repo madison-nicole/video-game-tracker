@@ -24,7 +24,7 @@ function EditableButtons({
           aria-label="Cancel edit"
           icon={<CloseIcon />}
           size="sm"
-          onClick={onCancel}
+          onMouseDown={onCancel}
         />
       </Flex>
     );

@@ -4,36 +4,36 @@ import { Flex } from '@chakra-ui/react';
 import EditableButtons from './editable-buttons';
 import EditableUserInput from './editable-user-input';
 
-function UserInfoInput({ currentValue, height }) {
+function UserInfoInput({
+  defaultValue, height, text, setText,
+}) {
   // hooks
 //   const dispatch = useDispatch();
 
   // state
   const [editMode, setEditMode] = useState(false);
-  const [text, setText] = useState(currentValue);
 
   // display game title changes
-  const onTextChange = (event) => {
+  const onTextChange = useCallback((event) => {
     setText(event.target.value);
-  };
+  }, [setText]);
 
   // update game card
   const onSave = useCallback(() => {
     setText(text);
     // dispatch(updateGame(selectedGame.id, navigate, title));
     setEditMode(false);
-  }, [text]);
+  }, [setText, text]);
 
   // cancel edits with the cancel button
   const onCancel = useCallback(() => {
-    // setText(selectedGame.title);
     setEditMode(false);
-    setText(currentValue);
-  }, [currentValue]);
+    setText(defaultValue);
+  }, [defaultValue, setText]);
 
   return (
     <Flex direction="row">
-      <EditableUserInput currentValue={currentValue} editMode={editMode} height={height} setEditMode={setEditMode} text={text} onTextChange={onTextChange} />
+      <EditableUserInput defaultValue={defaultValue} editMode={editMode} height={height} setEditMode={setEditMode} text={text} onTextChange={onTextChange} />
       <EditableButtons editMode={editMode} setEditMode={setEditMode} onCancel={onCancel} onSave={onSave} />
     </Flex>
   );

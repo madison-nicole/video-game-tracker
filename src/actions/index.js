@@ -135,6 +135,18 @@ export function signoutUser(navigate) {
   };
 }
 
+export function updateUser(username, user) {
+  return async (dispatch) => {
+    try {
+      const newUser = await GameDex.updateUser(username, user);
+      console.log(newUser);
+      dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: newUser });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 // Add new game
 // Update user games and user info
 export function addUserGame(userGames, username, game, review) {
