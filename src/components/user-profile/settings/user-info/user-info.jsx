@@ -39,8 +39,10 @@ function UserInfoSettings(props) {
       e.preventDefault();
 
       // save new image url
-      const avatarUrl = await uploadImage(img.file);
-
+      let avatarUrl = '';
+      if (img.file) {
+        avatarUrl = await uploadImage(img.file);
+      }
       const newUser = {
         ...userInfo,
         username,
@@ -54,6 +56,7 @@ function UserInfoSettings(props) {
       }
       setIsSaving(false);
     } catch (error) {
+      console.log(error);
       setIsSaving(false);
     }
   }, [bio, dispatch, img.file, userInfo, username, website]);
