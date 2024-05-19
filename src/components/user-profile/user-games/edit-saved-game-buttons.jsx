@@ -3,14 +3,14 @@ import { ButtonGroup, IconButton } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux';
 import { deleteUserGame } from '../../../actions';
-import { useSelectedGame } from '../../../hooks/redux-hooks';
+import { useSelectedGame, useUserGames } from '../../../hooks/redux-hooks';
 
 // show edit and delete buttons on game card hover
 function EditSavedGameButtons({ display, username }) {
   // hooks
   const dispatch = useDispatch();
   const game = useSelectedGame(); // to grab data from selected game
-  // const userGames = useUserGames();
+  const userGames = useUserGames();
 
   const onDeleteGame = useCallback(
     () => {
@@ -18,9 +18,9 @@ function EditSavedGameButtons({ display, username }) {
       const id = game?.id;
 
       // delete the saved game entry
-      dispatch(deleteUserGame(username, id));
+      dispatch(deleteUserGame(userGames, username, id));
     },
-    [game?.id, dispatch, username],
+    [game?.id, dispatch, userGames, username],
   );
 
   return (
