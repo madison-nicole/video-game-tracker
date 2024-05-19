@@ -69,7 +69,7 @@ export async function saveGame(username, game, review) {
  */
 export async function fetchUser() {
   const token = localStorage.getItem('token');
-  if (!token) return undefined;
+  if (!token) throw new Error('No token found');
   const response = await axios.get(`${GAMEDEX_URL}/users`, { headers: { authorization: token } });
   return response.data.user;
 }

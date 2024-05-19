@@ -1,25 +1,93 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Button, Flex, Stack, useColorModeValue,
   Text,
 } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 // import { useUserInfo } from '../../../../hooks/redux-hooks';
+import { useDispatch } from 'react-redux';
 import UserInfoInput from '../user-info/user-info-input';
+import { useUserInfo } from '../../../../hooks/redux-hooks';
+import { updateUser } from '../../../../api/gamedex';
 
-function SocialLinksSettings({ username }) {
-  // store data
-//   const userInfo = useUserInfo();
-//   const links = userInfo.socials;
+const SOCIALS = {
+  TWITCH: 'twitch',
+  TWITTER: 'twitter',
+  INSTAGRAM: 'instagram',
+  STEAM: 'steam',
+  YOUTUBE: 'youtube',
+  DISCORD: 'discord',
+};
+
+function SocialLinksSettings() {
+  // hooks
+  const userInfo = useUserInfo();
+  const dispatch = useDispatch();
 
   // store links
-  //   const twitchUrl = links.twitch;
-  const twitchUrl = '';
-  const twitterUrl = '';
-  const instagramUrl = '';
-  const steamUrl = '';
-  const youtubeUrl = '';
-  const discordUrl = '';
+  const [twitchUrl, setTwitchUrl] = useState('');
+  const [twitterUrl, setTwitterUrl] = useState('');
+  const [instagramUrl, setInstagramUrl] = useState('');
+  const [steamUrl, setSteamUrl] = useState('');
+  const [youtubeUrl, setYoutubeUrl] = useState('');
+  const [discordUrl, setDiscordUrl] = useState('');
+
+  // set urls on page load
+  useEffect(() => {
+    if (userInfo?.socials) {
+      Object.entries(userInfo.socials).forEach((entry) => {
+        const social = entry[0];
+        console.log(social);
+        const url = entry[1];
+        switch (social) {
+          case SOCIALS.TWITCH:
+            setTwitchUrl(url);
+            break;
+          case SOCIALS.TWITTER:
+            setTwitterUrl(url);
+            break;
+          case SOCIALS.INSTAGRAM:
+            setInstagramUrl(url);
+            break;
+          case SOCIALS.STEAM:
+            setSteamUrl(url);
+            break;
+          case SOCIALS.YOUTUBE:
+            setYoutubeUrl(url);
+            break;
+          case SOCIALS.DISCORD:
+            setDiscordUrl(url);
+            break;
+          default:
+        }
+      });
+    }
+  }, [userInfo]);
+
+  const onSave = useCallback(() => {
+    const socials = { ...userInfo?.socials };
+    if (twitchUrl && twitchUrl !== '') {
+      socials.twitch = twitchUrl;
+    }
+    if (twitterUrl && twitterUrl !== '') {
+      socials.twitter = twitterUrl;
+    }
+    if (instagramUrl && instagramUrl !== '') {
+      socials.instagram = instagramUrl;
+    }
+    if (steamUrl && steamUrl !== '') {
+      socials.steam = steamUrl;
+    }
+    if (youtubeUrl && youtubeUrl !== '') {
+      socials.youtube = youtubeUrl;
+    }
+    if (discordUrl && discordUrl !== '') {
+      socials.discord = discordUrl;
+    }
+    const newUser = { ...userInfo, socials };
+    console.log('newUser', newUser);
+    dispatch(updateUser(userInfo.username, newUser));
+  }, [discordUrl, dispatch, instagramUrl, steamUrl, twitchUrl, twitterUrl, userInfo, youtubeUrl]);
 
   return (
     <Flex align="flex-start"
@@ -39,33 +107,34 @@ function SocialLinksSettings({ username }) {
       >
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="10px 0px 30px 30px">
           <Text fontWeight={600} width="18%">Twitch</Text>
-          <UserInfoInput currentValue={twitchUrl} height="40px" />
+          <UserInfoInput defaultValue={userInfo?.socials?.twitch ?? ''} height="40px" setText={setTwitchUrl} text={twitchUrl} />
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 30px 30px">
           <Text fontWeight={600} width="18%">Instagram</Text>
-          <UserInfoInput currentValue={instagramUrl} height="40px" />
+          <UserInfoInput defaultValue={userInfo?.socials?.instagram ?? ''} height="40px" setText={setInstagramUrl} text={instagramUrl} />
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 30px 30px">
           <Text fontWeight={600} width="18%">Twitter</Text>
-          <UserInfoInput currentValue={twitterUrl} height="40px" />
+          <UserInfoInput defaultValue={userInfo?.socials?.twitter ?? ''} height="40px" setText={setTwitterUrl} text={twitterUrl} />
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 30px 30px">
           <Text fontWeight={600} width="18%">YouTube</Text>
-          <UserInfoInput currentValue={youtubeUrl} height="40px" />
+          <UserInfoInput defaultValue={userInfo?.socials?.youtube ?? ''} height="40px" setText={setYoutubeUrl} text={youtubeUrl} />
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 30px 30px">
           <Text fontWeight={600} width="18%">Steam</Text>
-          <UserInfoInput currentValue={steamUrl} height="40px" />
+          <UserInfoInput defaultValue={userInfo?.socials?.steam ?? ''} height="40px" setText={setSteamUrl} text={steamUrl} />
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 50px 30px">
           <Text fontWeight={600} width="18%">Discord</Text>
-          <UserInfoInput currentValue={discordUrl} height="40px" />
+          <UserInfoInput defaultValue={userInfo?.socials?.discord ?? ''} height="40px" setText={setDiscordUrl} text={discordUrl} />
         </Flex>
         <Flex direction="row" justifyContent="flex-end">
           <Button
             leftIcon={<CheckIcon />}
             variant="solidPink"
             w="80px"
+            onClick={onSave}
           >
             SAVE
           </Button>
