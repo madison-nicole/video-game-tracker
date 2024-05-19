@@ -2,7 +2,7 @@ import React from 'react';
 import { Input } from '@chakra-ui/react';
 
 function EditableUserInput({
-  editMode, setEditMode, onTextChange, currentValue, text, height,
+  editMode, setEditMode, onTextChange, defaultValue, text, height,
 }) {
   if (editMode) {
     return (
@@ -13,7 +13,7 @@ function EditableUserInput({
         fontSize="14px"
         height={height}
         mr="5px"
-        placeholder={currentValue}
+        placeholder={defaultValue}
         textAlign="left"
         value={text}
         variant="outline"

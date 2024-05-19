@@ -9,6 +9,7 @@ import { useUserInfo } from '../../../../hooks/redux-hooks';
 import uploadImage from '../../../../api/s3';
 import UploadProfilePhoto from './update-profile-photo';
 import { updateUser } from '../../../../actions';
+import UserInfoTextarea from './user-info-textarea';
 
 function UserInfoSettings(props) {
   // hooks
@@ -75,9 +76,9 @@ function UserInfoSettings(props) {
           <Text fontWeight={600} width="18%">Username</Text>
           <UserInfoInput defaultValue={userInfo.username} height="40px" setText={setUsername} text={username} />
         </Flex>
-        <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 30px 30px">
-          <Text fontWeight={600} width="18%">Bio</Text>
-          <UserInfoInput defaultValue={userInfo.bio} height="80px" setText={setBio} text={bio} />
+        <Flex alignItems="flex-start" direction="row" justifyContent="flex-start" margin="0px 0px 30px 30px">
+          <Text fontWeight={600} mt="8px" width="18%">Bio</Text>
+          <UserInfoTextarea defaultValue={userInfo.bio} height="80px" setText={setBio} text={bio} />
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 50px 30px">
           <Text fontWeight={600} width="18%">Website</Text>
