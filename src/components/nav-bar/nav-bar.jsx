@@ -58,6 +58,12 @@ function NavBar({ onOpen, setAccountStatus, username }) {
     navigate('/');
   }, [navigate]);
 
+  const handleColorModeClick = useCallback(() => {
+    toggleColorMode();
+    const userColorMode = localStorage.getItem('chakra-ui-color-mode');
+    localStorage.setItem('user-color-mode', userColorMode);
+  }, [toggleColorMode]);
+
   // if signed in, render a different menu
   function renderMenu() {
     if (authenticated) {
@@ -120,7 +126,7 @@ function NavBar({ onOpen, setAccountStatus, username }) {
           </Flex>
           <Flex alignItems="center" justifyContent="flex-end" width="100%">
             <HStack spacing={3}>
-              <Button id="light-dark-mode-button" variant="ghostBW" onClick={toggleColorMode}>
+              <Button id="light-dark-mode-button" variant="ghostBW" onClick={handleColorModeClick}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
               {renderMenu()}
