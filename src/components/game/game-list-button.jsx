@@ -1,30 +1,28 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { IconButton } from '@chakra-ui/react';
 import { CheckCircleIcon, AddIcon } from '@chakra-ui/icons';
 import { useUserGames } from '../../hooks/redux-hooks';
 
 function GameListButton({ onAdd, id }) {
   // check if game is in your logged games library
-  const gameInLibrary = useSelector((reduxState) => reduxState.user?.userGames?.[id]);
-
-  // console.log(id);
-  // console.log(gameInLibrary);
-
   const userGames = useUserGames();
-  console.log(userGames);
+  const gameInLibrary = userGames.find((game) => Number(game.id) === id);
 
+  // if (gameInLibrary) {
+  //   console.log(gameInLibrary);
+  // }
   // if game is logged, show a check button which can edit the entry
   if (gameInLibrary) {
     return (
       <IconButton
         aria-label="Game is in your library"
-        fontSize="10px"
+        color="#9ae6b4"
+        fontSize="30px"
         fontWeight={800}
         icon={<CheckCircleIcon />}
         isRound
         size="sm"
-        variant="unstyled"
+        variant="outline"
       />
     );
     // else show a plus button to add the game to your gamedex

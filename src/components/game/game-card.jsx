@@ -6,9 +6,10 @@ import {
   Slider, SliderTrack, SliderFilledTrack, SliderThumb,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { clearSelectedGame } from '../../actions';
-import { useAuthenticated, useSelectedGame, useUserInfo } from '../../hooks/redux-hooks';
-import { saveGame } from '../../api/gamedex';
+import { addNewGame, clearSelectedGame } from '../../actions';
+import {
+  useAuthenticated, useSelectedGame, useUserGames, useUserInfo,
+} from '../../hooks/redux-hooks';
 
 function GameCard({ openAuthModal, isOpenAuthModal }) {
   // hooks
@@ -16,6 +17,7 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
   const authenticated = useAuthenticated(); // to check if user is signed in
   const game = useSelectedGame(); // to grab data from selected game
   const userInfo = useUserInfo();
+  const userGames = useUserGames();
 
   // state
   const [userRating, setUserRating] = useState(0);
@@ -56,14 +58,14 @@ function GameCard({ openAuthModal, isOpenAuthModal }) {
     if (!authenticated) { // if not logged in
       openAuthModal();
     } else if (userRating === 0) { // if no rating is made
-      saveGame(username, savedGame); // store the game w/o a rating
+      dispatch(addNewGame(userGames, username, savedGame));
       onCloseGame();
     } else {
       // save the game with all data
-      saveGame(username, savedGame, userRating);
+      dispatch(addNewGame(userGames, username, savedGame, userRating));
       onCloseGame();
     }
-  }, [game?.id, game?.name, game?.coverUrl, game?.summary, game?.year, avgRating, authenticated, userRating, openAuthModal, username, onCloseGame]);
+  }, [userGames, game?.id, game?.name, game?.coverUrl, game?.summary, game?.year, avgRating, authenticated, userRating, openAuthModal, dispatch, username, onCloseGame]);
 
   if (!game) {
     return null;
