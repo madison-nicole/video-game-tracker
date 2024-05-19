@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Image, CardBody, Card } from '@chakra-ui/react';
 import EditSavedGameButtons from './edit-saved-game-buttons';
 import { useAuthenticated } from '../../../hooks/redux-hooks';
+import RequireAuth from '../../require-auth';
 
 function UserGame({ game, selectGame, username }) {
   // hooks
@@ -21,7 +22,9 @@ function UserGame({ game, selectGame, username }) {
           setHovered(false);
         }}
       >
-        <EditSavedGameButtons display={hovered} game={game} username={username} />
+        <RequireAuth>
+          <EditSavedGameButtons display={hovered} game={game} username={username} />
+        </RequireAuth>
         <Card
           alignItems="center"
           className={hovered ? 'gray-on-hover' : 'not-gray-on-hover'}

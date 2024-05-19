@@ -20,7 +20,7 @@ function UserProfile() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserGames username={userInfo.username} />
+            <UserGames />
           </TabPanel>
           {/* <TabPanel>
             INSERT STATS HERE

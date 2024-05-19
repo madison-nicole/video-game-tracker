@@ -1,31 +1,38 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SimpleGrid } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { fetchUserGames, selectGame } from '../../../actions';
+import { useParams } from 'react-router';
+import { selectGame } from '../../../actions';
 import UserGame from './user-game';
-import { useUserGames, useUserInfo } from '../../../hooks/redux-hooks';
+import { useUserInfo } from '../../../hooks/redux-hooks';
+import { getUserGames } from '../../../api/gamedex';
 
-function UserGames({ username }) {
+function UserGames() {
   // hooks
+  const { username } = useParams();
   const dispatch = useDispatch();
+  const [games, setGames] = useState([]);
 
   // load user games redux on profile load
   useEffect(() => {
-    if (username) {
-      dispatch(fetchUserGames(username));
+    async function loadUserGames() {
+      const userGames = await getUserGames(username);
+      setGames(userGames);
     }
+    loadUserGames();
   }, [dispatch, username]);
 
   // store user's saved games
-  const games = useUserGames();
   const userInfo = useUserInfo();
 
   // select game and fetch data
   const onSelectGame = useCallback((game) => {
-    const userRating = userInfo?.games?.[game.id];
-    const { coverUrl, releaseYear, avgRating } = game;
-    dispatch(selectGame(game, coverUrl, releaseYear, avgRating, userRating));
-  }, [dispatch, userInfo]);
+    if (userInfo.username === username) {
+      const userRating = userInfo?.games?.[game.id];
+      const { coverUrl, releaseYear, avgRating } = game;
+      dispatch(selectGame(game, coverUrl, releaseYear, avgRating, userRating));
+    }
+  }, [dispatch, userInfo?.games, userInfo.username, username]);
 
   if (!games) {
     return null;
