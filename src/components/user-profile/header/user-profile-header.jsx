@@ -1,5 +1,5 @@
 import {
-  Avatar, Button, Flex, Text,
+  Avatar, Button, Flex, Link, Text,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
@@ -50,9 +50,11 @@ function UserProfileHeader() {
         <Text>
           {followers} Followers
         </Text> */}
-        <Button href={`https://${userInfo?.website}`} variant="link">
-          {userInfo?.website }
-        </Button>
+        <Link href={`https://${userInfo?.website}`} isExternal>
+          <Button variant="link">
+            {userInfo?.website }
+          </Button>
+        </Link>
         <SocialIconButtons socials={userInfo?.socials} />
       </Flex>
     </Flex>

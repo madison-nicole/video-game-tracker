@@ -5,7 +5,7 @@ import {
   faYoutube, faDiscord, faSteam,
 
 } from '@fortawesome/free-brands-svg-icons';
-import { Flex, IconButton } from '@chakra-ui/react';
+import { Flex, IconButton, Link } from '@chakra-ui/react';
 
 function SocialIconButtons({ socials }) {
   // determine user socials
@@ -19,70 +19,22 @@ function SocialIconButtons({ socials }) {
       const social = entry[0];
       const url = entry[1];
       if (social === 'twitch') {
-        return (
-          <IconButton
-            aria-label="twitch"
-            cursor="pointer"
-            icon={<FontAwesomeIcon icon={faTwitch} size="lg" />}
-            src={url}
-            variant="ghost"
-          />
-        );
-      }
-      if (social === 'instagram') {
-        return (
-          <IconButton
-            aria-label="instagram"
-            cursor="pointer"
-            icon={<FontAwesomeIcon icon={faInstagram} size="lg" />}
-            src={url}
-            variant="ghost"
-          />
-        );
+        return <SocialIconButton icon={<FontAwesomeIcon icon={faTwitch} size="lg" />} label="twitch" url={url} />;
       }
       if (social === 'twitter') {
-        return (
-          <IconButton
-            aria-label="twitter"
-            cursor="pointer"
-            icon={<FontAwesomeIcon icon={faSquareXTwitter} size="lg" />}
-            src={url}
-            variant="ghost"
-          />
-        );
+        return <SocialIconButton icon={<FontAwesomeIcon icon={faSquareXTwitter} size="lg" />} label="twitter" url={url} />;
       }
-      if (social === 'youtube') {
-        return (
-          <IconButton
-            aria-label="youtube"
-            cursor="pointer"
-            icon={<FontAwesomeIcon icon={faYoutube} size="lg" />}
-            src={url}
-            variant="ghost"
-          />
-        );
+      if (social === 'instagram') {
+        return <SocialIconButton icon={<FontAwesomeIcon icon={faInstagram} size="lg" />} label="instagram" url={url} />;
       }
       if (social === 'steam') {
-        return (
-          <IconButton
-            aria-label="steam"
-            cursor="pointer"
-            icon={<FontAwesomeIcon icon={faSteam} size="lg" />}
-            src={url}
-            variant="ghost"
-          />
-        );
+        return <SocialIconButton icon={<FontAwesomeIcon icon={faSteam} size="lg" />} label="steam" url={url} />;
+      }
+      if (social === 'youtube') {
+        return <SocialIconButton icon={<FontAwesomeIcon icon={faYoutube} size="lg" />} label="youtube" url={url} />;
       }
       if (social === 'discord') {
-        return (
-          <IconButton
-            aria-label="discord"
-            cursor="pointer"
-            icon={<FontAwesomeIcon icon={faDiscord} size="lg" />}
-            src={url}
-            variant="link"
-          />
-        );
+        return <SocialIconButton icon={<FontAwesomeIcon icon={faDiscord} size="lg" />} label="discord" url={url} />;
       }
       return null;
     });
@@ -92,6 +44,20 @@ function SocialIconButtons({ socials }) {
     <Flex alignItems="center" direction="row" justifyContent="space-around">
       {renderSocialButtons()}
     </Flex>
+  );
+}
+
+function SocialIconButton({ label, icon, url }) {
+  return (
+    <Link href={`https://${url}`} isExternal>
+      <IconButton
+        aria-label={label}
+        cursor="pointer"
+        icon={icon}
+        src={url}
+        variant="link"
+      />
+    </Link>
   );
 }
 
