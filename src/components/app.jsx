@@ -19,7 +19,7 @@ import UserProfile from './user-profile/user-profile';
 import Settings from './user-profile/settings/settings';
 import * as Twitch from '../api/twitch';
 import AuthToaster from './auth-toaster';
-import Footer from './footer';
+// import Footer from './footer';
 
 function setDefaultDarkMode() {
   const userColorMode = localStorage.getItem('user-color-mode');
@@ -90,7 +90,7 @@ export default function App(props) {
             <Route element={<FallBack />} path="*" />
           </Routes>
           <AuthToaster onAuth={closeAuthModal} />
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </BrowserRouter>
     </ChakraProvider>
