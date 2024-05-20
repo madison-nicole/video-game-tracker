@@ -93,3 +93,67 @@ body, html {
     z-index: 2;
   }
 }
+
+// footer
+@keyframes wave {
+  from, to {
+    transform: translate(-50%, 0%);
+  }
+  
+  50% {
+    transform: translate(-50%, -20%);
+  }
+}
+
+body {
+  background-color: rgb(10, 10, 10);
+  margin: 0px;
+}
+
+#bubble-wrapper {
+  height: 100%;
+  width: 100%;
+  
+  position: fixed;
+  bottom: 0px;
+  
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bubble {
+  height: max(300px, 30vw);
+  width: max(300px, 30vw);
+  
+  background-color: #68d391;  
+  border-radius: 100%;
+  
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  
+  animation: wave 2s ease-in-out infinite;
+}
+
+@media(prefers-reduced-motion) {
+  .bubble {
+    animation: none;
+    display: none;
+  }
+}
+
+body {
+  margin-bottom: 100px
+}
+
+html {
+  min-height: 100%;
+}
+
+#footer {
+  margin-top: 100px;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  height: 100px;
+}
