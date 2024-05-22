@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 // IGDB URLs
-export const IGDB_GAMES_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/games';
-export const IGDB_COVERS_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/covers';
-export const IGDB_DATES_URL = 'https://kg0tnhf3p2.execute-api.us-west-2.amazonaws.com/production/v4/release_dates';
+export const IGDB_GAMES_URL = 'https://t4ebtc69jj.execute-api.us-west-2.amazonaws.com/production/v4/games';
+export const IGDB_COVERS_URL = 'https://t4ebtc69jj.execute-api.us-west-2.amazonaws.com/production/v4/covers';
+export const IGDB_DATES_URL = 'https://t4ebtc69jj.execute-api.us-west-2.amazonaws.com/production/v4/release_dates';
 
 // IGDB API key
-const API_KEY = 'o228NXPSSC2PvDrXAM3Xw5bYz6oOnFAN7XR4UTti';
+const API_KEY = 'jIXQfDYw1yaJmLNLclCnI7fsrufLpmhB3eR8yuKn';
 
 // IGDB API header
 export const IGDB_HEADERS = { 'x-api-key': API_KEY };
