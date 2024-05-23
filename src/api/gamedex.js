@@ -71,6 +71,7 @@ export async function loadUser() {
   const token = localStorage.getItem('token');
   if (!token) throw new Error('No token found');
   const response = await axios.get(`${GAMEDEX_URL}/users`, { headers: { authorization: token } });
+  console.log(response);
   return response.data.user;
 }
 

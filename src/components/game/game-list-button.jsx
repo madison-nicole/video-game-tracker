@@ -8,6 +8,8 @@ function GameListButton({ onAdd, id }) {
   const userGames = useUserGames();
   const gameInLibrary = userGames.find((game) => String(game.id) === String(id));
 
+  console.log(userGames);
+
   // if game is logged, show a check button which can edit the entry
   if (gameInLibrary) {
     return (

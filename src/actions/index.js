@@ -132,6 +132,8 @@ export function signoutUser(navigate) {
   return (dispatch) => {
     localStorage.removeItem('token');
     dispatch({ type: ActionTypes.DEAUTH_USER });
+    dispatch({ type: ActionTypes.FETCH_USER_INFO, payload: {} });
+    dispatch({ type: ActionTypes.FETCH_USER_GAMES, payload: [] });
     navigate('/');
   };
 }
