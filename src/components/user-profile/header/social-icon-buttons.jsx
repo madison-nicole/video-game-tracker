@@ -55,7 +55,7 @@ function SocialIconButton({ label, icon, url }) {
         cursor="pointer"
         icon={icon}
         src={url}
-        variant="link"
+        variant="ghost"
       />
     </Link>
   );
