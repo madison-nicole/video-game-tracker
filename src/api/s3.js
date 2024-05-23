@@ -12,9 +12,7 @@ async function getSignedRequest(file) {
 // note how we return the passed in url here rather than any return value
 // since we already know what the url will be - just not that it has been uploaded
 async function uploadFileToS3(signedRequest, file, url) {
-  await axios.put(signedRequest, file, {
-    headers: { 'Content-Type': file.type, Origin: 'https://video-game-tracker-m7cr.vercel.app/' },
-  });
+  await axios.put(signedRequest, file, { headers: { 'Content-Type': file.type } });
   return url;
 }
 
