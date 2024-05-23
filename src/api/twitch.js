@@ -55,7 +55,7 @@ export async function getTrendingGames() {
   // Fix image urls
   const processedGames = games.map((game) => {
     const imageUrl = game.box_art_url;
-    const sizedUrl = imageUrl?.replace('{width}', 1000).replace('{height}', 1300);
+    const sizedUrl = imageUrl?.replace('{width}', 500).replace('{height}', 650);
     return { ...game, box_art_url: sizedUrl };
   });
 
