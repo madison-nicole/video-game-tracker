@@ -5,7 +5,9 @@ import {
 } from '@chakra-ui/react';
 import { SmallCloseIcon } from '@chakra-ui/icons';
 
-function UpdateProfilePhoto({ img, handleUpload }) {
+function UpdateProfilePhoto({
+  img, setImg, avatarUrl, handleUpload,
+}) {
   const inputRef = useRef(null);
 
   const handleUpdate = () => {
@@ -18,7 +20,7 @@ function UpdateProfilePhoto({ img, handleUpload }) {
         <Avatar
           alt="profile photo preview"
           size="xl"
-          src={img.preview}
+          src={img.preview ?? avatarUrl}
         >
           <AvatarBadge
             aria-label="remove Image"
@@ -28,6 +30,7 @@ function UpdateProfilePhoto({ img, handleUpload }) {
             rounded="full"
             size="sm"
             top="-10px"
+            onClick={() => setImg('')}
           />
         </Avatar>
       </Center>

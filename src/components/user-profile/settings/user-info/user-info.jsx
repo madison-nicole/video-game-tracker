@@ -105,7 +105,7 @@ function UserInfoSettings(props) {
         </Flex>
         <Flex alignItems="center" direction="row" justifyContent="flex-start" margin="0px 0px 0px 30px">
           <Text fontWeight={600} marginBottom="30px" width="18%">Profile Picture</Text>
-          <UploadProfilePhoto handleUpload={handleUpload} img={img} userInfo={userInfo} />
+          <UploadProfilePhoto avatarUrl={userInfo?.avatarUrl} handleUpload={handleUpload} img={img} setImg={setImg} />
         </Flex>
         <Flex direction="row" justifyContent="flex-end">
           <Button

@@ -2,10 +2,13 @@ import React from 'react';
 import {
   Menu, MenuButton, Button, Avatar, MenuList, Center, MenuDivider, MenuItem,
 } from '@chakra-ui/react';
+import { useUserInfo } from '../../hooks/redux-hooks';
 
 function NavProfileMenu({
   handleBrowseGames, signOut, username, handleYourProfile, handleSettings,
 }) {
+  const userInfo = useUserInfo();
+
   return (
     <Menu className="profile-menu">
       <MenuButton
@@ -17,7 +20,7 @@ function NavProfileMenu({
       >
         <Avatar
           size="sm"
-          src=""
+          src={userInfo?.avatarUrl}
         />
       </MenuButton>
       <MenuList alignItems="center">
@@ -25,7 +28,7 @@ function NavProfileMenu({
         <Center>
           <Avatar
             size="2xl"
-            src=""
+            src={userInfo?.avatarUrl}
           />
         </Center>
         <br />
