@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // API url
-export const GAMEDEX_URL = 'http://localhost:9090/api';
+export const GAMEDEX_URL = 'https://video-game-tracker-api.onrender.com/api';
 
 /**
  * Sign in user

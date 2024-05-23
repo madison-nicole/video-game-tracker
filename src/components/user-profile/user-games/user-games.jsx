@@ -4,26 +4,33 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { selectGame } from '../../../actions';
 import UserGame from './user-game';
-import { useUserInfo } from '../../../hooks/redux-hooks';
+import { useUserGames, useUserInfo } from '../../../hooks/redux-hooks';
 import { getUserGames } from '../../../api/gamedex';
 
 function UserGames() {
   // hooks
   const { username: usernameParam } = useParams();
   const dispatch = useDispatch();
-  const [games, setGames] = useState([]);
+
+  // browsing user
+  const userInfo = useUserInfo();
+
+  // anyone's games
+  const [profileGames, setProfileGames] = useState([]);
+
+  // your own games
+  const userGames = useUserGames();
+
+  const games = userInfo.username === usernameParam ? userGames : profileGames;
 
   // load user games redux on profile load
   useEffect(() => {
     async function loadUserGames() {
-      const userGames = await getUserGames(usernameParam);
-      setGames(userGames);
+      const newGames = await getUserGames(usernameParam);
+      setProfileGames(newGames);
     }
     loadUserGames();
   }, [dispatch, usernameParam]);
-
-  // browsing user
-  const userInfo = useUserInfo();
 
   // own profile page or someone else's
   const isUserPage = userInfo.username === usernameParam;
