@@ -20,7 +20,7 @@ function UserInfoSettings(props) {
   const [username, setUsername] = useState(userInfo?.username);
   const [bio, setBio] = useState(userInfo?.bio ?? '');
   const [website, setWebsite] = useState(userInfo?.website ?? '');
-  const [img, setImg] = useState('');
+  const [img, setImg] = useState({ preview: userInfo?.avatarUrl, file: null });
   const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 

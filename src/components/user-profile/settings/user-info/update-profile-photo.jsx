@@ -20,7 +20,7 @@ function UpdateProfilePhoto({
         <Avatar
           alt="profile photo preview"
           size="xl"
-          src={img.preview ?? avatarUrl}
+          src={img.preview}
         >
           <AvatarBadge
             aria-label="remove Image"
