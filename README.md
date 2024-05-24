@@ -10,7 +10,9 @@
 <h3 align="center">project_title</h3>
 
   <p align="center">
-    project_description
+    The GameDex is a video game tracking website built with the IGDB database that allows you to create, update, and delete logs of video games that you have played, with a rating feature from 0 to 100.
+    On your profile, you can view your games, your ratings, your external social links, and all of your public profile information.
+    Within your settings, you can change to another unique username, upload a profile photo
   </p>
 </div>
 
@@ -37,6 +39,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
   <img alt="MongoDB" src="https://img.shields.io/badge/-MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white" />
   <img alt="Express.js" src="https://img.shields.io/badge/-Express.js-000000?style=flat-square&logo=express&logoColor=white" />
   <img alt="Node.js" src="https://img.shields.io/badge/-Node.js-339933?style=flat-square&logo=node.js&logoColor=white" />
+  <img alt="Amazon S3" src="https://img.shields.io/badge/-Amazon%20S3-569A31?style=flat-square&logo=amazon+s3&logoColor=white" />
 </p>
 
 <br>
