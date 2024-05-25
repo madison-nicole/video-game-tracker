@@ -17,6 +17,13 @@
 <br>
 <br>
 
+## About The Project
+
+The GameDex is a video game tracking website built using the IGDB database API that allows you to create, update, rate, and delete logs of video games that you have played.
+Check out GameDex [here](https://video-game-tracker-m7cr.vercel.app/) !
+
+<br>
+
 ### Built With
 
 <p>
@@ -35,11 +42,6 @@
 <br>
 <br>
 
-## About The Project
-
-The GameDex is a video game tracking website built using the IGDB database API that allows you to create, update, rate, and delete logs of video games that you have played.
-
-<br>
 
 ### Features
 
