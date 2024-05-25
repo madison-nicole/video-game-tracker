@@ -61,6 +61,18 @@ Check out GameDex [here](https://video-game-tracker-m7cr.vercel.app/) !
 <br>
 <br>
 
+## Architecture
+
+<p>
+  This repository encompasses the frontend of a fullstack web application.
+</p>
+<p>
+  The backend repository of the app is stored [here](https://github.com/m-saylor/video-game-tracker-api). The current frontend client is pointing to the deployed backend server; thus, you will not need to run it for usage.
+</p>
+
+
+<br>
+<br>
 
 <!-- GETTING STARTED -->
 ## Installation
@@ -71,23 +83,17 @@ To get a local copy up and running, follow these steps.
    ```sh
    git clone https://github.com/m-saylor/video-game-tracker.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Run the project locally
+3. Run the project locally
    ```sh
    npm run dev
    ```
 <br>
 <br>
 
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
