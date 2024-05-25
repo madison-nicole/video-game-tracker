@@ -17,25 +17,6 @@
 <br>
 <br>
 
-## About The Project
-
-The GameDex is a video game tracking website built using the IGDB database API that allows you to create, update, rate, and delete logs of video games that you have played.
-
-<br>
-
-### Features
-
-<ul>
-  <li>browse a page of trending games that is live updated via the Twitch API to find what's popular right now</li>
-  <li>add, edit, or delete games on the trending page from your saved games</li>
-  <li>browse a list of the top rated games based on average ratings from users from the IGDB database</li>
-  <li>browse a page of trending games that is live updated via the Twitch API to find what's popular right now</li>
-  <li>browse a page of trending games that is live updated via the Twitch API to find what's popular right now</li>
-</ul>
-
-<br>
-<br>
-
 ### Built With
 
 <p>
@@ -53,6 +34,31 @@ The GameDex is a video game tracking website built using the IGDB database API t
 
 <br>
 <br>
+
+## About The Project
+
+The GameDex is a video game tracking website built using the IGDB database API that allows you to create, update, rate, and delete logs of video games that you have played.
+
+<br>
+
+### Features
+
+<ul>
+  <li>create an account!</li>
+  <li>browse a page of trending games that is live updated via the Twitch API to find what's popular right now</li>
+  <li>add, edit, or delete games on the trending page from your saved games</li>
+  <li>browse a list of the top rated games based on average ratings from users from the IGDB database</li>
+  <li>add or edit games from the top rated games, with an indicator of the game's status</li>
+  <li>search for any game in the database and quickly add, edit, or delete your entry</li>
+  <li>update your profile information from the settings page--> customize your bio, website link, profile picture, and external social links</li>
+  <li>view your profile and saved games</li>
+  <li>edit or delete games from your profile page</li>
+  <li>sign out until next time!</li>
+</ul>
+
+<br>
+<br>
+
 
 <!-- GETTING STARTED -->
 ## Getting Started
