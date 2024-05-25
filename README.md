@@ -7,22 +7,19 @@
     <img src="images/logo.png" alt="demo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">The GameDex</h3>
 
   <p align="center">
-    The GameDex is a video game tracking website built with the IGDB database that allows you to create, update, and delete logs of video games that you have played, with a rating feature from 0 to 100.
-    On your profile, you can view your games, your ratings, your external social links, and all of your public profile information.
-    Within your settings, you can change to another unique username, upload a profile photo
+    The GameDex is a video game tracking website where you can save and rate the games you've played!
   </p>
 </div>
 
 <br>
 <br>
 
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+The GameDex is a video game tracking website built using the IGDB database API that allows you to create, update, rate, and delete logs of video games that you have played.
 
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 
