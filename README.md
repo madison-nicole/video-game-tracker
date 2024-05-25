@@ -10,7 +10,7 @@
 <h3 align="center">The GameDex</h3>
 
   <p align="center">
-    The GameDex is a video game tracking website where you can save and rate the games you've played!
+    The GameDex is a video game tracking website where you can save and rate the games you've played.
   </p>
 </div>
 
@@ -21,7 +21,17 @@
 
 The GameDex is a video game tracking website built using the IGDB database API that allows you to create, update, rate, and delete logs of video games that you have played.
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+<br>
+
+### Features
+
+<ul>
+  <li>browse a page of trending games that is live updated via the Twitch API to find what's popular right now</li>
+  <li>add, edit, or delete games on the trending page from your saved games</li>
+  <li>browse a list of the top rated games based on average ratings from users from the IGDB database</li>
+  <li>browse a page of trending games that is live updated via the Twitch API to find what's popular right now</li>
+  <li>browse a page of trending games that is live updated via the Twitch API to find what's popular right now</li>
+</ul>
 
 <br>
 <br>
