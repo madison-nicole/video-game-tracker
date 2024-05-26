@@ -22,6 +22,10 @@
 The GameDex is a video game tracking website built using the IGDB database API that allows you to create, update, rate, and delete logs of video games that you have played.
 Check out GameDex [here](https://video-game-tracker-m7cr.vercel.app/) !
 
+ This repository encompasses the frontend of a fullstack web application.
+
+ The backend repository of the app is stored [here](https://github.com/m-saylor/video-game-tracker-api). The current frontend client is pointing to the deployed backend server; thus, you will not need to run it for usage.
+
 <br>
 
 ### Built With
@@ -31,6 +35,7 @@ Check out GameDex [here](https://video-game-tracker-m7cr.vercel.app/) !
     <li><img alt="React" src="https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=white" /></li>
     <li><img alt="Redux" src="https://img.shields.io/badge/-Redux-764ABC?style=flat-square&logo=redux&logoColor=white" /></li>
     <li><img alt="JavaScript" src="https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white" /></li>
+    <img alt="Chakra UI" src="https://img.shields.io/badge/-Chakra%20UI-319795?style=flat-square&logo=chakra+ui&logoColor=white" />
     <li><img alt="Sass" src="https://img.shields.io/badge/-SCSS-CC6699?style=flat-square&logo=Sass&logoColor=white" /></li>
     <li><img alt="MongoDB" src="https://img.shields.io/badge/-MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white" /></li>
     <li><img alt="Express.js" src="https://img.shields.io/badge/-Express.js-000000?style=flat-square&logo=express&logoColor=white" /></li>
@@ -61,19 +66,6 @@ Check out GameDex [here](https://video-game-tracker-m7cr.vercel.app/) !
 <br>
 <br>
 
-## Architecture
-
-<p>
-  This repository encompasses the frontend of a fullstack web application.
-</p>
-<p>
-  The backend repository of the app is stored [here](https://github.com/m-saylor/video-game-tracker-api). The current frontend client is pointing to the deployed backend server; thus, you will not need to run it for usage.
-</p>
-
-
-<br>
-<br>
-
 <!-- GETTING STARTED -->
 ## Installation
 
@@ -93,6 +85,31 @@ To get a local copy up and running, follow these steps.
    ```
 <br>
 <br>
+
+## Usage
+
+create an account
+
+
+browse games
+
+
+rate a game
+
+
+edit a rating
+
+
+customize your profile
+
+
+delete a game
+
+
+share your profile with friends
+
+
+see ya next time!
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
