@@ -1,13 +1,13 @@
 <a name="readme-top"></a>
 
+<h3 align="center">The GameDex</h3>
+
 <!-- PROJECT DEMO GIF -->
 <br />
 <div align="center">
   <a href="https://github.com/m-saylor/video-game-tracker">
-    <img src="images/logo.png" alt="demo" width="80" height="80">
+    <img src="https://github.com/m-saylor/video-game-tracker/blob/main/GamedexDemo.GIF" alt="demo" width="40%">
   </a>
-
-<h3 align="center">The GameDex</h3>
 
   <p align="center">
     The GameDex is a video game tracking website where you can save and rate the games you've played.
