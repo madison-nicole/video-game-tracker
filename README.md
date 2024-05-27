@@ -86,30 +86,6 @@ To get a local copy up and running, follow these steps.
 <br>
 <br>
 
-## Usage
-
-create an account
-
-
-browse games
-
-
-rate a game
-
-
-edit a rating
-
-
-customize your profile
-
-
-delete a game
-
-
-share your profile with friends
-
-
-see ya next time!
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
