@@ -5,10 +5,6 @@
 <!-- PROJECT DEMO GIF -->
 <br />
 <div align="center">
-  <a href="https://github.com/m-saylor/video-game-tracker">
-    <img src="https://github.com/m-saylor/video-game-tracker/blob/main/GamedexDemo.GIF" alt="demo" width="40%">
-  </a>
-
   <p align="center">
     The GameDex is a video game tracking website where you can save and rate the games you've played.
   </p>
